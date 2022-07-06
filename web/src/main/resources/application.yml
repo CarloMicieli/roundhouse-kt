@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: trenako
+    lifecycle:
+        timeout-per-shutdown-phase: 15s
+
+server:
+    port: 8080
+    shutdown: graceful
+
+logging:
+    level:
+        org.springframework: INFO
+        com.trenako: DEBUG
