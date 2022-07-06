@@ -7,8 +7,26 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.diffplug.spotless")
     id("io.spring.dependency-management")
+    id("me.qoomon.git-versioning")
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.spring")
+}
+
+group = "com.trenako"
+version = "0.0.0-SNAPSHOT"
+gitVersioning.apply {
+    refs {
+        branch("main") {
+            version = "\${commit.timestamp}-\${commit.short}"
+        }
+        tag("v(?<version>.*)") {
+            version = "\${ref.version}"
+        }
+    }
+
+    rev {
+        version = "\${commit.short}-SNAPSHOT"
+    }
 }
 
 repositories {
