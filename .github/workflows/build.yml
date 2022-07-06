@@ -28,6 +28,9 @@ jobs:
       - name: Compile the project
         run: ./gradlew build -x check
 
+      - name: Checks that sourcecode satisfies formatting rules
+        run: ./gradlew spotlessCheck
+
       - name: Run the unit tests
         run: ./gradlew test
 

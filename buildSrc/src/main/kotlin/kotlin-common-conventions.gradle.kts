@@ -5,6 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    id("com.diffplug.spotless")
     id("org.jetbrains.kotlin.jvm")
 }
 
@@ -85,3 +86,24 @@ tasks {
     }
 }
 
+spotless {
+    kotlin {
+        endWithNewline()
+        ktlint()
+        toggleOffOn("fmt:off", "fmt:on")
+        indentWithSpaces()
+        trimTrailingWhitespace()
+        licenseHeaderFile("${project.rootDir}/.spotless/header.txt")
+    }
+
+    kotlinGradle {
+        endWithNewline()
+        ktlint()
+        indentWithSpaces()
+        trimTrailingWhitespace()
+    }
+}
+
+tasks.check {
+    dependsOn(tasks.spotlessCheck)
+}
