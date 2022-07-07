@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![GitHub last commit](https://img.shields.io/github/last-commit/CarloMicieli/trenako)
-![Build](https://github.com/CarloMicieli/trenako/workflows/build/badge.svg)
+[![CI with Gradle](https://github.com/CarloMicieli/trenako/actions/workflows/ci.yml/badge.svg)](https://github.com/CarloMicieli/trenako/actions/workflows/ci.yml)
 
 A web application for model railways collectors.
 
