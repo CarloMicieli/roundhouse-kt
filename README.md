@@ -28,6 +28,20 @@ A web application for model railways collectors.
      :: Spring Boot ::                (v2.7.1)
 ```
 
+### Docker 
+
+To build the docker image run:
+
+```bash
+  ./gradlew bootBuildImage
+```
+
+To start the application with docker compose:
+
+```bash
+  docker compose up 
+```
+
 ## Contributing
 
 Contributions are always welcome!

@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  web-api:
+    image: ghcr.io/carlomicieli/trenako-server:latest
+    ports:
+      - 8080:8080
+      - 8081:8081
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - JAVA_TOOL_OPTIONS=-Xss512k -Xmx256M -XX:ReservedCodeCacheSize=64M -XX:MaxMetaspaceSize=64M
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '0.50'
+          memory: 512M
