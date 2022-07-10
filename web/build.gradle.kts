@@ -67,6 +67,6 @@ tasks.named("check") {
 
 tasks.named<BootBuildImage>("bootBuildImage") {
     builder = "paketobuildpacks/builder:tiny"
-    imageName = "ghcr.io/carlomicieli/trenako-server:${project.version}"
-    tags = listOf("ghcr.io/carlomicieli/trenako-server:latest")
+    imageName = "ghcr.io/carlomicieli/trenako:${project.version}"
+    tags = listOf("ghcr.io/carlomicieli/trenako:latest")
 }

@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   web-api:
-    image: ghcr.io/carlomicieli/trenako-server:latest
+    image: ghcr.io/carlomicieli/trenako:latest
     ports:
       - 8080:8080
       - 8081:8081
