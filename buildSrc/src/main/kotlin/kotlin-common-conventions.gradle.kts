@@ -8,8 +8,8 @@ plugins {
     id("com.diffplug.spotless")
     id("io.spring.dependency-management")
     id("me.qoomon.git-versioning")
-    id("org.jetbrains.kotlin.jvm")
-    id("org.jetbrains.kotlin.plugin.spring")
+    kotlin("jvm")
+    kotlin("plugin.spring")
 }
 
 group = "com.trenako"
@@ -56,8 +56,8 @@ tasks {
             allWarningsAsErrors = true
             freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = JavaVersion.VERSION_17.toString()
-            apiVersion = "1.6"
-            languageVersion = "1.6"
+            apiVersion = "1.7"
+            languageVersion = "1.7"
         }
     }
 }
