@@ -10,13 +10,8 @@ plugins {
 }
 
 dependencies {
-    modules {
-        module("org.springframework.boot:spring-boot-starter-tomcat") {
-            replacedBy("org.springframework.boot:spring-boot-starter-reactor-netty", "Use Netty instead of Tomcat")
-        }
-    }
-
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-reactor-netty")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 }
 
