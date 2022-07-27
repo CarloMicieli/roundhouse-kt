@@ -25,7 +25,7 @@ A web application for model railways collectors.
      \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
       '  |____| .__|_| |_|_| |_\__, | / / / /
      =========|_|==============|___/=/_/_/_/
-     :: Spring Boot ::                (v2.7.1)
+     :: Spring Boot ::                (v2.7.2)
 ```
 
 ### Docker 
