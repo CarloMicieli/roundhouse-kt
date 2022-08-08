@@ -13,4 +13,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     implementation("org.jetbrains.kotlin:kotlin-allopen:1.7.10")
     implementation("org.springframework.boot:spring-boot-gradle-plugin:2.7.2")
+    implementation("com.github.ben-manes:gradle-versions-plugin:0.42.0")
 }
