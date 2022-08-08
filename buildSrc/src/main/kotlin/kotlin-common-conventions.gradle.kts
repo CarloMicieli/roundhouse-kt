@@ -8,6 +8,7 @@ plugins {
     id("com.diffplug.spotless")
     id("io.spring.dependency-management")
     id("me.qoomon.git-versioning")
+    id("com.github.ben-manes.versions")
     kotlin("jvm")
     kotlin("plugin.spring")
 }
@@ -62,7 +63,7 @@ tasks {
     }
 }
 
-extra["kotestVersion"] = "5.3.2"
+extra["kotestVersion"] = "5.4.1"
 
 configurations {
     all {
