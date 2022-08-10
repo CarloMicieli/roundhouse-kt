@@ -10,6 +10,8 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":catalog"))
+
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-reactor-netty")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -29,6 +31,8 @@ testing {
             dependencies {
                 implementation(project)
                 implementation("org.springframework.boot:spring-boot-starter-test")
+                implementation("org.springframework:spring-web")
+                implementation("io.kotest:kotest-assertions-core:5.4.1")
             }
 
             targets {

@@ -18,21 +18,6 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.catalog.brands.createbrands
 
-import com.trenako.web.api.catalog.brands.Brands
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-
-@SpringBootApplication
-class Application
-
-fun main(args: Array<String>) {
-    runApplication<Application>(*args) {
-        initializers.forEach { addInitializers(it) }
-    }
-}
-
-val initializers = listOf(
-    Brands.beans
-)
+data class CreateBrand(val name: String = "")

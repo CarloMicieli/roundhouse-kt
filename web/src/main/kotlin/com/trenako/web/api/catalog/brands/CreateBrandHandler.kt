@@ -18,13 +18,22 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.web.api.catalog.brands
 
-import io.kotest.core.spec.style.ShouldSpec
-import io.kotest.matchers.shouldBe
+import com.trenako.catalog.brands.createbrands.CreateBrand
+import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.awaitBodyOrNull
+import org.springframework.web.reactive.function.server.buildAndAwait
+import java.net.URI
 
-class ApplicationTest : ShouldSpec({
-    should("simply work") {
-        "works" shouldBe "works"
+class CreateBrandHandler {
+    suspend fun handle(serverRequest: ServerRequest): ServerResponse {
+        val createBrand = serverRequest.awaitBodyOrNull<CreateBrand>()
+        return if (createBrand == null) {
+            ServerResponse.unprocessableEntity().buildAndAwait()
+        } else {
+            ServerResponse.created(URI("/api/brands/acme")).buildAndAwait()
+        }
     }
-})
+}

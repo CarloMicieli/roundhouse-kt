@@ -18,21 +18,30 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.web.api.catalog.brands
 
-import com.trenako.web.api.catalog.brands.Brands
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import org.springframework.context.support.beans
+import org.springframework.http.MediaType
+import org.springframework.web.reactive.function.server.RouterFunction
+import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.coRouter
 
-@SpringBootApplication
-class Application
+object Brands {
+    val beans = beans {
+        bean<CreateBrandHandler>()
 
-fun main(args: Array<String>) {
-    runApplication<Application>(*args) {
-        initializers.forEach { addInitializers(it) }
+        bean {
+            println("sssss")
+            val createBrandHandler = ref<CreateBrandHandler>()
+            routes(createBrandHandler)
+        }
+    }
+
+    internal fun routes(createBrandHandler: CreateBrandHandler): RouterFunction<ServerResponse> = coRouter {
+        "/api/brands".nest {
+            accept(MediaType.APPLICATION_JSON).nest {
+                POST("", createBrandHandler::handle)
+            }
+        }
     }
 }
-
-val initializers = listOf(
-    Brands.beans
-)

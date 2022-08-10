@@ -20,19 +20,13 @@
  */
 package com.trenako
 
-import com.trenako.web.api.catalog.brands.Brands
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import org.springframework.context.ApplicationContextInitializer
+import org.springframework.context.support.GenericApplicationContext
 
-@SpringBootApplication
-class Application
-
-fun main(args: Array<String>) {
-    runApplication<Application>(*args) {
-        initializers.forEach { addInitializers(it) }
+class TestConfigInitializer : ApplicationContextInitializer<GenericApplicationContext> {
+    override fun initialize(applicationContext: GenericApplicationContext) {
+        initializers.forEach {
+            it.initialize(applicationContext)
+        }
     }
 }
-
-val initializers = listOf(
-    Brands.beans
-)
