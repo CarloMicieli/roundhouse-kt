@@ -80,7 +80,7 @@ class CreateBrandIntegrationTest() {
 
     @Test
     fun `should create a new brand`() {
-        val newBrand = RequestBody(name = "ACME")
+        val newBrand = RequestBody(name = "acme")
 
         webClient.post()
             .uri("/api/brands")

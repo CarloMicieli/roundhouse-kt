@@ -21,28 +21,35 @@
 package com.trenako.web.api.catalog.brands
 
 import com.trenako.catalog.brands.createbrands.CreateBrand
+import com.trenako.catalog.brands.createbrands.CreateBrandError
+import com.trenako.catalog.brands.createbrands.CreateBrandUseCase
+import com.trenako.problems.ProblemDetails
 import com.trenako.problems.ProblemDetailsGenerator
-import com.trenako.validation.Validated
-import com.trenako.validation.inputValidator
+import com.trenako.usecases.get
+import com.trenako.usecases.map
+import com.trenako.usecases.mapError
 import com.trenako.web.api.toServerResponse
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.awaitBodyOrNull
 import org.springframework.web.reactive.function.server.buildAndAwait
 import java.net.URI
-import javax.validation.Validator
 
-class CreateBrandHandler(private val problemDetailsGenerator: ProblemDetailsGenerator, private val validator: Validator) {
+class CreateBrandHandler(private val problemDetailsGenerator: ProblemDetailsGenerator, private val createBrandUseCase: CreateBrandUseCase) {
     suspend fun handle(serverRequest: ServerRequest): ServerResponse {
         val createBrand = serverRequest.awaitBodyOrNull<CreateBrand>()
         return if (createBrand == null) {
             problemDetailsGenerator.unprocessableEntity("Request body is empty").toServerResponse()
         } else {
-            val inputValidator = validator.inputValidator<CreateBrand>()
-            when (val result = inputValidator.validate(createBrand)) {
-                is Validated.Valid -> ServerResponse.created(URI("/api/brands/acme")).buildAndAwait()
-                is Validated.Invalid -> problemDetailsGenerator.invalidRequest(result.errors).toServerResponse()
-            }
+            createBrandUseCase.execute(createBrand)
+                .map { ServerResponse.created(URI("/api/brands/${it.id}")).buildAndAwait() }
+                .mapError { it.toProblemDetails().toServerResponse() }
+                .get()
         }
+    }
+
+    private fun CreateBrandError.toProblemDetails(): ProblemDetails = when (this) {
+        is CreateBrandError.InvalidRequest -> problemDetailsGenerator.invalidRequest(this.errors)
+        is CreateBrandError.GenericError -> problemDetailsGenerator.unprocessableEntity(this.ex.message ?: "")
     }
 }

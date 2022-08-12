@@ -18,31 +18,21 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.web.api.catalog.brands
+package com.trenako.catalog.brands.createbrands
 
-import com.trenako.catalog.brands.createbrands.CreateBrandUseCase
-import org.springframework.context.support.beans
-import org.springframework.http.MediaType
-import org.springframework.web.reactive.function.server.RouterFunction
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.coRouter
+import com.trenako.usecases.UseCase
+import com.trenako.usecases.UseCaseResult
+import com.trenako.validation.Validated
+import com.trenako.validation.inputValidator
+import java.time.LocalDateTime
+import javax.validation.Validator
 
-object Brands {
-    val beans = beans {
-        bean<CreateBrandHandler>()
-        bean<CreateBrandUseCase>()
-
-        bean {
-            val createBrandHandler = ref<CreateBrandHandler>()
-            routes(createBrandHandler)
-        }
-    }
-
-    internal fun routes(createBrandHandler: CreateBrandHandler): RouterFunction<ServerResponse> = coRouter {
-        "/api/brands".nest {
-            accept(MediaType.APPLICATION_JSON).nest {
-                POST("", createBrandHandler::handle)
-            }
+class CreateBrandUseCase(private val validator: Validator) : UseCase<CreateBrand, BrandCreated, CreateBrandError> {
+    override suspend fun execute(input: CreateBrand): UseCaseResult<BrandCreated, CreateBrandError> {
+        val inputValidator = validator.inputValidator<CreateBrand>()
+        return when (val result = inputValidator.validate(input)) {
+            is Validated.Valid -> UseCaseResult.withOutput(BrandCreated(BrandId(input.name), LocalDateTime.now()))
+            is Validated.Invalid -> UseCaseResult.withError(CreateBrandError.InvalidRequest(result.errors))
         }
     }
 }

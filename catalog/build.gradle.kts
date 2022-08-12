@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common"))
     implementation("org.hibernate.validator:hibernate-validator")
 }
