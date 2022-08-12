@@ -18,29 +18,22 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.web.api.catalog.brands
+package com.trenako.validation
 
-import org.springframework.context.support.beans
-import org.springframework.http.MediaType
-import org.springframework.web.reactive.function.server.RouterFunction
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.coRouter
-
-object Brands {
-    val beans = beans {
-        bean<CreateBrandHandler>()
-
-        bean {
-            val createBrandHandler = ref<CreateBrandHandler>()
-            routes(createBrandHandler)
-        }
-    }
-
-    internal fun routes(createBrandHandler: CreateBrandHandler): RouterFunction<ServerResponse> = coRouter {
-        "/api/brands".nest {
-            accept(MediaType.APPLICATION_JSON).nest {
-                POST("", createBrandHandler::handle)
-            }
-        }
-    }
-}
+/**
+ * A validation error
+ */
+data class ValidationError(
+    /**
+     * The field name with the invalid value
+     */
+    val fieldName: String,
+    /**
+     * The validation error message
+     */
+    val errorMessage: String,
+    /**
+     * The invalid value (optional)
+     */
+    val invalidValue: Any? = null
+)

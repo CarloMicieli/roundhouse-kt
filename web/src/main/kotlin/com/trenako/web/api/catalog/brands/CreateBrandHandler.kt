@@ -22,20 +22,27 @@ package com.trenako.web.api.catalog.brands
 
 import com.trenako.catalog.brands.createbrands.CreateBrand
 import com.trenako.problems.ProblemDetailsGenerator
+import com.trenako.validation.Validated
+import com.trenako.validation.inputValidator
 import com.trenako.web.api.toServerResponse
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.awaitBodyOrNull
 import org.springframework.web.reactive.function.server.buildAndAwait
 import java.net.URI
+import javax.validation.Validator
 
-class CreateBrandHandler(private val problemDetailsGenerator: ProblemDetailsGenerator) {
+class CreateBrandHandler(private val problemDetailsGenerator: ProblemDetailsGenerator, private val validator: Validator) {
     suspend fun handle(serverRequest: ServerRequest): ServerResponse {
         val createBrand = serverRequest.awaitBodyOrNull<CreateBrand>()
         return if (createBrand == null) {
             problemDetailsGenerator.unprocessableEntity("Request body is empty").toServerResponse()
         } else {
-            ServerResponse.created(URI("/api/brands/acme")).buildAndAwait()
+            val inputValidator = validator.inputValidator<CreateBrand>()
+            when (val result = inputValidator.validate(createBrand)) {
+                is Validated.Valid -> ServerResponse.created(URI("/api/brands/acme")).buildAndAwait()
+                is Validated.Invalid -> problemDetailsGenerator.invalidRequest(result.errors).toServerResponse()
+            }
         }
     }
 }

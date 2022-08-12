@@ -18,29 +18,33 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.web.api.catalog.brands
+package com.trenako.validation
 
-import org.springframework.context.support.beans
-import org.springframework.http.MediaType
-import org.springframework.web.reactive.function.server.RouterFunction
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.coRouter
+import javax.validation.ConstraintViolation
+import javax.validation.Validator
 
-object Brands {
-    val beans = beans {
-        bean<CreateBrandHandler>()
+class InputValidator<T>(private val validator: Validator) {
 
-        bean {
-            val createBrandHandler = ref<CreateBrandHandler>()
-            routes(createBrandHandler)
+    /**
+     * Validate the input
+     * @param input the value to validate
+     * @return the result of the validation
+     */
+    fun validate(input: T): Validated<T> {
+        val errors = validator.validate(input)
+            .map { it.toValidationError() }
+            .sortedBy { it.fieldName }
+
+        return if (errors.isEmpty()) {
+            Validated.Valid(input)
+        } else {
+            Validated.Invalid(errors)
         }
     }
 
-    internal fun routes(createBrandHandler: CreateBrandHandler): RouterFunction<ServerResponse> = coRouter {
-        "/api/brands".nest {
-            accept(MediaType.APPLICATION_JSON).nest {
-                POST("", createBrandHandler::handle)
-            }
-        }
+    private fun <T> ConstraintViolation<T>.toValidationError(): ValidationError {
+        return ValidationError(this.propertyPath.toString(), this.message, this.invalidValue)
     }
 }
+
+fun <T> Validator.inputValidator(): InputValidator<T> = InputValidator(this)

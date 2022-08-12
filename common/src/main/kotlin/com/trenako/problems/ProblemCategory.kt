@@ -24,5 +24,6 @@ package com.trenako.problems
  * The kind of problem
  */
 enum class ProblemCategory {
+    InvalidRequest,
     UnprocessableEntity,
 }

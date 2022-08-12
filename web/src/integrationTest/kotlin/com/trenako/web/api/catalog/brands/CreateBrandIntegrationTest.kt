@@ -59,6 +59,26 @@ class CreateBrandIntegrationTest() {
     }
 
     @Test
+    fun `should return BAD_REQUEST when the request body is invalid`() {
+        val newBrand = RequestBody(name = "a")
+
+        webClient.post()
+            .uri("/api/brands")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(newBrand)
+            .exchange()
+            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+            .expectBody()
+            .jsonPath("$.detail").isEqualTo("Fields validation failed for this request. Check them before you try again.")
+            .jsonPath("$.instance").isNotEmpty
+            .jsonPath("$.timestamp").isNotEmpty
+            .jsonPath("$.title").isEqualTo("Invalid request")
+            .jsonPath("$.type").isEqualTo("trn:problem-type:bad-request")
+            .jsonPath("$.fields.name").isEqualTo("size must be between 3 and 100")
+    }
+
+    @Test
     fun `should create a new brand`() {
         val newBrand = RequestBody(name = "ACME")
 

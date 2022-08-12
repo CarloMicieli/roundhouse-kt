@@ -21,6 +21,7 @@
 package com.trenako.problems
 
 import com.trenako.util.URN
+import com.trenako.validation.ValidationError
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -46,5 +47,18 @@ class ProblemDetailsGeneratorTest {
         problemDetails.timestamp shouldBe now
         problemDetails.title shouldBe "Unprocessable entity"
         problemDetails.type shouldBe URN("trn:problem-type:unprocessable-entity")
+    }
+
+    @Test
+    fun `should generate problem details for invalid requests`() {
+        val errors = listOf(ValidationError("field1", "errorMessage1"))
+        val problemDetails = problemDetailsGenerator.invalidRequest(errors)
+        problemDetails.category shouldBe ProblemCategory.InvalidRequest
+        problemDetails.detail shouldBe "Fields validation failed for this request. Check them before you try again."
+        problemDetails.fields shouldBe mapOf("field1" to "errorMessage1")
+        problemDetails.instance shouldBe URN("trn:uuid:420c52bd-22f9-4772-88c5-361cbe6dbaaf")
+        problemDetails.timestamp shouldBe now
+        problemDetails.title shouldBe "Invalid request"
+        problemDetails.type shouldBe URN("trn:problem-type:bad-request")
     }
 }

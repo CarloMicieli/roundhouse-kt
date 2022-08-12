@@ -24,6 +24,7 @@ import com.trenako.util.FixedUuidSource
 import com.trenako.util.RandomUuidSource
 import com.trenako.util.URN
 import com.trenako.util.UuidSource
+import com.trenako.validation.ValidationError
 import java.time.Clock
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -46,6 +47,22 @@ class ProblemDetailsGenerator(private val clock: Clock, private val idSource: Uu
             timestamp = LocalDateTime.now(clock),
             instance = URN.fromUUID(idSource.newId()),
             fields = mapOf()
+        )
+
+    /**
+     * Create a {@code ProblemDetails} instance for invalid request
+     * @param errors the validation errors list
+     * @return a {@code ProblemDetails} instance
+     */
+    fun invalidRequest(errors: List<ValidationError>) =
+        ProblemDetails(
+            type = URN.fromProblemType("bad-request"),
+            title = "Invalid request",
+            detail = "Fields validation failed for this request. Check them before you try again.",
+            category = ProblemCategory.InvalidRequest,
+            timestamp = LocalDateTime.now(clock),
+            instance = URN.fromUUID(idSource.newId()),
+            fields = errors.associate { it.fieldName to it.errorMessage }
         )
 
     companion object {

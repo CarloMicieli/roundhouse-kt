@@ -20,4 +20,11 @@
  */
 package com.trenako.catalog.brands.createbrands
 
-data class CreateBrand(val name: String = "")
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Size
+
+data class CreateBrand(
+    @field:NotBlank
+    @field:Size(min = 3, max = 100)
+    val name: String = ""
+)
