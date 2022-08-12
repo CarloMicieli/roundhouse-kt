@@ -50,6 +50,12 @@ class CreateBrandIntegrationTest() {
             .contentType(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .expectBody()
+            .jsonPath("$.detail").isEqualTo("Request body is empty")
+            .jsonPath("$.instance").isNotEmpty
+            .jsonPath("$.timestamp").isNotEmpty
+            .jsonPath("$.title").isEqualTo("Unprocessable entity")
+            .jsonPath("$.type").isEqualTo("trn:problem-type:unprocessable-entity")
     }
 
     @Test

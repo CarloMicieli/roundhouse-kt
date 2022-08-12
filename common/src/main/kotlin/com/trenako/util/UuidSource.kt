@@ -18,18 +18,25 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.util
 
-import org.springframework.context.ApplicationContextInitializer
-import org.springframework.context.support.GenericApplicationContext
+import java.util.UUID
 
-class TestConfigInitializer : ApplicationContextInitializer<GenericApplicationContext> {
-    override fun initialize(applicationContext: GenericApplicationContext) {
-        ApplicationConfig.common.forEach {
-            it.initialize(applicationContext)
-        }
-        ApplicationConfig.catalog.forEach {
-            it.initialize(applicationContext)
-        }
-    }
+/** An interface for UUID type 4 generators. */
+sealed interface UuidSource {
+    /**
+     * Generates a new type 4 UUID value
+     * @return a type 4 UUID value
+     */
+    fun newId(): UUID
+}
+
+/** A UUID type 4 generator which is always returning the same value */
+class FixedUuidSource(private val returnedValue: UUID) : UuidSource {
+    override fun newId(): UUID = returnedValue
+}
+
+/** A UUID type 4 pseudo random generator */
+object RandomUuidSource : UuidSource {
+    override fun newId(): UUID = UUID.randomUUID()
 }

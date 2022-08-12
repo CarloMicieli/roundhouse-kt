@@ -18,18 +18,34 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.util
 
-import org.springframework.context.ApplicationContextInitializer
-import org.springframework.context.support.GenericApplicationContext
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import java.util.*
 
-class TestConfigInitializer : ApplicationContextInitializer<GenericApplicationContext> {
-    override fun initialize(applicationContext: GenericApplicationContext) {
-        ApplicationConfig.common.forEach {
-            it.initialize(applicationContext)
+@DisplayName("URN")
+class URNTest {
+    @Test
+    fun `can represent a problem type`() {
+        val urn = URN.fromProblemType("blank")
+        urn.value shouldBe "trn:problem-type:blank"
+    }
+
+    @Test
+    fun `can represent an unique identifier`() {
+        val id = UUID.randomUUID()
+        val urn = URN.fromUUID(id)
+        urn.value shouldBe "trn:uuid:$id"
+    }
+
+    @Test
+    fun `should throw an exception for blank input values`() {
+        val exception = shouldThrowExactly<IllegalArgumentException> {
+            URN("")
         }
-        ApplicationConfig.catalog.forEach {
-            it.initialize(applicationContext)
-        }
+        exception.message shouldBe "URN value cannot be blank"
     }
 }

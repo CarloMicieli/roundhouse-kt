@@ -18,18 +18,21 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.problems
 
-import org.springframework.context.ApplicationContextInitializer
-import org.springframework.context.support.GenericApplicationContext
+import com.trenako.util.URN
+import java.time.LocalDateTime
 
-class TestConfigInitializer : ApplicationContextInitializer<GenericApplicationContext> {
-    override fun initialize(applicationContext: GenericApplicationContext) {
-        ApplicationConfig.common.forEach {
-            it.initialize(applicationContext)
-        }
-        ApplicationConfig.catalog.forEach {
-            it.initialize(applicationContext)
-        }
-    }
-}
+/**
+ * From RFC-7807 "problem detail" is a way to carry machine-readable details of errors in an HTTP
+ * response to avoid the need to define new error response formats for HTTP APIs.
+ */
+data class ProblemDetails(
+    val type: URN,
+    val title: String,
+    val detail: String,
+    val category: ProblemCategory,
+    val timestamp: LocalDateTime,
+    val instance: URN,
+    val fields: Map<String, String>
+)

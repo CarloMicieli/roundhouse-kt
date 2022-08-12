@@ -18,18 +18,9 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.problems
 
-import org.springframework.context.ApplicationContextInitializer
-import org.springframework.context.support.GenericApplicationContext
+import org.junit.jupiter.api.DisplayName
 
-class TestConfigInitializer : ApplicationContextInitializer<GenericApplicationContext> {
-    override fun initialize(applicationContext: GenericApplicationContext) {
-        ApplicationConfig.common.forEach {
-            it.initialize(applicationContext)
-        }
-        ApplicationConfig.catalog.forEach {
-            it.initialize(applicationContext)
-        }
-    }
-}
+@DisplayName("ProblemDetails")
+class ProblemDetailsTest

@@ -20,7 +20,6 @@
  */
 package com.trenako
 
-import com.trenako.web.api.catalog.brands.Brands
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
@@ -29,10 +28,7 @@ class Application
 
 fun main(args: Array<String>) {
     runApplication<Application>(*args) {
-        initializers.forEach { addInitializers(it) }
+        ApplicationConfig.common.forEach { addInitializers(it) }
+        ApplicationConfig.catalog.forEach { addInitializers(it) }
     }
 }
-
-val initializers = listOf(
-    Brands.beans
-)

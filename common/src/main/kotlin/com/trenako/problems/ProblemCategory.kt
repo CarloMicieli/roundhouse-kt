@@ -18,18 +18,11 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.problems
 
-import org.springframework.context.ApplicationContextInitializer
-import org.springframework.context.support.GenericApplicationContext
-
-class TestConfigInitializer : ApplicationContextInitializer<GenericApplicationContext> {
-    override fun initialize(applicationContext: GenericApplicationContext) {
-        ApplicationConfig.common.forEach {
-            it.initialize(applicationContext)
-        }
-        ApplicationConfig.catalog.forEach {
-            it.initialize(applicationContext)
-        }
-    }
+/**
+ * The kind of problem
+ */
+enum class ProblemCategory {
+    UnprocessableEntity,
 }

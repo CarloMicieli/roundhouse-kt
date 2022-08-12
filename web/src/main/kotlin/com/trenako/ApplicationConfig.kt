@@ -18,24 +18,27 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.web.api.catalog.brands
+package com.trenako
 
-import com.trenako.catalog.brands.createbrands.CreateBrand
 import com.trenako.problems.ProblemDetailsGenerator
-import com.trenako.web.api.toServerResponse
-import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.awaitBodyOrNull
-import org.springframework.web.reactive.function.server.buildAndAwait
-import java.net.URI
+import com.trenako.util.RandomUuidSource
+import com.trenako.util.UuidSource
+import com.trenako.web.api.catalog.brands.Brands
+import org.springframework.context.support.beans
+import java.time.Clock
 
-class CreateBrandHandler(private val problemDetailsGenerator: ProblemDetailsGenerator) {
-    suspend fun handle(serverRequest: ServerRequest): ServerResponse {
-        val createBrand = serverRequest.awaitBodyOrNull<CreateBrand>()
-        return if (createBrand == null) {
-            problemDetailsGenerator.unprocessableEntity("Request body is empty").toServerResponse()
-        } else {
-            ServerResponse.created(URI("/api/brands/acme")).buildAndAwait()
-        }
-    }
+object ApplicationConfig {
+    val common = listOf(
+        commonBeans
+    )
+
+    val catalog = listOf(
+        Brands.beans
+    )
+}
+
+val commonBeans = beans {
+    bean<Clock>() { Clock.systemDefaultZone() }
+    bean<UuidSource>() { RandomUuidSource }
+    bean<ProblemDetailsGenerator>()
 }
