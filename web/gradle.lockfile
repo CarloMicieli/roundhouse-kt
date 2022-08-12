@@ -8,6 +8,7 @@ com.fasterxml.jackson.core:jackson-core:2.13.3=compileClasspath
 com.fasterxml.jackson.core:jackson-databind:2.13.3=compileClasspath
 com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.3=compileClasspath
 com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3=compileClasspath
+com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3=compileClasspath
 com.fasterxml.jackson.module:jackson-module-parameter-names:2.13.3=compileClasspath
 com.fasterxml.jackson:jackson-bom:2.13.3=compileClasspath
 com.fasterxml:classmate:1.5.1=compileClasspath

@@ -20,8 +20,19 @@
  */
 package com.trenako
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.trenako.problems.ProblemDetailsGenerator
 import com.trenako.util.RandomUuidSource
+import com.trenako.util.URN
 import com.trenako.util.UuidSource
 import com.trenako.web.api.catalog.brands.Brands
 import org.springframework.context.support.beans
@@ -41,4 +52,27 @@ val commonBeans = beans {
     bean<Clock>() { Clock.systemDefaultZone() }
     bean<UuidSource>() { RandomUuidSource }
     bean<ProblemDetailsGenerator>()
+    bean<ObjectMapper>() {
+        ObjectMapper()
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .registerModule(customSerializerModule())
+            .registerModule(JavaTimeModule())
+            .registerModule(KotlinModule.Builder().build())
+    }
+}
+
+class URNSerializer : StdSerializer<URN>(URN::class.java) {
+    override fun serialize(value: URN?, gen: JsonGenerator, provider: SerializerProvider) {
+        gen.writeString(value?.value)
+    }
+}
+
+fun customSerializerModule(): SimpleModule {
+    val module = SimpleModule()
+    with(module) {
+        addSerializer(URNSerializer())
+    }
+    return module
 }
