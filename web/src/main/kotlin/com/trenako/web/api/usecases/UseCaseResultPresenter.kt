@@ -18,15 +18,42 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.web.api
+package com.trenako.web.api.usecases
 
 import com.trenako.problems.ProblemCategory
 import com.trenako.problems.ProblemDetails
+import com.trenako.problems.ProblemDetailsGenerator
+import com.trenako.usecases.UseCaseResult
+import com.trenako.usecases.get
+import com.trenako.usecases.map
+import com.trenako.usecases.mapError
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import java.time.LocalDateTime
+
+/**
+ * A basic interface for a web api presenter to convert {@code UseCase} results to
+ * the most suitable http responses.
+ * @param O the output type
+ * @param E the error type
+ */
+interface UseCaseResultPresenter<O, E> {
+    val problemDetailsGenerator: ProblemDetailsGenerator
+
+    suspend fun outputToResponse(output: O): ServerResponse
+
+    suspend fun errorToProblemDetails(error: E): ProblemDetails
+
+    suspend fun toServerResponse(result: UseCaseResult<O, E>): ServerResponse = result.map {
+        outputToResponse(it)
+    }.mapError {
+        errorToProblemDetails(it).toServerResponse()
+    }.get()
+
+    suspend fun toEmptyRequestResponse(): ServerResponse = problemDetailsGenerator.unprocessableEntity("Request body is empty").toServerResponse()
+}
 
 suspend fun ProblemDetails.toServerResponse(): ServerResponse {
     val mediaType = MediaType.APPLICATION_PROBLEM_JSON
@@ -48,6 +75,7 @@ private fun categoryToHttpStatus(category: ProblemCategory): HttpStatus = when (
     ProblemCategory.InvalidRequest -> HttpStatus.BAD_REQUEST
     ProblemCategory.UnprocessableEntity -> HttpStatus.UNPROCESSABLE_ENTITY
     ProblemCategory.AlreadyExists -> HttpStatus.CONFLICT
+    ProblemCategory.Error -> HttpStatus.INTERNAL_SERVER_ERROR
 }
 
 data class ProblemDetailsBody(

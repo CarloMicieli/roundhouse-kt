@@ -21,8 +21,6 @@
 package com.trenako.web.api.catalog.brands
 
 import com.trenako.catalog.brands.createbrands.CreateBrand
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
@@ -30,6 +28,10 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doSuspendableAnswer
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.server.ServerResponse
@@ -45,14 +47,14 @@ class BrandRoutingTest {
 
     @BeforeAll
     fun setup() {
-        createBrandHandler = mockk()
+        createBrandHandler = mock()
         webclient = WebTestClient.bindToRouterFunction(Brands.routes(createBrandHandler)).build()
     }
 
     @Test
     @DisplayName("POST /api/brands is mapped correctly")
     fun postNewBrandTest() = runTest {
-        coEvery { createBrandHandler.handle(any()) } returns ServerResponse.ok().bodyValueAndAwait("works")
+        whenever(createBrandHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
 
         val bodyValue = CreateBrand()
 

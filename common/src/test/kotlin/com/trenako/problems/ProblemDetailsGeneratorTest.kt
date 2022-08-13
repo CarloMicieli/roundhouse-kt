@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @DisplayName("ProblemDetailsGenerator")
 @TestInstance(Lifecycle.PER_CLASS)
@@ -73,5 +73,17 @@ class ProblemDetailsGeneratorTest {
         problemDetails.timestamp shouldBe now
         problemDetails.title shouldBe "Already exists"
         problemDetails.type shouldBe URN("trn:problem-type:already-exists")
+    }
+
+    @Test
+    fun `should generate problem details for errors`() {
+        val problemDetails = problemDetailsGenerator.error("Ops, something bad happened")
+        problemDetails.category shouldBe ProblemCategory.Error
+        problemDetails.detail shouldBe "Ops, something bad happened"
+        problemDetails.fields shouldBe mapOf()
+        problemDetails.instance shouldBe URN("trn:uuid:420c52bd-22f9-4772-88c5-361cbe6dbaaf")
+        problemDetails.timestamp shouldBe now
+        problemDetails.title shouldBe "Internal Server Error"
+        problemDetails.type shouldBe URN("trn:problem-type:internal-server-error")
     }
 }

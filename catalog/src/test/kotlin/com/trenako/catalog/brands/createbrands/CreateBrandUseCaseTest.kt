@@ -22,14 +22,15 @@ package com.trenako.catalog.brands.createbrands
 
 import com.trenako.usecases.UseCaseResult
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.mockito.kotlin.doSuspendableAnswer
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import javax.validation.Validation
 
 @DisplayName("Create brand use case")
@@ -45,7 +46,7 @@ class CreateBrandUseCaseTest {
         val factory = Validation.buildDefaultValidatorFactory()
         val validator = factory.validator
 
-        createBrandRepository = mockk()
+        createBrandRepository = mock()
 
         useCase = CreateBrandUseCase(validator, createBrandRepository)
     }
@@ -62,8 +63,7 @@ class CreateBrandUseCaseTest {
 
     @Test
     fun `should create new brands`() = runTest {
-        coEvery { createBrandRepository.exists("ACME") } returns false
-        coEvery { createBrandRepository.insert(any()) } returns Unit
+        whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { false }
 
         val input = CreateBrand(name = "ACME")
         val result = useCase.execute(input)
@@ -75,7 +75,7 @@ class CreateBrandUseCaseTest {
 
     @Test
     fun `should check if the brand already exists`() = runTest {
-        coEvery { createBrandRepository.exists("ACME") } returns true
+        whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { true }
 
         val input = CreateBrand(name = "ACME")
         val result = useCase.execute(input)

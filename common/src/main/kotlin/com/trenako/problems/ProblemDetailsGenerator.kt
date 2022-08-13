@@ -82,6 +82,22 @@ class ProblemDetailsGenerator(private val clock: Clock, private val idSource: Uu
             fields = fields
         )
 
+    /**
+     * Create a {@code ProblemDetails} instance for a generic error
+     * @param errorMessage the error message
+     * @return a {@code ProblemDetails} instance
+     */
+    fun error(errorMessage: String?) =
+        ProblemDetails(
+            type = URN.fromProblemType("internal-server-error"),
+            title = "Internal Server Error",
+            detail = errorMessage ?: "An error has occurred",
+            category = ProblemCategory.Error,
+            timestamp = LocalDateTime.now(clock),
+            instance = URN.fromUUID(idSource.newId()),
+            fields = mapOf()
+        )
+
     companion object {
         /**
          * Create a default {@code ProblemDetailsGenerator} with a random UUID generator and using the

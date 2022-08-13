@@ -24,7 +24,8 @@ package com.trenako.problems
  * The kind of problem
  */
 enum class ProblemCategory {
+    AlreadyExists,
+    Error,
     InvalidRequest,
     UnprocessableEntity,
-    AlreadyExists,
 }

@@ -18,7 +18,7 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.web.api
+package com.trenako.web.api.usecases
 
 import com.trenako.problems.ProblemCategory
 import com.trenako.problems.ProblemDetails
@@ -64,6 +64,23 @@ class ProblemDetailsTest {
 
         val serverResponse = problemDetails.toServerResponse()
         serverResponse.statusCode() shouldBe HttpStatus.BAD_REQUEST
+        serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
+    }
+
+    @Test
+    fun `should produce a conflict response`() = runBlocking {
+        val problemDetails = ProblemDetails(
+            type = URN("type"),
+            title = "title",
+            detail = "detail",
+            category = ProblemCategory.AlreadyExists,
+            timestamp = LocalDateTime.now(),
+            instance = URN("instance"),
+            fields = mapOf("field1" to "value1")
+        )
+
+        val serverResponse = problemDetails.toServerResponse()
+        serverResponse.statusCode() shouldBe HttpStatus.CONFLICT
         serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
     }
 }

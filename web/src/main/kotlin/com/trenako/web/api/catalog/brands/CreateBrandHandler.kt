@@ -20,37 +20,24 @@
  */
 package com.trenako.web.api.catalog.brands
 
+import com.trenako.catalog.brands.createbrands.BrandCreated
 import com.trenako.catalog.brands.createbrands.CreateBrand
 import com.trenako.catalog.brands.createbrands.CreateBrandError
 import com.trenako.catalog.brands.createbrands.CreateBrandUseCase
-import com.trenako.problems.ProblemDetails
-import com.trenako.problems.ProblemDetailsGenerator
-import com.trenako.usecases.get
-import com.trenako.usecases.map
-import com.trenako.usecases.mapError
-import com.trenako.web.api.toServerResponse
+import com.trenako.web.api.usecases.UseCaseHandler
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.awaitBodyOrNull
-import org.springframework.web.reactive.function.server.buildAndAwait
-import java.net.URI
 
-class CreateBrandHandler(private val problemDetailsGenerator: ProblemDetailsGenerator, private val createBrandUseCase: CreateBrandUseCase) {
-    suspend fun handle(serverRequest: ServerRequest): ServerResponse {
-        val createBrand = serverRequest.awaitBodyOrNull<CreateBrand>()
-        return if (createBrand == null) {
-            problemDetailsGenerator.unprocessableEntity("Request body is empty").toServerResponse()
-        } else {
-            createBrandUseCase.execute(createBrand)
-                .map { ServerResponse.created(URI("/api/brands/${it.id}")).buildAndAwait() }
-                .mapError { it.toProblemDetails().toServerResponse() }
-                .get()
-        }
-    }
+class CreateBrandHandler(
+    override val useCase: CreateBrandUseCase,
+    override val presenter: CreateBrandPresenter,
+    override val logger: Logger = CreateBrandHandler.logger
+) : UseCaseHandler<CreateBrand, BrandCreated, CreateBrandError> {
+    override suspend fun extractInput(serverRequest: ServerRequest): CreateBrand? = serverRequest.awaitBodyOrNull()
 
-    private fun CreateBrandError.toProblemDetails(): ProblemDetails = when (this) {
-        is CreateBrandError.InvalidRequest -> problemDetailsGenerator.invalidRequest(this.errors)
-        is CreateBrandError.GenericError -> problemDetailsGenerator.unprocessableEntity(this.ex.message ?: "")
-        is CreateBrandError.BrandAlreadyExists -> problemDetailsGenerator.alreadyExists("Brand already exists", mapOf("name" to this.name))
+    companion object {
+        private val logger = LoggerFactory.getLogger("CreateBrandHandler")
     }
 }
