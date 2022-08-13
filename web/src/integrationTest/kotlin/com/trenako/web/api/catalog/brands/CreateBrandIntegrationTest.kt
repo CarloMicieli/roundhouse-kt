@@ -79,6 +79,34 @@ class CreateBrandIntegrationTest() {
     }
 
     @Test
+    fun `should return CONFLICT when a brand with the same name already exists`() {
+        val newBrand = RequestBody(name = "roco")
+
+        webClient.post()
+            .uri("/api/brands")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(newBrand)
+            .exchange()
+            .expectStatus().isCreated
+
+        webClient.post()
+            .uri("/api/brands")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(newBrand)
+            .exchange()
+            .expectStatus().isEqualTo(HttpStatus.CONFLICT)
+            .expectBody()
+            .jsonPath("$.detail").isEqualTo("Brand already exists")
+            .jsonPath("$.instance").isNotEmpty
+            .jsonPath("$.timestamp").isNotEmpty
+            .jsonPath("$.title").isEqualTo("Already exists")
+            .jsonPath("$.type").isEqualTo("trn:problem-type:already-exists")
+            .jsonPath("$.fields.name").isEqualTo("roco")
+    }
+
+    @Test
     fun `should create a new brand`() {
         val newBrand = RequestBody(name = "acme")
 

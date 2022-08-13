@@ -31,6 +31,7 @@ object Brands {
     val beans = beans {
         bean<CreateBrandHandler>()
         bean<CreateBrandUseCase>()
+        bean<InMemoryBrandRepository>()
 
         bean {
             val createBrandHandler = ref<CreateBrandHandler>()

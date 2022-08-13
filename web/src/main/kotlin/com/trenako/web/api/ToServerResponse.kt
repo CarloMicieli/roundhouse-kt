@@ -47,6 +47,7 @@ suspend fun ProblemDetails.toServerResponse(): ServerResponse {
 private fun categoryToHttpStatus(category: ProblemCategory): HttpStatus = when (category) {
     ProblemCategory.InvalidRequest -> HttpStatus.BAD_REQUEST
     ProblemCategory.UnprocessableEntity -> HttpStatus.UNPROCESSABLE_ENTITY
+    ProblemCategory.AlreadyExists -> HttpStatus.CONFLICT
 }
 
 data class ProblemDetailsBody(

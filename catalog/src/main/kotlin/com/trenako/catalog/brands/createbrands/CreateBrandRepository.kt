@@ -20,10 +20,32 @@
  */
 package com.trenako.catalog.brands.createbrands
 
-import com.trenako.validation.ValidationError
+/**
+ * A repository for the {@code CreateBrandUseCase} to handle all persistence requirements
+ */
+interface CreateBrandRepository {
+    /**
+     * Check if a brand with the same name already exists.
+     * @param name the brand name
+     */
+    suspend fun exists(name: String): Boolean
 
-sealed interface CreateBrandError {
-    data class InvalidRequest(val errors: List<ValidationError>) : CreateBrandError
-    data class GenericError(val ex: Exception) : CreateBrandError
-    data class BrandAlreadyExists(val name: String) : CreateBrandError
+    /**
+     * Persist a new brand.
+     *
+     * This method is executed only for its side effect, hence if the operation is successful the method is not
+     * producing any meaningful output.
+     *
+     * @param newBrand the new brand to insert
+     * @return either an {@code Error} or Unit
+     */
+    suspend fun insert(newBrand: NewBrand)
+
+    /**
+     * A DTO for a new brand
+     */
+    data class NewBrand(
+        val id: BrandId,
+        val name: String
+    )
 }

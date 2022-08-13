@@ -65,6 +65,23 @@ class ProblemDetailsGenerator(private val clock: Clock, private val idSource: Uu
             fields = errors.associate { it.fieldName to it.errorMessage }
         )
 
+    /**
+     * Create a {@code ProblemDetails} instance for duplicated records
+     * @param message the general message
+     * @param fields the fields to give additional information
+     * @return a {@code ProblemDetails} instance
+     */
+    fun alreadyExists(message: String, fields: Map<String, String>) =
+        ProblemDetails(
+            type = URN.fromProblemType("already-exists"),
+            title = "Already exists",
+            detail = message,
+            category = ProblemCategory.AlreadyExists,
+            timestamp = LocalDateTime.now(clock),
+            instance = URN.fromUUID(idSource.newId()),
+            fields = fields
+        )
+
     companion object {
         /**
          * Create a default {@code ProblemDetailsGenerator} with a random UUID generator and using the

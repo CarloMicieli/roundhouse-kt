@@ -61,4 +61,17 @@ class ProblemDetailsGeneratorTest {
         problemDetails.title shouldBe "Invalid request"
         problemDetails.type shouldBe URN("trn:problem-type:bad-request")
     }
+
+    @Test
+    fun `should generate problem details for resource which already exists`() {
+        val fields = mapOf("field1" to "errorMessage1")
+        val problemDetails = problemDetailsGenerator.alreadyExists("The resource already exists", fields)
+        problemDetails.category shouldBe ProblemCategory.AlreadyExists
+        problemDetails.detail shouldBe "The resource already exists"
+        problemDetails.fields shouldBe mapOf("field1" to "errorMessage1")
+        problemDetails.instance shouldBe URN("trn:uuid:420c52bd-22f9-4772-88c5-361cbe6dbaaf")
+        problemDetails.timestamp shouldBe now
+        problemDetails.title shouldBe "Already exists"
+        problemDetails.type shouldBe URN("trn:problem-type:already-exists")
+    }
 }

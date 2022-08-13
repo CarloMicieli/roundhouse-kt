@@ -18,12 +18,28 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.web.api.catalog.brands
 
-import com.trenako.validation.ValidationError
+import com.trenako.catalog.brands.createbrands.BrandId
+import com.trenako.catalog.brands.createbrands.CreateBrandRepository
+import java.util.concurrent.ConcurrentHashMap
 
-sealed interface CreateBrandError {
-    data class InvalidRequest(val errors: List<ValidationError>) : CreateBrandError
-    data class GenericError(val ex: Exception) : CreateBrandError
-    data class BrandAlreadyExists(val name: String) : CreateBrandError
+class InMemoryBrandRepository : CreateBrandRepository {
+    private val data: ConcurrentHashMap<BrandId, Brand> = ConcurrentHashMap()
+
+    override suspend fun exists(name: String): Boolean {
+        val search = BrandId(name)
+        return data.containsKey(search)
+    }
+
+    override suspend fun insert(newBrand: CreateBrandRepository.NewBrand) {
+        val brand = Brand(
+            newBrand.id,
+            newBrand.name
+        )
+
+        data[newBrand.id] = brand
+    }
+
+    data class Brand(val id: BrandId, val name: String)
 }

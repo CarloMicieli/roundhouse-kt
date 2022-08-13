@@ -22,6 +22,8 @@ package com.trenako.catalog.brands.createbrands
 
 import com.trenako.usecases.UseCaseResult
 import io.kotest.matchers.shouldBe
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
@@ -36,12 +38,16 @@ import javax.validation.Validation
 class CreateBrandUseCaseTest {
 
     lateinit var useCase: CreateBrandUseCase
+    lateinit var createBrandRepository: CreateBrandRepository
 
     @BeforeAll
     fun setup() {
         val factory = Validation.buildDefaultValidatorFactory()
         val validator = factory.validator
-        useCase = CreateBrandUseCase(validator)
+
+        createBrandRepository = mockk()
+
+        useCase = CreateBrandUseCase(validator, createBrandRepository)
     }
 
     @Test
@@ -56,12 +62,27 @@ class CreateBrandUseCaseTest {
 
     @Test
     fun `should create new brands`() = runTest {
+        coEvery { createBrandRepository.exists("ACME") } returns false
+        coEvery { createBrandRepository.insert(any()) } returns Unit
+
         val input = CreateBrand(name = "ACME")
         val result = useCase.execute(input)
 
         result.isError() shouldBe false
         val output = result.extractOutput()
         output.id shouldBe BrandId("ACME")
+    }
+
+    @Test
+    fun `should check if the brand already exists`() = runTest {
+        coEvery { createBrandRepository.exists("ACME") } returns true
+
+        val input = CreateBrand(name = "ACME")
+        val result = useCase.execute(input)
+
+        result.isError() shouldBe true
+        val error = result.extractError()
+        (error is CreateBrandError.BrandAlreadyExists) shouldBe true
     }
 
     private fun UseCaseResult<BrandCreated, CreateBrandError>.extractError(): CreateBrandError = when (this) {

@@ -27,12 +27,29 @@ import com.trenako.validation.inputValidator
 import java.time.LocalDateTime
 import javax.validation.Validator
 
-class CreateBrandUseCase(private val validator: Validator) : UseCase<CreateBrand, BrandCreated, CreateBrandError> {
+class CreateBrandUseCase(private val validator: Validator, private val repository: CreateBrandRepository) : UseCase<CreateBrand, BrandCreated, CreateBrandError> {
     override suspend fun execute(input: CreateBrand): UseCaseResult<BrandCreated, CreateBrandError> {
         val inputValidator = validator.inputValidator<CreateBrand>()
         return when (val result = inputValidator.validate(input)) {
-            is Validated.Valid -> UseCaseResult.withOutput(BrandCreated(BrandId(input.name), LocalDateTime.now()))
+            is Validated.Valid -> doWork(result.value)
             is Validated.Invalid -> UseCaseResult.withError(CreateBrandError.InvalidRequest(result.errors))
         }
+    }
+
+    private suspend fun doWork(input: CreateBrand): UseCaseResult<BrandCreated, CreateBrandError> {
+        if (repository.exists(input.name)) {
+            return UseCaseResult.withError(CreateBrandError.BrandAlreadyExists(input.name))
+        }
+
+        val newBrand = input.toNewBrand()
+        repository.insert(newBrand)
+        return UseCaseResult.withOutput(BrandCreated(newBrand.id, LocalDateTime.now()))
+    }
+
+    private fun CreateBrand.toNewBrand(): CreateBrandRepository.NewBrand {
+        return CreateBrandRepository.NewBrand(
+            id = BrandId(this.name),
+            name = this.name
+        )
     }
 }

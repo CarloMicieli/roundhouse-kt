@@ -51,5 +51,6 @@ class CreateBrandHandler(private val problemDetailsGenerator: ProblemDetailsGene
     private fun CreateBrandError.toProblemDetails(): ProblemDetails = when (this) {
         is CreateBrandError.InvalidRequest -> problemDetailsGenerator.invalidRequest(this.errors)
         is CreateBrandError.GenericError -> problemDetailsGenerator.unprocessableEntity(this.ex.message ?: "")
+        is CreateBrandError.BrandAlreadyExists -> problemDetailsGenerator.alreadyExists("Brand already exists", mapOf("name" to this.name))
     }
 }
