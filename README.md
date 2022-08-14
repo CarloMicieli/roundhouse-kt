@@ -10,14 +10,30 @@ A web application for model railways collectors.
 
 * Java 17 
 * Git
+* Docker
 
 ## How to run
+
+### Database
+
+To run the `postgres` database:
+
+```bash
+  docker run -it --rm --name postgres-dev \
+    -e POSTGRES_PASSWORD=mysecretpassword \
+    -e POSTGRES_DB=trenako \
+    -d -p 5432:5432 \
+    -v postgres_data_dev:/var/lib/postgresql/data \
+    postgres:14.2-alpine
+```
+
+### Start the server
 
 ```bash
   git clone https://github.com/CarloMicieli/trenako.git
   cd trenako
   
-  ./gradlew web:bootRun
+  ./gradlew web:bootRun  --args='--spring.profiles.active=local'
   
       .   ____          _            __ _ _
      /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \

@@ -25,22 +25,43 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
-import org.springframework.context.ApplicationContext
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.junit.jupiter.Container
+import org.testcontainers.junit.jupiter.Testcontainers
 
 @DisplayName("POST /api/brands")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("it")
+@Testcontainers
 class CreateBrandIntegrationTest() {
+
+    companion object {
+        @Container
+        private val postgresContainer = PostgreSQLContainer<Nothing>("postgres:14.2-alpine")
+
+        @DynamicPropertySource
+        @JvmStatic
+        fun registerDynamicProperties(registry: DynamicPropertyRegistry) {
+            registry.add("spring.liquibase.enabled") { "true" }
+            registry.add("spring.liquibase.url", postgresContainer::getJdbcUrl)
+            registry.add("spring.liquibase.user", postgresContainer::getUsername)
+            registry.add("spring.liquibase.password", postgresContainer::getPassword)
+
+            val url = postgresContainer.jdbcUrl.replace("jdbc:", "r2dbc:")
+            registry.add("spring.r2dbc.url") { url }
+            registry.add("spring.r2dbc.username", postgresContainer::getUsername)
+            registry.add("spring.r2dbc.password", postgresContainer::getPassword)
+        }
+    }
 
     @Autowired
     lateinit var webClient: WebTestClient
-
-    @Autowired
-    lateinit var context: ApplicationContext
 
     @Test
     fun `should return UNPROCESSABLE_ENTITY when the request body is empty`() {

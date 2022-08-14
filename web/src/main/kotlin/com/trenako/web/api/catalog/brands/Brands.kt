@@ -21,6 +21,7 @@
 package com.trenako.web.api.catalog.brands
 
 import com.trenako.catalog.brands.createbrands.CreateBrandUseCase
+import com.trenako.infrastructure.persistence.catalog.R2dbcBrandsRepository
 import org.springframework.context.support.beans
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.RouterFunction
@@ -33,7 +34,7 @@ object Brands {
         bean<CreateBrandUseCase>()
         bean<CreateBrandPresenter>()
 
-        bean<InMemoryBrandRepository>()
+        bean<R2dbcBrandsRepository>()
 
         bean {
             val createBrandHandler = ref<CreateBrandHandler>()

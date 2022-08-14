@@ -12,6 +12,7 @@ plugins {
 dependencies {
     implementation(project(":common"))
     implementation(project(":catalog"))
+    implementation(project(":infrastructure"))
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-reactor-netty")
@@ -19,6 +20,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    implementation("org.liquibase:liquibase-core")
+    implementation("org.springframework:spring-jdbc")
+    runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.12.RELEASE")
+    runtimeOnly("org.postgresql:postgresql")
 }
 
 tasks.getByName<BootRun>("bootRun") {
@@ -37,6 +44,11 @@ testing {
                 implementation("org.springframework.boot:spring-boot-starter-test")
                 implementation("org.springframework:spring-web")
                 implementation("io.kotest:kotest-assertions-core:5.4.1")
+
+                implementation("org.testcontainers:testcontainers:1.17.3")
+                implementation("org.testcontainers:junit-jupiter:1.17.3")
+                implementation("org.testcontainers:postgresql:1.17.3")
+                implementation("org.testcontainers:r2dbc:1.17.3")
             }
 
             targets {
@@ -72,4 +84,8 @@ tasks.named<BootBuildImage>("bootBuildImage") {
     builder = "paketobuildpacks/builder:tiny"
     imageName = "ghcr.io/carlomicieli/trenako:${project.version}"
     tags = listOf("ghcr.io/carlomicieli/trenako:latest")
+}
+
+springBoot {
+    buildInfo()
 }
