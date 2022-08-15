@@ -18,16 +18,25 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.validation.annotation
 
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import com.trenako.validation.annotation.constraints.ValidWebsiteUrl
+import java.net.URI
+import javax.validation.ConstraintValidator
+import javax.validation.ConstraintValidatorContext
 
-data class CreateBrand(
-    @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null
-)
+class ValidWebsiteUrlValidator : ConstraintValidator<ValidWebsiteUrl, String> {
+
+    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
+        return if (value == null) {
+            true
+        } else {
+            try {
+                URI(value)
+                true
+            } catch (_: Exception) {
+                false
+            }
+        }
+    }
+}

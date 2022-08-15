@@ -20,14 +20,28 @@
  */
 package com.trenako.catalog.brands.createbrands
 
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
+import com.trenako.contact.ContactInfo
+import com.trenako.contact.MailAddress
+import com.trenako.contact.PhoneNumber
+import com.trenako.contact.WebsiteUrl
+import com.trenako.validation.annotation.constraints.ValidWebsiteUrl
+import java.net.URI
 import javax.validation.constraints.Size
 
-data class CreateBrand(
-    @field:NotBlank
+data class CreateBrandContactInfo(
     @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null
-)
+    val email: String?,
+    @field:Size(min = 3, max = 100)
+    @field:ValidWebsiteUrl
+    val websiteUrl: String?,
+    @field:Size(min = 3, max = 20)
+    val phoneNumber: String?
+) {
+
+    fun toContactInfo(): ContactInfo? {
+        val mailAddress = if (this.email == null) null else MailAddress(this.email)
+        val phone = if (this.phoneNumber == null) null else PhoneNumber(this.phoneNumber)
+        val websiteUrl = if (this.websiteUrl == null) null else WebsiteUrl(URI(this.websiteUrl))
+        return ContactInfo(mailAddress, websiteUrl, phone)
+    }
+}

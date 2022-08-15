@@ -20,6 +20,8 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.contact.ContactInfo
+
 /**
  * A repository for the {@code CreateBrandUseCase} to handle all persistence requirements
  */
@@ -46,6 +48,7 @@ interface CreateBrandRepository {
      */
     data class NewBrand(
         val id: BrandId,
-        val name: String
+        val name: String,
+        val contactInfo: ContactInfo?
     )
 }

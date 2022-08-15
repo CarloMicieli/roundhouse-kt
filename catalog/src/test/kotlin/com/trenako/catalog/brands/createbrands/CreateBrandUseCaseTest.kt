@@ -65,7 +65,14 @@ class CreateBrandUseCaseTest {
     fun `should create new brands`() = runTest {
         whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { false }
 
-        val input = CreateBrand(name = "ACME")
+        val input = CreateBrand(
+            name = "ACME",
+            contactInfo = CreateBrandContactInfo(
+                email = "mail@mail.com",
+                websiteUrl = "https://www.website.com",
+                phoneNumber = "555 1234"
+            )
+        )
         val result = useCase.execute(input)
 
         result.isError() shouldBe false

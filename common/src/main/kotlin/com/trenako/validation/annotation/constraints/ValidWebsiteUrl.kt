@@ -18,16 +18,18 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.validation.annotation.constraints
 
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import com.trenako.validation.annotation.ValidWebsiteUrlValidator
+import javax.validation.Constraint
+import javax.validation.Payload
+import kotlin.reflect.KClass
 
-data class CreateBrand(
-    @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null
+@Target(AnnotationTarget.FIELD)
+@Constraint(validatedBy = [ValidWebsiteUrlValidator::class])
+@MustBeDocumented
+annotation class ValidWebsiteUrl(
+    val message: String = "{com.trenako.website.url.invalid}",
+    val groups: Array<KClass<*>> = [],
+    val payload: Array<KClass<out Payload>> = []
 )

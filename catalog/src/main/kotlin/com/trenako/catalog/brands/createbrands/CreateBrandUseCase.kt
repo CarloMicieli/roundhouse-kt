@@ -49,7 +49,8 @@ class CreateBrandUseCase(private val validator: Validator, private val repositor
     private fun CreateBrand.toNewBrand(): CreateBrandRepository.NewBrand {
         return CreateBrandRepository.NewBrand(
             id = BrandId.of(this.name),
-            name = this.name
+            name = this.name,
+            contactInfo = this.contactInfo?.toContactInfo()
         )
     }
 }

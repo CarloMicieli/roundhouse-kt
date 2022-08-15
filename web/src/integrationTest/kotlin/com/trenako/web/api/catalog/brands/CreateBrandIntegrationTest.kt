@@ -91,7 +91,8 @@ class CreateBrandIntegrationTest() {
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
             .expectBody()
-            .jsonPath("$.detail").isEqualTo("Fields validation failed for this request. Check them before you try again.")
+            .jsonPath("$.detail")
+            .isEqualTo("Fields validation failed for this request. Check them before you try again.")
             .jsonPath("$.instance").isNotEmpty
             .jsonPath("$.timestamp").isNotEmpty
             .jsonPath("$.title").isEqualTo("Invalid request")
@@ -129,7 +130,14 @@ class CreateBrandIntegrationTest() {
 
     @Test
     fun `should create a new brand`() {
-        val newBrand = RequestBody(name = "acme")
+        val newBrand = RequestBody(
+            name = "acme",
+            contactInfo = ContactInfo(
+                email = "mail@mail.com",
+                websiteUrl = "https://www.website.com",
+                phoneNumber = "555 1234"
+            )
+        )
 
         webClient.post()
             .uri("/api/brands")
@@ -141,5 +149,6 @@ class CreateBrandIntegrationTest() {
             .expectHeader().valueEquals("Location", "/api/brands/acme")
     }
 
-    data class RequestBody(val name: String = "")
+    data class ContactInfo(val email: String?, val websiteUrl: String?, val phoneNumber: String?)
+    data class RequestBody(val name: String = "", val contactInfo: ContactInfo? = null)
 }

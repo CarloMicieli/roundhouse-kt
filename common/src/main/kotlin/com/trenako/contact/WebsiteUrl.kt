@@ -18,16 +18,11 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.contact
 
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import java.net.URI
 
-data class CreateBrand(
-    @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null
-)
+@JvmInline
+value class WebsiteUrl(val value: URI) {
+    override fun toString(): String = value.toString()
+}
