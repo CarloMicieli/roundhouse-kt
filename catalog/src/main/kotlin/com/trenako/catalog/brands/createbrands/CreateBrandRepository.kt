@@ -20,6 +20,7 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.address.Address
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.contact.ContactInfo
 
@@ -55,6 +56,7 @@ interface CreateBrandRepository {
         val description: String?,
         val kind: BrandKind,
         val contactInfo: ContactInfo?,
+        val address: Address?,
         val active: Boolean?
     )
 }

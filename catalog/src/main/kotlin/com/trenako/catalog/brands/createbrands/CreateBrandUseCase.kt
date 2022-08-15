@@ -57,7 +57,8 @@ class CreateBrandUseCase(private val validator: Validator, private val repositor
             description = this.description,
             contactInfo = this.contactInfo?.toContactInfo(),
             kind = this.kind.toEnum(),
-            active = this.status?.toEnum<BrandStatus>() == BrandStatus.ACTIVE
+            active = this.status?.toEnum<BrandStatus>() == BrandStatus.ACTIVE,
+            address = this.address?.toAddress()
         )
     }
 }

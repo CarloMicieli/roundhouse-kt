@@ -20,36 +20,39 @@
  */
 package com.trenako.catalog.brands.createbrands
 
-import com.trenako.catalog.brands.validation.constraints.ValidBrandKind
-import com.trenako.catalog.brands.validation.constraints.ValidBrandStatus
-import javax.validation.Valid
+import com.trenako.address.Address
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
-data class CreateBrand(
+class CreateBrandAddress(
     @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
+    @field:Size(max = 255)
+    val streetAddress: String = "",
+
+    @field:Size(max = 255)
+    val extendedAddress: String?,
 
     @field:NotBlank
-    @field:ValidBrandKind
-    val kind: String = "",
+    @field:Size(max = 50)
+    val city: String = "",
 
-    @field:Size(min = 3, max = 50)
-    val registeredCompanyName: String? = null,
+    @field:Size(max = 50)
+    val region: String?,
 
-    @field:Size(min = 3, max = 50)
-    val groupName: String? = null,
+    @field:Size(max = 10)
+    val postalCode: String?,
 
-    @field:Size(min = 3, max = 1000)
-    val description: String? = null,
+    @field:NotBlank
+    @field:Size(min = 2, max = 2)
+    val countryCode: String = ""
+) {
 
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null,
-
-    @field:Valid
-    val address: CreateBrandAddress? = null,
-
-    @field:ValidBrandStatus
-    val status: String? = null
-)
+    fun toAddress(): Address = Address(
+        streetAddress = this.streetAddress,
+        extendedAddress = this.extendedAddress,
+        city = this.city,
+        region = this.region,
+        postalCode = this.postalCode,
+        countryCode = this.countryCode
+    )
+}

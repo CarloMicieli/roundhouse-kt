@@ -149,6 +149,14 @@ class CreateBrandIntegrationTest {
                 websiteUrl = "https://www.website.com",
                 phoneNumber = "555 1234"
             ),
+            address = Address(
+                streetAddress = "22 Acacia Avenue",
+                extendedAddress = "Apt. 123",
+                city = "London",
+                postalCode = "1H2 H88",
+                countryCode = "GB",
+                region = "Sussex"
+            ),
             status = "ACTIVE"
         )
 
@@ -164,6 +172,15 @@ class CreateBrandIntegrationTest {
 
     data class ContactInfo(val email: String?, val websiteUrl: String?, val phoneNumber: String?)
 
+    data class Address(
+        val streetAddress: String,
+        val extendedAddress: String?,
+        val city: String,
+        val region: String?,
+        val postalCode: String?,
+        val countryCode: String
+    )
+
     data class RequestBody(
         val name: String = "",
         val kind: String = "",
@@ -171,6 +188,7 @@ class CreateBrandIntegrationTest {
         val registeredCompanyName: String? = null,
         val description: String? = null,
         val contactInfo: ContactInfo? = null,
+        val address: Address? = null,
         val status: String? = null
     )
 }
