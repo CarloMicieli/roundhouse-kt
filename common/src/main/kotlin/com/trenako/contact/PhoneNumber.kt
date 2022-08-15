@@ -18,13 +18,7 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako
+package com.trenako.contact
 
-import io.kotest.core.spec.style.ShouldSpec
-import io.kotest.matchers.shouldBe
-
-class ApplicationTest : ShouldSpec({
-    should("simply work") {
-        "works" shouldBe "works"
-    }
-})
+@JvmInline
+value class PhoneNumber(val value: String)
