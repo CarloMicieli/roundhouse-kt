@@ -70,7 +70,7 @@ class CreateBrandUseCaseTest {
 
         result.isError() shouldBe false
         val output = result.extractOutput()
-        output.id shouldBe BrandId("ACME")
+        output.id shouldBe BrandId.of("ACME")
     }
 
     @Test

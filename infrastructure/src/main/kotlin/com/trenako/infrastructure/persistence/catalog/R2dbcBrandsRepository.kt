@@ -34,7 +34,7 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
 
     override suspend fun insert(newBrand: CreateBrandRepository.NewBrand) {
         val dto = BrandDto(
-            brandId = newBrand.id.value,
+            brandId = newBrand.id.toString(),
             name = newBrand.name,
             version = 0,
             created = Instant.now()

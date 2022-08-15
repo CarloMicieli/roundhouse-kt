@@ -20,7 +20,13 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.util.Slug
+
 @JvmInline
-value class BrandId(val value: String) {
-    override fun toString(): String = value
+value class BrandId(private val value: Slug) {
+    override fun toString(): String = value.toString()
+
+    companion object {
+        fun of(value: String): BrandId = BrandId(Slug(value))
+    }
 }
