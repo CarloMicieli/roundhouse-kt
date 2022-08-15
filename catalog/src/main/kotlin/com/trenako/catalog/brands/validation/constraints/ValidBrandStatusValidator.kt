@@ -18,23 +18,14 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands.validation.constraints
 
-import com.trenako.catalog.brands.validation.constraints.ValidBrandKind
-import com.trenako.catalog.brands.validation.constraints.ValidBrandStatus
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import com.trenako.catalog.brands.BrandStatus
+import com.trenako.util.EnumUtils.isValidName
+import javax.validation.ConstraintValidator
+import javax.validation.ConstraintValidatorContext
 
-data class CreateBrand(
-    @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:NotBlank
-    @field:ValidBrandKind
-    val kind: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null,
-    @field:ValidBrandStatus
-    val status: String? = null
-)
+class ValidBrandStatusValidator : ConstraintValidator<ValidBrandStatus, String> {
+    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean =
+        value?.isValidName<BrandStatus>() ?: true
+}

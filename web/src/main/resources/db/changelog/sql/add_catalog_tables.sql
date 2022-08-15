@@ -6,6 +6,7 @@ CREATE TABLE public.brands
     website_url varchar(100),
     phone_number varchar(20),
     kind varchar(25) NOT NULL,
+    active boolean,
     created timestamp without time zone NOT NULL,
     last_modified timestamp without time zone,
     version integer NOT NULL DEFAULT 1,

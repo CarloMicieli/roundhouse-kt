@@ -18,23 +18,17 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands.validation.constraints
 
-import com.trenako.catalog.brands.validation.constraints.ValidBrandKind
-import com.trenako.catalog.brands.validation.constraints.ValidBrandStatus
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import javax.validation.Constraint
+import javax.validation.Payload
+import kotlin.reflect.KClass
 
-data class CreateBrand(
-    @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:NotBlank
-    @field:ValidBrandKind
-    val kind: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null,
-    @field:ValidBrandStatus
-    val status: String? = null
+@Target(AnnotationTarget.FIELD)
+@Constraint(validatedBy = [ValidBrandStatusValidator::class])
+@MustBeDocumented
+annotation class ValidBrandStatus(
+    val message: String = "{com.trenako.brand.status.invalid}",
+    val groups: Array<KClass<*>> = [],
+    val payload: Array<KClass<out Payload>> = []
 )

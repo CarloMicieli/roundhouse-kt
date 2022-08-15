@@ -21,6 +21,7 @@
 package com.trenako.catalog.brands.validation.constraints
 
 import com.trenako.catalog.brands.BrandKind
+import com.trenako.catalog.brands.BrandStatus
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.AfterAll
@@ -30,6 +31,8 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import javax.validation.Validation
 import javax.validation.Validator
 import javax.validation.ValidatorFactory
@@ -52,32 +55,38 @@ class BrandValidatorsTest {
     }
 
     @Nested
-    @DisplayName("BrandKind")
-    inner class BrandKindValidator {
+    @DisplayName("kind")
+    inner class KindValidator {
         @Test
         fun `should pass validation for null values`() {
-            val input = MyClass(kind = null)
+            val input = BrandKindClass(kind = null)
             val errors = validator.validate(input)
             errors shouldHaveSize 0
         }
 
-        @Test
-        fun `should pass validation for valid brand kind values`() {
-            val input = MyClass(kind = BrandKind.INDUSTRIAL.toString())
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "INDUSTRIAL",
+                "BRASS_MODELS"
+            ]
+        )
+        fun `should pass validation for valid brand kind values`(kind: String) {
+            val input = BrandKindClass(kind)
             val errors = validator.validate(input)
             errors shouldHaveSize 0
         }
 
         @Test
         fun `should pass validation for valid brand kind values, ignoring the case`() {
-            val input = MyClass(kind = BrandKind.INDUSTRIAL.toString().lowercase())
+            val input = BrandKindClass(BrandKind.INDUSTRIAL.toString().lowercase())
             val errors = validator.validate(input)
             errors shouldHaveSize 0
         }
 
         @Test
         fun `should fail validation for invalid brand kind values`() {
-            val input = MyClass(kind = "NOT_A_VALID_NAME")
+            val input = BrandKindClass("NOT_A_VALID_NAME")
 
             val errors = validator.validate(input)
 
@@ -89,5 +98,50 @@ class BrandValidatorsTest {
         }
     }
 
-    data class MyClass(@field:ValidBrandKind val kind: String?)
+    @Nested
+    @DisplayName("status")
+    inner class StatusValidator {
+        @Test
+        fun `should pass validation for null values`() {
+            val input = BrandStatusClass(status = null)
+            val errors = validator.validate(input)
+            errors shouldHaveSize 0
+        }
+
+        @ParameterizedTest
+        @ValueSource(
+            strings = [
+                "ACTIVE",
+                "OUT_OF_BUSINESS"
+            ]
+        )
+        fun `should pass validation for valid brand status values`(status: String) {
+            val input = BrandStatusClass(status)
+            val errors = validator.validate(input)
+            errors shouldHaveSize 0
+        }
+
+        @Test
+        fun `should pass validation for valid brand status values, ignoring the case`() {
+            val input = BrandStatusClass(BrandStatus.ACTIVE.toString().lowercase())
+            val errors = validator.validate(input)
+            errors shouldHaveSize 0
+        }
+
+        @Test
+        fun `should fail validation for invalid brand status values`() {
+            val input = BrandStatusClass("NOT_A_VALID_NAME")
+
+            val errors = validator.validate(input)
+
+            errors shouldHaveSize 1
+            val error = errors.first()
+            error.message shouldBe "{com.trenako.brand.status.invalid}"
+            error.invalidValue shouldBe "NOT_A_VALID_NAME"
+            error.propertyPath.toString() shouldBe "status"
+        }
+    }
+
+    data class BrandKindClass(@field:ValidBrandKind val kind: String?)
+    data class BrandStatusClass(@field:ValidBrandStatus val status: String?)
 }

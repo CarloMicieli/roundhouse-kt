@@ -20,6 +20,7 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.catalog.brands.BrandStatus
 import com.trenako.usecases.UseCase
 import com.trenako.usecases.UseCaseResult
 import com.trenako.util.EnumUtils.toEnum
@@ -52,7 +53,8 @@ class CreateBrandUseCase(private val validator: Validator, private val repositor
             id = BrandId.of(this.name),
             name = this.name,
             contactInfo = this.contactInfo?.toContactInfo(),
-            brandKind = this.kind.toEnum()
+            kind = this.kind.toEnum(),
+            active = this.status?.toEnum<BrandStatus>() == BrandStatus.ACTIVE
         )
     }
 }

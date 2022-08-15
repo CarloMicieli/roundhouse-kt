@@ -50,7 +50,8 @@ interface CreateBrandRepository {
     data class NewBrand(
         val id: BrandId,
         val name: String,
-        val brandKind: BrandKind,
-        val contactInfo: ContactInfo?
+        val kind: BrandKind,
+        val contactInfo: ContactInfo?,
+        val active: Boolean?
     )
 }

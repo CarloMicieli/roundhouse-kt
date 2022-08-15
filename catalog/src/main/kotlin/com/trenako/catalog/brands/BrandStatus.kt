@@ -18,23 +18,12 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands
 
-import com.trenako.catalog.brands.validation.constraints.ValidBrandKind
-import com.trenako.catalog.brands.validation.constraints.ValidBrandStatus
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
-
-data class CreateBrand(
-    @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:NotBlank
-    @field:ValidBrandKind
-    val kind: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null,
-    @field:ValidBrandStatus
-    val status: String? = null
-)
+/**
+ * It represents the status of a {@code Brand}
+ */
+enum class BrandStatus {
+    ACTIVE,
+    OUT_OF_BUSINESS
+}
