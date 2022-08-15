@@ -18,20 +18,18 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands
 
-import com.trenako.catalog.brands.validation.constraints.ValidBrandKind
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+/** The kinds for railway model brands */
+enum class BrandKind {
+    /** these manufactures produce models using the die casting method */
+    INDUSTRIAL,
 
-data class CreateBrand(
-    @field:NotBlank
-    @field:Size(min = 3, max = 100)
-    val name: String = "",
-    @field:NotBlank
-    @field:ValidBrandKind
-    val kind: String = "",
-    @field:Valid
-    val contactInfo: CreateBrandContactInfo? = null
-)
+    /**
+     * these manufacturers produce models which are made of brass or similar alloys.
+     *
+     * They are usually more expensive than the industrial series due to the limited production
+     * quantities and the "hand made" nature of the production
+     */
+    BRASS_MODELS
+}

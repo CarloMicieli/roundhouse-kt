@@ -39,6 +39,7 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
             phoneNumber = newBrand.contactInfo?.phone?.value,
             email = newBrand.contactInfo?.email?.value,
             websiteUrl = newBrand.contactInfo?.websiteUrl?.toString(),
+            kind = newBrand.brandKind.name,
             version = 0,
             created = Instant.now()
         )
@@ -55,6 +56,7 @@ data class BrandDto(
     @Id
     val brandId: String,
     val name: String,
+    val kind: String,
     val phoneNumber: String?,
     val websiteUrl: String?,
     val email: String?,

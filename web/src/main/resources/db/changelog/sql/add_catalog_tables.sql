@@ -5,6 +5,7 @@ CREATE TABLE public.brands
     email varchar(100),
     website_url varchar(100),
     phone_number varchar(20),
+    kind varchar(25) NOT NULL,
     created timestamp without time zone NOT NULL,
     last_modified timestamp without time zone,
     version integer NOT NULL DEFAULT 1,

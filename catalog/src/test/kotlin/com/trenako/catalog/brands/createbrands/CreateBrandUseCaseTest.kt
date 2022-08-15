@@ -20,6 +20,7 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.catalog.brands.BrandKind
 import com.trenako.usecases.UseCaseResult
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -67,6 +68,7 @@ class CreateBrandUseCaseTest {
 
         val input = CreateBrand(
             name = "ACME",
+            kind = BrandKind.INDUSTRIAL.name,
             contactInfo = CreateBrandContactInfo(
                 email = "mail@mail.com",
                 websiteUrl = "https://www.website.com",
@@ -84,7 +86,10 @@ class CreateBrandUseCaseTest {
     fun `should check if the brand already exists`() = runTest {
         whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { true }
 
-        val input = CreateBrand(name = "ACME")
+        val input = CreateBrand(
+            name = "ACME",
+            kind = BrandKind.INDUSTRIAL.name
+        )
         val result = useCase.execute(input)
 
         result.isError() shouldBe true

@@ -106,7 +106,10 @@ class CreateBrandIntegrationTest {
     @Test
     fun `should return CONFLICT when a brand with the same name already exists`() {
         val name = UUID.randomUUID().toString()
-        val newBrand = RequestBody(name = name)
+        val newBrand = RequestBody(
+            name = name,
+            kind = "INDUSTRIAL"
+        )
 
         webClient.post()
             .uri(POST_BRANDS_ENDPOINT)
@@ -137,6 +140,7 @@ class CreateBrandIntegrationTest {
         val name = UUID.randomUUID().toString()
         val newBrand = RequestBody(
             name = name,
+            kind = "INDUSTRIAL",
             contactInfo = ContactInfo(
                 email = "mail@mail.com",
                 websiteUrl = "https://www.website.com",
@@ -155,5 +159,9 @@ class CreateBrandIntegrationTest {
     }
 
     data class ContactInfo(val email: String?, val websiteUrl: String?, val phoneNumber: String?)
-    data class RequestBody(val name: String = "", val contactInfo: ContactInfo? = null)
+    data class RequestBody(
+        val name: String = "",
+        val kind: String = "",
+        val contactInfo: ContactInfo? = null
+    )
 }

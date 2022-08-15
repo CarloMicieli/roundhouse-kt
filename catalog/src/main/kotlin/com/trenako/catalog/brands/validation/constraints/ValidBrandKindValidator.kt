@@ -18,39 +18,14 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands.validation.constraints
 
 import com.trenako.catalog.brands.BrandKind
-import com.trenako.contact.ContactInfo
+import com.trenako.util.EnumUtils.isValidName
+import javax.validation.ConstraintValidator
+import javax.validation.ConstraintValidatorContext
 
-/**
- * A repository for the {@code CreateBrandUseCase} to handle all persistence requirements
- */
-interface CreateBrandRepository {
-    /**
-     * Check if a brand with the same name already exists.
-     * @param name the brand name
-     */
-    suspend fun exists(name: String): Boolean
-
-    /**
-     * Persist a new brand.
-     *
-     * This method is executed only for its side effect, hence if the operation is successful the method is not
-     * producing any meaningful output.
-     *
-     * @param newBrand the new brand to insert
-     * @return either an {@code Error} or Unit
-     */
-    suspend fun insert(newBrand: NewBrand)
-
-    /**
-     * A DTO for a new brand
-     */
-    data class NewBrand(
-        val id: BrandId,
-        val name: String,
-        val brandKind: BrandKind,
-        val contactInfo: ContactInfo?
-    )
+class ValidBrandKindValidator : ConstraintValidator<ValidBrandKind, String> {
+    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean =
+        value?.isValidName<BrandKind>() ?: true
 }

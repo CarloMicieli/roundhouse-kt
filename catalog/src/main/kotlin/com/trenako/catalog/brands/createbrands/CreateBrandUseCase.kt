@@ -22,6 +22,7 @@ package com.trenako.catalog.brands.createbrands
 
 import com.trenako.usecases.UseCase
 import com.trenako.usecases.UseCaseResult
+import com.trenako.util.EnumUtils.toEnum
 import com.trenako.validation.Validated
 import com.trenako.validation.inputValidator
 import java.time.LocalDateTime
@@ -50,7 +51,8 @@ class CreateBrandUseCase(private val validator: Validator, private val repositor
         return CreateBrandRepository.NewBrand(
             id = BrandId.of(this.name),
             name = this.name,
-            contactInfo = this.contactInfo?.toContactInfo()
+            contactInfo = this.contactInfo?.toContactInfo(),
+            brandKind = this.kind.toEnum()
         )
     }
 }
