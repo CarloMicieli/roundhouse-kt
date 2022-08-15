@@ -1,39 +1,39 @@
 spring:
-    application:
-        name: trenako
-    lifecycle:
-        timeout-per-shutdown-phase: 15s
-    liquibase:
-        enabled: false
-    r2dbc:
-        url: r2dbc:${DB_URL:postgresql://localhost:5432/trenako}
-        username: ${DB_USERNAME:postgres}
-        password: ${DB_PASSWORD:mysecretpassword}
-        pool:
-            enabled: true
-            initial-size: 10
-            max-size: 25
+  application:
+    name: trenako
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
+  liquibase:
+    enabled: false
+  r2dbc:
+    url: r2dbc:${DB_URL:postgresql://localhost:5432/trenako}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:mysecretpassword}
+    pool:
+      enabled: true
+      initial-size: 10
+      max-size: 25
 
 server:
-    port: 8080
-    shutdown: graceful
+  port: 8080
+  shutdown: graceful
 
 logging:
-    level:
-        org.springframework: INFO
-        org.springframework.r2dbc: INFO
-        org.springframework.web.reactive: INFO
-        com.trenako: DEBUG
+  level:
+    org.springframework: INFO
+    org.springframework.r2dbc: INFO
+    org.springframework.web.reactive: INFO
+    com.trenako: DEBUG
 
 management:
-    server:
-        port: 8081
-    endpoints:
-        enabled-by-default: false
-        web:
-            base-path: /
-            exposure:
-                include: health
-    endpoint:
-        health:
-            enabled: true
+  server:
+    port: 8081
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+      exposure:
+        include: health
+  endpoint:
+    health:
+      enabled: true

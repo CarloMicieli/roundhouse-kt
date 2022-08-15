@@ -1,11 +1,11 @@
 context:
-    initializer:
-        classes: com.trenako.TestConfigInitializer
+  initializer:
+    classes: com.trenako.TestConfigInitializer
 
 logging:
-    level:
-        org.springframework: INFO
-        org.springframework.r2dbc: INFO
-        org.springframework.web.reactive: INFO
-        org.testcontainers: INFO
-        com.trenako: INFO
+  level:
+    org.springframework: INFO
+    org.springframework.r2dbc: INFO
+    org.springframework.web.reactive: INFO
+    org.testcontainers: INFO
+    com.trenako: INFO
