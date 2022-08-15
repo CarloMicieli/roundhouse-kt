@@ -34,12 +34,15 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import java.util.*
+
+private const val POST_BRANDS_ENDPOINT = "/api/brands"
 
 @DisplayName("POST /api/brands")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("it")
 @Testcontainers
-class CreateBrandIntegrationTest() {
+class CreateBrandIntegrationTest {
 
     companion object {
         @Container
@@ -66,7 +69,7 @@ class CreateBrandIntegrationTest() {
     @Test
     fun `should return UNPROCESSABLE_ENTITY when the request body is empty`() {
         webClient.post()
-            .uri("/api/brands")
+            .uri(POST_BRANDS_ENDPOINT)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .exchange()
@@ -84,7 +87,7 @@ class CreateBrandIntegrationTest() {
         val newBrand = RequestBody(name = "a")
 
         webClient.post()
-            .uri("/api/brands")
+            .uri(POST_BRANDS_ENDPOINT)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(newBrand)
@@ -102,10 +105,11 @@ class CreateBrandIntegrationTest() {
 
     @Test
     fun `should return CONFLICT when a brand with the same name already exists`() {
-        val newBrand = RequestBody(name = "roco")
+        val name = UUID.randomUUID().toString()
+        val newBrand = RequestBody(name = name)
 
         webClient.post()
-            .uri("/api/brands")
+            .uri(POST_BRANDS_ENDPOINT)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(newBrand)
@@ -113,7 +117,7 @@ class CreateBrandIntegrationTest() {
             .expectStatus().isCreated
 
         webClient.post()
-            .uri("/api/brands")
+            .uri(POST_BRANDS_ENDPOINT)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(newBrand)
@@ -125,13 +129,14 @@ class CreateBrandIntegrationTest() {
             .jsonPath("$.timestamp").isNotEmpty
             .jsonPath("$.title").isEqualTo("Already exists")
             .jsonPath("$.type").isEqualTo("trn:problem-type:already-exists")
-            .jsonPath("$.fields.name").isEqualTo("roco")
+            .jsonPath("$.fields.name").isEqualTo(name)
     }
 
     @Test
     fun `should create a new brand`() {
+        val name = UUID.randomUUID().toString()
         val newBrand = RequestBody(
-            name = "acme",
+            name = name,
             contactInfo = ContactInfo(
                 email = "mail@mail.com",
                 websiteUrl = "https://www.website.com",
@@ -140,13 +145,13 @@ class CreateBrandIntegrationTest() {
         )
 
         webClient.post()
-            .uri("/api/brands")
+            .uri(POST_BRANDS_ENDPOINT)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(newBrand)
             .exchange()
             .expectStatus().isCreated
-            .expectHeader().valueEquals("Location", "/api/brands/acme")
+            .expectHeader().valueEquals("Location", "/api/brands/$name")
     }
 
     data class ContactInfo(val email: String?, val websiteUrl: String?, val phoneNumber: String?)
