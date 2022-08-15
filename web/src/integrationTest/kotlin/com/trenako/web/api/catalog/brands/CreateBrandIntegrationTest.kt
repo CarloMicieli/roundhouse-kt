@@ -108,8 +108,7 @@ class CreateBrandIntegrationTest {
         val name = UUID.randomUUID().toString()
         val newBrand = RequestBody(
             name = name,
-            kind = "INDUSTRIAL",
-            status = "ACTIVE"
+            kind = "INDUSTRIAL"
         )
 
         webClient.post()
@@ -141,12 +140,16 @@ class CreateBrandIntegrationTest {
         val name = UUID.randomUUID().toString()
         val newBrand = RequestBody(
             name = name,
+            groupName = "group",
+            description = "Description goes here",
+            registeredCompanyName = "Company & co",
             kind = "INDUSTRIAL",
             contactInfo = ContactInfo(
                 email = "mail@mail.com",
                 websiteUrl = "https://www.website.com",
                 phoneNumber = "555 1234"
-            )
+            ),
+            status = "ACTIVE"
         )
 
         webClient.post()
@@ -160,9 +163,13 @@ class CreateBrandIntegrationTest {
     }
 
     data class ContactInfo(val email: String?, val websiteUrl: String?, val phoneNumber: String?)
+
     data class RequestBody(
         val name: String = "",
         val kind: String = "",
+        val groupName: String? = null,
+        val registeredCompanyName: String? = null,
+        val description: String? = null,
         val contactInfo: ContactInfo? = null,
         val status: String? = null
     )

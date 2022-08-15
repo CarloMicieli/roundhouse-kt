@@ -68,12 +68,16 @@ class CreateBrandUseCaseTest {
 
         val input = CreateBrand(
             name = "ACME",
+            registeredCompanyName = "ACME Srl",
+            groupName = "ACME",
+            description = "Description goes here",
             kind = BrandKind.INDUSTRIAL.name,
             contactInfo = CreateBrandContactInfo(
                 email = "mail@mail.com",
                 websiteUrl = "https://www.website.com",
                 phoneNumber = "555 1234"
-            )
+            ),
+            status = "ACTIVE"
         )
         val result = useCase.execute(input)
 

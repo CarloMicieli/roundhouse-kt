@@ -33,6 +33,12 @@ data class CreateBrand(
     @field:NotBlank
     @field:ValidBrandKind
     val kind: String = "",
+    @field:Size(min = 3, max = 50)
+    val registeredCompanyName: String? = null,
+    @field:Size(min = 3, max = 50)
+    val groupName: String? = null,
+    @field:Size(min = 3, max = 1000)
+    val description: String? = null,
     @field:Valid
     val contactInfo: CreateBrandContactInfo? = null,
     @field:ValidBrandStatus

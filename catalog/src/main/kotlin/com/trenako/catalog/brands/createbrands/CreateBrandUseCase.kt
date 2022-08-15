@@ -52,6 +52,9 @@ class CreateBrandUseCase(private val validator: Validator, private val repositor
         return CreateBrandRepository.NewBrand(
             id = BrandId.of(this.name),
             name = this.name,
+            registeredCompanyName = this.registeredCompanyName,
+            groupName = this.groupName,
+            description = this.description,
             contactInfo = this.contactInfo?.toContactInfo(),
             kind = this.kind.toEnum(),
             active = this.status?.toEnum<BrandStatus>() == BrandStatus.ACTIVE
