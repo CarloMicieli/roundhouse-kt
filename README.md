@@ -25,7 +25,7 @@ To run the `postgres` database:
     -e POSTGRES_DB=trenako \
     -d -p 5432:5432 \
     -v postgres_data_dev:/var/lib/postgresql/data \
-    postgres:14.2-alpine
+    postgres:14.5-alpine
 ```
 
 ### Start the server

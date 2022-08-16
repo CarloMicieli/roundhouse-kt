@@ -38,7 +38,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 abstract class AbstractWebApiTest {
     companion object {
         @Container
-        private val postgresContainer = PostgreSQLContainer<Nothing>("postgres:14.2-alpine")
+        private val postgresContainer = PostgreSQLContainer<Nothing>("postgres:14.5-alpine")
 
         @DynamicPropertySource
         @JvmStatic
