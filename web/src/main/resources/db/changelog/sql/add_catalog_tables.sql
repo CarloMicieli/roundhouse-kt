@@ -2,7 +2,7 @@ CREATE TABLE public.brands
 (
     brand_id varchar(50) NOT NULL,
     name varchar(50) NOT NULL,
-    registered_company_name varchar(50),
+    registered_company_name varchar(100),
     group_name varchar(50),
     description varchar(1000),
     email varchar(100),

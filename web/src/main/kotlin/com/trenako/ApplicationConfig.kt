@@ -30,11 +30,14 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.trenako.infrastructure.persistence.catalog.CatalogSeeding
 import com.trenako.problems.ProblemDetailsGenerator
 import com.trenako.util.RandomUuidSource
 import com.trenako.util.URN
 import com.trenako.util.UuidSource
 import com.trenako.web.api.catalog.brands.Brands
+import kotlinx.coroutines.runBlocking
+import org.springframework.boot.CommandLineRunner
 import org.springframework.context.support.beans
 import java.time.Clock
 
@@ -60,6 +63,18 @@ val commonBeans = beans {
             .registerModule(customSerializerModule())
             .registerModule(JavaTimeModule())
             .registerModule(KotlinModule.Builder().build())
+    }
+
+    profile("local || it") {
+        bean<CatalogSeeding>()
+        bean {
+            CommandLineRunner {
+                runBlocking {
+                    val catalogSeeding = ref<CatalogSeeding>()
+                    catalogSeeding.seed()
+                }
+            }
+        }
     }
 }
 

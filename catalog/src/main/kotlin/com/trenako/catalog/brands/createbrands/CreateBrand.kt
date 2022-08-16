@@ -35,7 +35,7 @@ data class CreateBrand(
     @field:ValidBrandKind
     val kind: String = "",
 
-    @field:Size(min = 3, max = 50)
+    @field:Size(min = 3, max = 100)
     val registeredCompanyName: String? = null,
 
     @field:Size(min = 3, max = 50)
