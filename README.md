@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![GitHub last commit](https://img.shields.io/github/last-commit/CarloMicieli/trenako)
 [![CI with Gradle](https://github.com/CarloMicieli/trenako/actions/workflows/ci.yml/badge.svg)](https://github.com/CarloMicieli/trenako/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/CarloMicieli/trenako/branch/main/graph/badge.svg?token=4Y0V0EL0V7)](https://codecov.io/gh/CarloMicieli/trenako)
 
 A web application for model railways collectors.
 

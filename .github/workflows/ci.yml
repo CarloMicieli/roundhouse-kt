@@ -41,6 +41,16 @@ jobs:
         with:
           arguments: integrationTest
 
+      - name: Kover coverage report
+        run: ./gradlew koverMergedXmlReport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          verbose: true          
+
   docker:
       runs-on: ubuntu-22.04
       needs: build

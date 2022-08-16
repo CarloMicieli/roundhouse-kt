@@ -9,6 +9,7 @@ plugins {
     id("io.spring.dependency-management")
     id("me.qoomon.git-versioning")
     id("com.github.ben-manes.versions")
+    id("org.jetbrains.kotlinx.kover")
     kotlin("jvm")
     kotlin("plugin.spring")
 }
@@ -146,6 +147,16 @@ spotless {
         ktlint()
         indentWithSpaces()
         trimTrailingWhitespace()
+    }
+}
+
+koverMerged {
+    enable()
+    xmlReport {
+        onCheck.set(false)
+    }
+    htmlReport {
+        onCheck.set(false)
     }
 }
 
