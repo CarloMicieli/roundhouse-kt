@@ -12,7 +12,7 @@ dependencies {
     implementation("me.qoomon:gradle-git-versioning-plugin:6.3.0")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     implementation("org.jetbrains.kotlin:kotlin-allopen:1.7.10")
-    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.7.2")
+    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.7.3")
     implementation("com.github.ben-manes:gradle-versions-plugin:0.42.0")
     implementation("org.jetbrains.kotlinx:kover:0.6.0-Beta")
 }
