@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.trenako.infrastructure.persistence.catalog.CatalogSeeding
+import com.trenako.infrastructure.persistence.catalog.seeding.CatalogSeeding
 import com.trenako.problems.ProblemDetailsGenerator
 import com.trenako.util.RandomUuidSource
 import com.trenako.util.URN
