@@ -48,7 +48,7 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
             addressCity = newBrand.address?.city,
             addressRegion = newBrand.address?.region,
             addressPostalCode = newBrand.address?.postalCode,
-            addressCountryCode = newBrand.address?.countryCode,
+            addressCountryCode = newBrand.address?.countryCode?.code,
             active = newBrand.active,
             version = 0,
             created = Instant.now()

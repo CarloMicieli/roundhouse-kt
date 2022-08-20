@@ -27,6 +27,7 @@ import com.trenako.catalog.brands.createbrands.CreateBrandRepository
 import com.trenako.contact.ContactInfo
 import com.trenako.contact.MailAddress
 import com.trenako.contact.WebsiteUrl
+import com.trenako.countries.Country
 import com.trenako.util.Slug
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -91,7 +92,7 @@ object Brands {
             postalCode = "20131",
             city = "Milano",
             region = "MI",
-            countryCode = "IT"
+            countryCode = Country.of("it")
         ),
         description = ""
     )
@@ -130,7 +131,7 @@ object Brands {
             postalCode = "D-73066",
             city = "Uhingen",
             region = null,
-            countryCode = "DE"
+            countryCode = Country.of("DE")
         ),
         description = ""
     )
@@ -153,7 +154,7 @@ object Brands {
             postalCode = "D-73630",
             city = "Remshalden",
             region = null,
-            countryCode = "DE"
+            countryCode = Country.of("DE")
         ),
         description = ""
     )
@@ -192,7 +193,7 @@ object Brands {
             postalCode = "A-5101",
             city = "Bergheim",
             region = null,
-            countryCode = "AT"
+            countryCode = Country.of("AT")
         ),
         description = ""
     )
@@ -215,7 +216,7 @@ object Brands {
             postalCode = "D-41063",
             city = "Mönchengladbach",
             region = null,
-            countryCode = "DE"
+            countryCode = Country.of("DE")
         ),
         description = ""
     )
@@ -238,7 +239,7 @@ object Brands {
             postalCode = "A-2563",
             city = "Pottenstein",
             region = null,
-            countryCode = "AT"
+            countryCode = Country.of("AT")
         ),
         description = ""
     )
@@ -260,7 +261,7 @@ object Brands {
             extendedAddress = null,
             postalCode = "90518",
             city = "Altdorf b. Nürnberg",
-            countryCode = "AT",
+            countryCode = Country.of("AT"),
             region = null
         ),
         description = ""
@@ -300,7 +301,7 @@ object Brands {
             postalCode = "B-4950",
             city = "Sourbrodt",
             region = null,
-            countryCode = "BE"
+            countryCode = Country.of("BE")
         ),
         description = ""
     )
@@ -322,7 +323,7 @@ object Brands {
             extendedAddress = null,
             postalCode = "D-73033",
             city = "Göppingen",
-            countryCode = "DE",
+            countryCode = Country.of("DE"),
             region = null
         ),
         description = ""
@@ -362,7 +363,7 @@ object Brands {
             postalCode = "D-96515",
             city = "Sonneberg",
             region = null,
-            countryCode = "DE"
+            countryCode = Country.of("DE")
         ),
         description = ""
     )
@@ -385,7 +386,7 @@ object Brands {
             postalCode = "25015",
             city = "Desenzano del Garda",
             region = null,
-            countryCode = "IT"
+            countryCode = Country.of("IT")
         ),
         description = ""
     )
@@ -424,7 +425,7 @@ object Brands {
             postalCode = "A-5101",
             city = "Bergheim",
             region = null,
-            countryCode = "AT"
+            countryCode = Country.of("AT")
         ),
         description = ""
     )
@@ -447,7 +448,7 @@ object Brands {
             postalCode = "4700-209",
             city = "Braga",
             region = null,
-            countryCode = "PT"
+            countryCode = Country.of("PT")
         ),
         description = ""
     )
@@ -469,7 +470,7 @@ object Brands {
             extendedAddress = null,
             postalCode = "D-73033",
             city = "Göppingen",
-            countryCode = "DE",
+            countryCode = Country.of("DE"),
             region = null
         ),
         description = ""
@@ -493,7 +494,7 @@ object Brands {
             postalCode = "35010",
             city = "Vigodarzere",
             region = "PD",
-            countryCode = "IT"
+            countryCode = Country.of("IT")
         ),
         description = ""
     )

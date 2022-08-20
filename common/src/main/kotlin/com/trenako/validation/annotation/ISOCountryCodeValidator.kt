@@ -18,18 +18,16 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.address
+package com.trenako.validation.annotation
 
-import com.trenako.countries.Country
+import com.trenako.countries.isValidCountryCode
+import com.trenako.validation.annotation.constraints.ISOCountryCode
+import javax.validation.ConstraintValidator
+import javax.validation.ConstraintValidatorContext
 
-/**
- * An immutable object value that represents an {@code Address}.
- */
-data class Address(
-    val streetAddress: String,
-    val extendedAddress: String?,
-    val city: String,
-    val region: String?,
-    val postalCode: String?,
-    val countryCode: Country
-)
+class ISOCountryCodeValidator : ConstraintValidator<ISOCountryCode, String> {
+
+    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
+        return value?.isValidCountryCode() ?: true
+    }
+}

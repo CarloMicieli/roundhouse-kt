@@ -18,18 +18,18 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.address
+package com.trenako.validation.annotation.constraints
 
-import com.trenako.countries.Country
+import com.trenako.validation.annotation.ISOCountryCodeValidator
+import javax.validation.Constraint
+import javax.validation.Payload
+import kotlin.reflect.KClass
 
-/**
- * An immutable object value that represents an {@code Address}.
- */
-data class Address(
-    val streetAddress: String,
-    val extendedAddress: String?,
-    val city: String,
-    val region: String?,
-    val postalCode: String?,
-    val countryCode: Country
+@Target(AnnotationTarget.FIELD)
+@Constraint(validatedBy = [ISOCountryCodeValidator::class])
+@MustBeDocumented
+annotation class ISOCountryCode(
+    val message: String = "{com.trenako.country.code.invalid}",
+    val groups: Array<KClass<*>> = [],
+    val payload: Array<KClass<out Payload>> = []
 )

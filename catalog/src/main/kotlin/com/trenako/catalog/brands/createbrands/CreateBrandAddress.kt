@@ -21,6 +21,8 @@
 package com.trenako.catalog.brands.createbrands
 
 import com.trenako.address.Address
+import com.trenako.countries.Country
+import com.trenako.validation.annotation.constraints.ISOCountryCode
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
@@ -43,7 +45,7 @@ class CreateBrandAddress(
     val postalCode: String?,
 
     @field:NotBlank
-    @field:Size(min = 2, max = 2)
+    @field:ISOCountryCode
     val countryCode: String = ""
 ) {
 
@@ -53,6 +55,6 @@ class CreateBrandAddress(
         city = this.city,
         region = this.region,
         postalCode = this.postalCode,
-        countryCode = this.countryCode
+        countryCode = Country.of(this.countryCode)
     )
 }
