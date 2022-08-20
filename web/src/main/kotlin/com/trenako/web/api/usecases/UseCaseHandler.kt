@@ -22,6 +22,7 @@ package com.trenako.web.api.usecases
 
 import com.trenako.usecases.UseCase
 import org.slf4j.Logger
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 
@@ -31,6 +32,7 @@ import org.springframework.web.reactive.function.server.ServerResponse
  * @param O the use case output type
  * @param E the use case error type
  */
+@Transactional
 interface UseCaseHandler<I, O, E> {
     val useCase: UseCase<I, O, E>
     val presenter: UseCaseResultPresenter<O, E>
