@@ -39,7 +39,7 @@ data class URN(val value: String) {
     companion object {
         /**
          * Creates a {@code URN} representing a problem type
-         * @param problemType a non empty String to identify a problem type
+         * @param problemType a non-empty String to identify a problem type
          */
         fun fromProblemType(problemType: String): URN = URN("trn:problem-type:$problemType")
 
@@ -47,5 +47,7 @@ data class URN(val value: String) {
          * Creates a {@code URN} representing a unique identifier
          */
         fun fromUUID(id: UUID): URN = URN("trn:uuid:$id")
+
+        fun fromRequestId(requestId: String): URN = URN("trn:request-id:$requestId")
     }
 }

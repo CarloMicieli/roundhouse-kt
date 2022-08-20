@@ -35,6 +35,12 @@ class URNTest {
     }
 
     @Test
+    fun `can represent a request id`() {
+        val urn = URN.fromRequestId("1234")
+        urn.value shouldBe "trn:request-id:1234"
+    }
+
+    @Test
     fun `can represent an unique identifier`() {
         val id = UUID.randomUUID()
         val urn = URN.fromUUID(id)

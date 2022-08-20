@@ -27,10 +27,11 @@ import com.trenako.usecases.UseCaseResult
 import com.trenako.usecases.get
 import com.trenako.usecases.map
 import com.trenako.usecases.mapError
+import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.bodyValueAndAwait
+import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 
 /**
@@ -55,7 +56,9 @@ interface UseCaseResultPresenter<O, E> {
     suspend fun toEmptyRequestResponse(): ServerResponse = problemDetailsGenerator.unprocessableEntity("Request body is empty").toServerResponse()
 }
 
-suspend fun ProblemDetails.toServerResponse(): ServerResponse {
+suspend fun ProblemDetails.toServerResponse(): ServerResponse = toServerResponseMono().awaitSingle()
+
+fun ProblemDetails.toServerResponseMono(): Mono<ServerResponse> {
     val mediaType = MediaType.APPLICATION_PROBLEM_JSON
     val httpStatus = categoryToHttpStatus(this.category)
 
@@ -68,7 +71,7 @@ suspend fun ProblemDetails.toServerResponse(): ServerResponse {
         type = this.type.value
     )
 
-    return ServerResponse.status(httpStatus).contentType(mediaType).bodyValueAndAwait(body)
+    return ServerResponse.status(httpStatus).contentType(mediaType).bodyValue(body)
 }
 
 private fun categoryToHttpStatus(category: ProblemCategory): HttpStatus = when (category) {
