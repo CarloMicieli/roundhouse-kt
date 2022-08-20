@@ -22,6 +22,7 @@
 
 package com.trenako.infrastructure.persistence.catalog
 
+import com.trenako.catalog.brands.BrandStatus
 import com.trenako.catalog.brands.createbrands.CreateBrandRepository
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
@@ -33,6 +34,7 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
     override suspend fun exists(name: String): Boolean = repository.existsByName(name)
 
     override suspend fun insert(newBrand: CreateBrandRepository.NewBrand) {
+        val active: Boolean? = if (newBrand.status == null) { null } else { newBrand.status == BrandStatus.ACTIVE }
         val dto = BrandDto(
             brandId = newBrand.id.toString(),
             name = newBrand.name,
@@ -49,7 +51,7 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
             addressRegion = newBrand.address?.region,
             addressPostalCode = newBrand.address?.postalCode,
             addressCountryCode = newBrand.address?.countryCode?.code,
-            active = newBrand.active,
+            active = active,
             version = 0,
             created = Instant.now()
         )

@@ -22,6 +22,7 @@ package com.trenako.infrastructure.persistence.catalog
 
 import com.trenako.address.Address
 import com.trenako.catalog.brands.BrandKind
+import com.trenako.catalog.brands.BrandStatus
 import com.trenako.catalog.brands.createbrands.BrandId
 import com.trenako.catalog.brands.createbrands.CreateBrandRepository
 import com.trenako.contact.ContactInfo
@@ -80,7 +81,7 @@ object Brands {
         registeredCompanyName = "Associazione Costruzioni Modellistiche Esatte",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("mail@acmetreni.com"),
             websiteUrl = WebsiteUrl(URI("http://www.acmetreni.com")),
@@ -103,7 +104,7 @@ object Brands {
         registeredCompanyName = "Arnold model",
         groupName = "hornby",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("customerservices.it@hornby.com"),
             websiteUrl = WebsiteUrl(URI("https://it.arnoldmodel.com/")),
@@ -119,7 +120,7 @@ object Brands {
         registeredCompanyName = "BEMO Modelleisenbahnen GmbH u. Co KG",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("mail@bemo-modellbahn.de"),
             websiteUrl = WebsiteUrl(URI("https://www.bemo-modellbahn.de")),
@@ -142,7 +143,7 @@ object Brands {
         registeredCompanyName = "BRAWA Artur Braun Modellspielwarenfabrik GmbH & Co. KG",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.brawa.de")),
@@ -165,7 +166,7 @@ object Brands {
         registeredCompanyName = "Electrotren",
         groupName = "hornby",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("customerservices.it@hornby.com"),
             websiteUrl = WebsiteUrl(URI("https://it.electrotren.com/")),
@@ -181,7 +182,7 @@ object Brands {
         registeredCompanyName = "Modelleisenbahn GmbH",
         groupName = "modelleisenbahn",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.fleischmann.de")),
@@ -204,7 +205,7 @@ object Brands {
         registeredCompanyName = "Heris-Modelleisenbahn",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("info@heris-modelleisenbahn.de"),
             websiteUrl = WebsiteUrl(URI("https://www.heris-modelleisenbahn.de/")),
@@ -227,7 +228,7 @@ object Brands {
         registeredCompanyName = "Jägerndorfer Ges.m.b.H.",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.jaegerndorfer.at/")),
@@ -250,7 +251,7 @@ object Brands {
         registeredCompanyName = null,
         groupName = "bachmann",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("bachmann@liliput.de"),
             websiteUrl = WebsiteUrl(URI("https://liliput.de/")),
@@ -273,7 +274,7 @@ object Brands {
         registeredCompanyName = "Lima model",
         groupName = "hornby",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("customerservices.it@hornby.com"),
             websiteUrl = WebsiteUrl(URI("https://it.limamodel.it/")),
@@ -289,7 +290,7 @@ object Brands {
         registeredCompanyName = "L.S. MODELS EXCLUSIVE SPRL",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("info@lsmodels.com"),
             websiteUrl = WebsiteUrl(URI("http://www.lsmodels.com/")),
@@ -312,7 +313,7 @@ object Brands {
         registeredCompanyName = "Gebr. Märklin & Cie. GmbH",
         groupName = "märklin",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.maerklin.de")),
@@ -335,7 +336,7 @@ object Brands {
         registeredCompanyName = "Os.kar international",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.oskartrains.eu")),
@@ -351,7 +352,7 @@ object Brands {
         registeredCompanyName = "PIKO Spielwaren GmbH",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("info@piko.de"),
             websiteUrl = WebsiteUrl(URI("https://www.piko.de")),
@@ -374,7 +375,7 @@ object Brands {
         registeredCompanyName = "PIKO Spielwaren GmbH",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("info@piratamodels.it"),
             websiteUrl = WebsiteUrl(URI("hhttps://www.piratamodels.it")),
@@ -397,7 +398,7 @@ object Brands {
         registeredCompanyName = "Rivarossi",
         groupName = "hornby",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("customerservices.it@hornby.com"),
             websiteUrl = WebsiteUrl(URI("https://it.rivarossi.com/")),
@@ -413,7 +414,7 @@ object Brands {
         registeredCompanyName = "Modelleisenbahn GmbH",
         groupName = "modelleisenbahn",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = MailAddress("webshop@roco.cc"),
             websiteUrl = WebsiteUrl(URI("https://www.roco.cc")),
@@ -436,7 +437,7 @@ object Brands {
         registeredCompanyName = "AVALIARE Engenharia Lda.",
         groupName = null,
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.sudexpressmodels.eu/")),
@@ -459,7 +460,7 @@ object Brands {
         registeredCompanyName = "Gebr. Märklin & Cie. GmbH",
         groupName = "märklin",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.trix.de")),
@@ -482,7 +483,7 @@ object Brands {
         registeredCompanyName = "Modelleisenbahn GmbH",
         groupName = "modelleisenbahn",
         kind = BrandKind.INDUSTRIAL,
-        active = true,
+        status = BrandStatus.ACTIVE,
         contactInfo = ContactInfo(
             email = null,
             websiteUrl = WebsiteUrl(URI("https://www.vitrains.it/")),
