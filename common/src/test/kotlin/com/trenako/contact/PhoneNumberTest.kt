@@ -22,14 +22,27 @@ package com.trenako.contact
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 @DisplayName("Phone number")
 class PhoneNumberTest {
-    @Test
-    fun `is created from nullable Strings`() {
-        "(555) 1234".toPhoneNumberOrNull() shouldBe PhoneNumber("(555) 1234")
-        "".toPhoneNumberOrNull() shouldBe null
-        null.toPhoneNumberOrNull() shouldBe null
+    @Nested
+    @DisplayName("toPhoneNumberOrNull")
+    inner class ToPhoneNumberOrNullTest {
+        @Test
+        fun `should return a PhoneNumber when the input is valid`() {
+            "(555) 1234".toPhoneNumberOrNull() shouldBe PhoneNumber("(555) 1234")
+        }
+
+        @Test
+        fun `should return null when the input is blank`() {
+            "".toPhoneNumberOrNull() shouldBe null
+        }
+
+        @Test
+        fun `should return null when the input is null`() {
+            null.toPhoneNumberOrNull() shouldBe null
+        }
     }
 }

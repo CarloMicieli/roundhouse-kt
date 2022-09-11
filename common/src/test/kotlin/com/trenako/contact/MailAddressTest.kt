@@ -23,6 +23,7 @@ package com.trenako.contact
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 @DisplayName("Mail address")
@@ -41,10 +42,22 @@ class MailAddressTest {
         email shouldBe MailAddress("mail@mail.com")
     }
 
-    @Test
-    fun `is created from nullable Strings`() {
-        "mail@mail.com".toMailAddressOrNull() shouldBe MailAddress("mail@mail.com")
-        "".toMailAddressOrNull() shouldBe null
-        null.toMailAddressOrNull() shouldBe null
+    @Nested
+    @DisplayName("toMailAddressOrNull")
+    inner class ToMailAddressOrNullTest {
+        @Test
+        fun `should return a MailAddress when the input is valid`() {
+            "mail@mail.com".toMailAddressOrNull() shouldBe MailAddress("mail@mail.com")
+        }
+
+        @Test
+        fun `should return null when the input is blank`() {
+            "".toMailAddressOrNull() shouldBe null
+        }
+
+        @Test
+        fun `should return null when the input is null`() {
+            null.toMailAddressOrNull() shouldBe null
+        }
     }
 }
