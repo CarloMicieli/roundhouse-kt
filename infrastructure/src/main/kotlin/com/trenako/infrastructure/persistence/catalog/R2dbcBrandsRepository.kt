@@ -25,6 +25,7 @@ package com.trenako.infrastructure.persistence.catalog
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
 import com.trenako.catalog.brands.createbrands.CreateBrandRepository
+import com.trenako.contact.PhoneNumber
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table
@@ -41,7 +42,7 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
             registeredCompanyName = newBrand.registeredCompanyName,
             groupName = newBrand.groupName,
             description = newBrand.description,
-            phoneNumber = newBrand.contactInfo?.phone?.value,
+            phoneNumber = newBrand.contactInfo?.phone,
             email = newBrand.contactInfo?.email?.value,
             websiteUrl = newBrand.contactInfo?.websiteUrl?.toString(),
             kind = newBrand.kind,
@@ -72,7 +73,7 @@ data class BrandDto(
     val groupName: String?,
     val description: String?,
     val kind: BrandKind,
-    val phoneNumber: String?,
+    val phoneNumber: PhoneNumber?,
     val websiteUrl: String?,
     val email: String?,
 
@@ -85,7 +86,7 @@ data class BrandDto(
 
     val status: BrandStatus?,
     @Version
-    val version: Int = 0,
+    var version: Int = 0,
     val created: Instant,
     val lastModified: Instant? = null
 )

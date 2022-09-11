@@ -22,6 +22,10 @@ package com.trenako.infrastructure.persistence
 
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
+import com.trenako.contact.PhoneNumber
+import com.trenako.infrastructure.persistence.catalog.converters.BrandKindWritingConverter
+import com.trenako.infrastructure.persistence.catalog.converters.BrandStatusWritingConverter
+import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberWritingConverter
 import io.netty.util.internal.StringUtil
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
@@ -47,14 +51,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcConfiguration() {
 
     @Bean
-    override fun r2dbcCustomConversions(): R2dbcCustomConversions =
-        R2dbcCustomConversions(storeConversions, listOf(brandStatusWritingConverter(), brandKindWritingConverter()))
+    override fun r2dbcCustomConversions(): R2dbcCustomConversions {
+        val converters = listOf(
+            brandKindWritingConverter(),
+            brandStatusWritingConverter(),
+            phoneNumberWritingConverter()
+        )
+        return R2dbcCustomConversions(storeConversions, converters)
+    }
 
     @Bean
     fun brandStatusWritingConverter(): Converter<BrandStatus, BrandStatus> = BrandStatusWritingConverter()
 
     @Bean
     fun brandKindWritingConverter(): Converter<BrandKind, BrandKind> = BrandKindWritingConverter()
+
+    @Bean
+    fun phoneNumberWritingConverter(): Converter<PhoneNumber, String> = PhoneNumberWritingConverter()
 
     @Bean(destroyMethod = "dispose")
     override fun connectionFactory(): ConnectionPool {
