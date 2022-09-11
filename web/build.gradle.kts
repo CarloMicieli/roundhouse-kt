@@ -43,12 +43,12 @@ testing {
                 implementation(project)
                 implementation("org.springframework.boot:spring-boot-starter-test")
                 implementation("org.springframework:spring-web")
-                implementation("io.kotest:kotest-assertions-core:5.4.1")
+                implementation("io.kotest:kotest-assertions-core:${Kotest.version}")
 
-                implementation("org.testcontainers:testcontainers:1.17.3")
-                implementation("org.testcontainers:junit-jupiter:1.17.3")
-                implementation("org.testcontainers:postgresql:1.17.3")
-                implementation("org.testcontainers:r2dbc:1.17.3")
+                implementation("org.testcontainers:testcontainers:${Testcontainers.version}")
+                implementation("org.testcontainers:junit-jupiter:${Testcontainers.version}")
+                implementation("org.testcontainers:postgresql:${Testcontainers.version}")
+                implementation("org.testcontainers:r2dbc:${Testcontainers.version}")
             }
 
             targets {
