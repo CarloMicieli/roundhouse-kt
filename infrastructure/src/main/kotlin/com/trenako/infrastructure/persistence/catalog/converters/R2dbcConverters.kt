@@ -23,6 +23,7 @@ package com.trenako.infrastructure.persistence.catalog.converters
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
 import com.trenako.contact.PhoneNumber
+import com.trenako.contact.WebsiteUrl
 import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.WritingConverter
 import org.springframework.data.r2dbc.convert.EnumWriteSupport
@@ -36,4 +37,9 @@ class BrandKindWritingConverter : EnumWriteSupport<BrandKind>()
 @WritingConverter
 class PhoneNumberWritingConverter : Converter<PhoneNumber, String> {
     override fun convert(source: PhoneNumber): String = source.value
+}
+
+@WritingConverter
+class WebsiteUrlWritingConverter : Converter<WebsiteUrl, String> {
+    override fun convert(source: WebsiteUrl): String = source.value.toString()
 }

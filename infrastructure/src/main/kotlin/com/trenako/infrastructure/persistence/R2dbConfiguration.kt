@@ -23,9 +23,11 @@ package com.trenako.infrastructure.persistence
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
 import com.trenako.contact.PhoneNumber
+import com.trenako.contact.WebsiteUrl
 import com.trenako.infrastructure.persistence.catalog.converters.BrandKindWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.BrandStatusWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberWritingConverter
+import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlWritingConverter
 import io.netty.util.internal.StringUtil
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
@@ -55,7 +57,8 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
         val converters = listOf(
             brandKindWritingConverter(),
             brandStatusWritingConverter(),
-            phoneNumberWritingConverter()
+            phoneNumberWritingConverter(),
+            websiteUrlWritingConverter()
         )
         return R2dbcCustomConversions(storeConversions, converters)
     }
@@ -68,6 +71,9 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
 
     @Bean
     fun phoneNumberWritingConverter(): Converter<PhoneNumber, String> = PhoneNumberWritingConverter()
+
+    @Bean
+    fun websiteUrlWritingConverter(): Converter<WebsiteUrl, String> = WebsiteUrlWritingConverter()
 
     @Bean(destroyMethod = "dispose")
     override fun connectionFactory(): ConnectionPool {
