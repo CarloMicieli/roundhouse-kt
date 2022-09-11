@@ -86,7 +86,7 @@ fun acme(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "20131",
         city = "Milano",
         region = "MI",
-        countryCode = Country.of("it")
+        country = Country.of("it")
     ),
     description = ""
 )
@@ -125,7 +125,7 @@ fun bemo(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "D-73066",
         city = "Uhingen",
         region = null,
-        countryCode = Country.of("DE")
+        country = Country.of("DE")
     ),
     description = ""
 )
@@ -148,7 +148,7 @@ fun brawa(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "D-73630",
         city = "Remshalden",
         region = null,
-        countryCode = Country.of("DE")
+        country = Country.of("DE")
     ),
     description = ""
 )
@@ -187,7 +187,7 @@ fun fleischmann(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBra
         postalCode = "A-5101",
         city = "Bergheim",
         region = null,
-        countryCode = Country.of("AT")
+        country = Country.of("AT")
     ),
     description = ""
 )
@@ -210,7 +210,7 @@ fun heris(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "D-41063",
         city = "Mönchengladbach",
         region = null,
-        countryCode = Country.of("DE")
+        country = Country.of("DE")
     ),
     description = ""
 )
@@ -233,7 +233,7 @@ fun jagerndorfer(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBr
         postalCode = "A-2563",
         city = "Pottenstein",
         region = null,
-        countryCode = Country.of("AT")
+        country = Country.of("AT")
     ),
     description = ""
 )
@@ -255,7 +255,7 @@ fun liliput(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         extendedAddress = null,
         postalCode = "90518",
         city = "Altdorf b. Nürnberg",
-        countryCode = Country.of("AT"),
+        country = Country.of("AT"),
         region = null
     ),
     description = ""
@@ -295,7 +295,7 @@ fun lsModels(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "B-4950",
         city = "Sourbrodt",
         region = null,
-        countryCode = Country.of("BE")
+        country = Country.of("BE")
     ),
     description = ""
 )
@@ -317,7 +317,7 @@ fun maerklin(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         extendedAddress = null,
         postalCode = "D-73033",
         city = "Göppingen",
-        countryCode = Country.of("DE"),
+        country = Country.of("DE"),
         region = null
     ),
     description = ""
@@ -357,7 +357,7 @@ fun piko(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "D-96515",
         city = "Sonneberg",
         region = null,
-        countryCode = Country.of("DE")
+        country = Country.of("DE")
     ),
     description = ""
 )
@@ -380,7 +380,7 @@ fun pirata(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "25015",
         city = "Desenzano del Garda",
         region = null,
-        countryCode = Country.of("IT")
+        country = Country.of("IT")
     ),
     description = ""
 )
@@ -419,7 +419,7 @@ fun roco(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "A-5101",
         city = "Bergheim",
         region = null,
-        countryCode = Country.of("AT")
+        country = Country.of("AT")
     ),
     description = ""
 )
@@ -442,7 +442,7 @@ fun sudexpress(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBran
         postalCode = "4700-209",
         city = "Braga",
         region = null,
-        countryCode = Country.of("PT")
+        country = Country.of("PT")
     ),
     description = ""
 )
@@ -464,7 +464,7 @@ fun trix(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         extendedAddress = null,
         postalCode = "D-73033",
         city = "Göppingen",
-        countryCode = Country.of("DE"),
+        country = Country.of("DE"),
         region = null
     ),
     description = ""
@@ -488,7 +488,7 @@ fun vitrains(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
         postalCode = "35010",
         city = "Vigodarzere",
         region = "PD",
-        countryCode = Country.of("IT")
+        country = Country.of("IT")
     ),
     description = ""
 )

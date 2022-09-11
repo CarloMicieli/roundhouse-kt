@@ -55,6 +55,6 @@ class CreateBrandAddress(
         city = this.city,
         region = this.region,
         postalCode = this.postalCode,
-        countryCode = Country.of(this.countryCode)
+        country = Country.of(this.countryCode)
     )
 }

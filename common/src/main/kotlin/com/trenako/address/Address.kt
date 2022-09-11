@@ -31,5 +31,5 @@ data class Address(
     val city: String,
     val region: String?,
     val postalCode: String?,
-    val countryCode: Country
+    val country: Country
 )
