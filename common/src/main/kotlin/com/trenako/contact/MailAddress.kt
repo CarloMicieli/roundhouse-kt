@@ -20,5 +20,39 @@
  */
 package com.trenako.contact
 
+/**
+ * A mail address
+ */
 @JvmInline
-value class MailAddress(val value: String)
+value class MailAddress(val value: String) {
+    init {
+        require(value.isNotBlank()) { "A mail address cannot be blank" }
+        require(MailAddressValidator.isValid(value)) { "$value is not a valid mail address" }
+    }
+
+    companion object {
+        fun tryCreate(email: String): MailAddress? {
+            return if (email.isNotBlank() && MailAddressValidator.isValid(email)) {
+                MailAddress(email)
+            } else {
+                null
+            }
+        }
+    }
+}
+
+/**
+ * Try to convert this {@code String} into a {@code MailAddress}, in case the {@code String} is
+ * not a valid mail this method will throw an exception
+ *
+ * @return a {@code MailAddress}
+ */
+fun String.toMailAddress(): MailAddress = MailAddress(this)
+
+/**
+ * Try to convert this {@code String} into a {@code MailAddress}, in case the {@code String} is
+ * not a valid mail this method will return {@code null}
+ *
+ * @return a {@code MailAddress}, or {@code null} if the {@code String} is not a valid mail address
+ */
+fun String?.toMailAddressOrNull(): MailAddress? = this?.let { MailAddress.tryCreate(this) }
