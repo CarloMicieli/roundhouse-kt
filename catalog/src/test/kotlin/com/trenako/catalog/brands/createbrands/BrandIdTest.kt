@@ -20,28 +20,36 @@
  */
 package com.trenako.catalog.brands.createbrands
 
-import com.trenako.util.Slug
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-/**
- * It represents a brand unique identifier. The value should be url encoded.
- */
-@JvmInline
-value class BrandId(private val value: Slug) : Comparable<BrandId> {
-    override fun compareTo(other: BrandId): Int = this.toString().compareTo(other.toString())
+@DisplayName("BrandId")
+class BrandIdTest {
+    @Test
+    fun `should compare two Brand ids`() {
+        val id1 = BrandId.of("brand-id1")
+        val id2 = BrandId.of("brand-id2")
 
-    override fun toString(): String = value.toString()
+        (id1 < id2) shouldBe true
+        (id1 > id2) shouldBe false
+        (id2 > id1) shouldBe true
+        (id2 < id1) shouldBe false
+    }
 
-    companion object {
-        /**
-         * Creates a new {@code BrandId} from the input string.
-         *
-         * Throws an {@code IllegalArgumentException} when the input string is blank.
-         *
-         * @return a new {@code BrandId}
-         */
-        fun of(value: String): BrandId {
-            require(value.isNotBlank()) { "Brand id cannot be blank" }
-            return BrandId(Slug(value))
+    @Test
+    fun `should produce a String representation for Brand ids`() {
+        val id = BrandId.of("brand-id1")
+        id.toString() shouldBe "brand-id1"
+    }
+
+    @Test
+    fun `should throw an exception when the id value is blank`() {
+        val ex = shouldThrowExactly<IllegalArgumentException> {
+            BrandId.of("")
         }
+
+        ex.message shouldBe "Brand id cannot be blank"
     }
 }
