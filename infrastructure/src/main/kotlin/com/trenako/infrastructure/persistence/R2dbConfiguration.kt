@@ -22,10 +22,12 @@ package com.trenako.infrastructure.persistence
 
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
+import com.trenako.contact.MailAddress
 import com.trenako.contact.PhoneNumber
 import com.trenako.contact.WebsiteUrl
 import com.trenako.infrastructure.persistence.catalog.converters.BrandKindWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.BrandStatusWritingConverter
+import com.trenako.infrastructure.persistence.catalog.converters.MailAddressWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlWritingConverter
 import io.netty.util.internal.StringUtil
@@ -57,6 +59,7 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
         val converters = listOf(
             brandKindWritingConverter(),
             brandStatusWritingConverter(),
+            mailAddressWritingConverter(),
             phoneNumberWritingConverter(),
             websiteUrlWritingConverter()
         )
@@ -68,6 +71,9 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
 
     @Bean
     fun brandKindWritingConverter(): Converter<BrandKind, BrandKind> = BrandKindWritingConverter()
+
+    @Bean
+    fun mailAddressWritingConverter(): Converter<MailAddress, String> = MailAddressWritingConverter()
 
     @Bean
     fun phoneNumberWritingConverter(): Converter<PhoneNumber, String> = PhoneNumberWritingConverter()

@@ -22,6 +22,7 @@ package com.trenako.infrastructure.persistence.catalog.converters
 
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
+import com.trenako.contact.MailAddress
 import com.trenako.contact.PhoneNumber
 import com.trenako.contact.WebsiteUrl
 import org.springframework.core.convert.converter.Converter
@@ -42,4 +43,9 @@ class PhoneNumberWritingConverter : Converter<PhoneNumber, String> {
 @WritingConverter
 class WebsiteUrlWritingConverter : Converter<WebsiteUrl, String> {
     override fun convert(source: WebsiteUrl): String = source.value.toString()
+}
+
+@WritingConverter
+class MailAddressWritingConverter : Converter<MailAddress, String> {
+    override fun convert(source: MailAddress): String = source.value
 }
