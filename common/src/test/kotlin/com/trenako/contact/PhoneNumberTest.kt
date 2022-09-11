@@ -20,21 +20,16 @@
  */
 package com.trenako.contact
 
-/**
- * A phone number
- */
-@JvmInline
-value class PhoneNumber(val value: String)
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
-/**
- * Convert a nullable String in to a {@code PhoneNumber}.
- *
- * When the {@code String} is blank the method will return {@code null}
- *
- * @return a PhoneNumber, or {@code null} if the input is not a valid phone number
- */
-fun String?.toPhoneNumberOrNull(): PhoneNumber? = if (this.isNullOrBlank()) {
-    null
-} else {
-    PhoneNumber(this)
+@DisplayName("Phone number")
+class PhoneNumberTest {
+    @Test
+    fun `is created from nullable Strings`() {
+        "(555) 1234".toPhoneNumberOrNull() shouldBe PhoneNumber("(555) 1234")
+        "".toPhoneNumberOrNull() shouldBe null
+        null.toPhoneNumberOrNull() shouldBe null
+    }
 }
