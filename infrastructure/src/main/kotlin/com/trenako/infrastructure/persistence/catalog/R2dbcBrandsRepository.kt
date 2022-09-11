@@ -22,6 +22,7 @@
 
 package com.trenako.infrastructure.persistence.catalog
 
+import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
 import com.trenako.catalog.brands.createbrands.CreateBrandRepository
 import org.springframework.data.annotation.Id
@@ -34,7 +35,6 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
     override suspend fun exists(name: String): Boolean = repository.existsByName(name)
 
     override suspend fun insert(newBrand: CreateBrandRepository.NewBrand) {
-        val active: Boolean? = if (newBrand.status == null) { null } else { newBrand.status == BrandStatus.ACTIVE }
         val dto = BrandDto(
             brandId = newBrand.id.toString(),
             name = newBrand.name,
@@ -44,14 +44,14 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
             phoneNumber = newBrand.contactInfo?.phone?.value,
             email = newBrand.contactInfo?.email?.value,
             websiteUrl = newBrand.contactInfo?.websiteUrl?.toString(),
-            kind = newBrand.kind.name,
+            kind = newBrand.kind,
             addressStreetAddress = newBrand.address?.streetAddress,
             addressExtendedAddress = newBrand.address?.extendedAddress,
             addressCity = newBrand.address?.city,
             addressRegion = newBrand.address?.region,
             addressPostalCode = newBrand.address?.postalCode,
             addressCountryCode = newBrand.address?.country?.code,
-            active = active,
+            status = newBrand.status,
             version = 0,
             created = Instant.now()
         )
@@ -71,7 +71,7 @@ data class BrandDto(
     val registeredCompanyName: String?,
     val groupName: String?,
     val description: String?,
-    val kind: String,
+    val kind: BrandKind,
     val phoneNumber: String?,
     val websiteUrl: String?,
     val email: String?,
@@ -83,7 +83,7 @@ data class BrandDto(
     val addressPostalCode: String?,
     val addressCountryCode: String?,
 
-    val active: Boolean?,
+    val status: BrandStatus?,
     @Version
     val version: Int = 0,
     val created: Instant,
