@@ -18,7 +18,7 @@ CREATE TABLE public.brands
     address_city             varchar(50),
     address_region           varchar(50),
     address_postal_code      varchar(10),
-    address_country_code     varchar(2),
+    address_country          varchar(2),
     created                  timestamp without time zone NOT NULL,
     last_modified            timestamp without time zone,
     version                  integer                     NOT NULL DEFAULT 1,

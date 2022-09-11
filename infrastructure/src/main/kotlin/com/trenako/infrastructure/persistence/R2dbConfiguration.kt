@@ -25,8 +25,10 @@ import com.trenako.catalog.brands.BrandStatus
 import com.trenako.contact.MailAddress
 import com.trenako.contact.PhoneNumber
 import com.trenako.contact.WebsiteUrl
+import com.trenako.countries.Country
 import com.trenako.infrastructure.persistence.catalog.converters.BrandKindWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.BrandStatusWritingConverter
+import com.trenako.infrastructure.persistence.catalog.converters.CountryWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.MailAddressWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberWritingConverter
 import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlWritingConverter
@@ -59,6 +61,7 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
         val converters = listOf(
             brandKindWritingConverter(),
             brandStatusWritingConverter(),
+            countryWritingConverter(),
             mailAddressWritingConverter(),
             phoneNumberWritingConverter(),
             websiteUrlWritingConverter()
@@ -71,6 +74,9 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
 
     @Bean
     fun brandKindWritingConverter(): Converter<BrandKind, BrandKind> = BrandKindWritingConverter()
+
+    @Bean
+    fun countryWritingConverter(): Converter<Country, String> = CountryWritingConverter()
 
     @Bean
     fun mailAddressWritingConverter(): Converter<MailAddress, String> = MailAddressWritingConverter()

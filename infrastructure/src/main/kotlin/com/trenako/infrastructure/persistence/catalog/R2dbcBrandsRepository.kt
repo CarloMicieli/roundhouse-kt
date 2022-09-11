@@ -28,6 +28,7 @@ import com.trenako.catalog.brands.createbrands.CreateBrandRepository
 import com.trenako.contact.MailAddress
 import com.trenako.contact.PhoneNumber
 import com.trenako.contact.WebsiteUrl
+import com.trenako.countries.Country
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table
@@ -53,7 +54,7 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
             addressCity = newBrand.address?.city,
             addressRegion = newBrand.address?.region,
             addressPostalCode = newBrand.address?.postalCode,
-            addressCountryCode = newBrand.address?.country?.code,
+            addressCountry = newBrand.address?.country,
             status = newBrand.status,
             version = 0,
             created = Instant.now()
@@ -84,7 +85,7 @@ data class BrandDto(
     val addressCity: String?,
     val addressRegion: String?,
     val addressPostalCode: String?,
-    val addressCountryCode: String?,
+    val addressCountry: Country?,
 
     val status: BrandStatus?,
     @Version

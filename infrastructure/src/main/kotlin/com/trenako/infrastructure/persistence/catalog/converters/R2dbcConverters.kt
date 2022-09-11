@@ -25,6 +25,7 @@ import com.trenako.catalog.brands.BrandStatus
 import com.trenako.contact.MailAddress
 import com.trenako.contact.PhoneNumber
 import com.trenako.contact.WebsiteUrl
+import com.trenako.countries.Country
 import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.WritingConverter
 import org.springframework.data.r2dbc.convert.EnumWriteSupport
@@ -48,4 +49,9 @@ class WebsiteUrlWritingConverter : Converter<WebsiteUrl, String> {
 @WritingConverter
 class MailAddressWritingConverter : Converter<MailAddress, String> {
     override fun convert(source: MailAddress): String = source.value
+}
+
+@WritingConverter
+class CountryWritingConverter : Converter<Country, String> {
+    override fun convert(source: Country): String = source.code
 }
