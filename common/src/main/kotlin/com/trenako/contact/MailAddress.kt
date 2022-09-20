@@ -23,8 +23,7 @@ package com.trenako.contact
 /**
  * A mail address
  */
-@JvmInline
-value class MailAddress(val value: String) {
+data class MailAddress(val value: String) {
     init {
         require(value.isNotBlank()) { "A mail address cannot be blank" }
         require(MailAddressValidator.isValid(value)) { "$value is not a valid mail address" }

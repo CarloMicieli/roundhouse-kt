@@ -22,16 +22,16 @@ package com.trenako.infrastructure.persistence
 
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
-import com.trenako.contact.MailAddress
-import com.trenako.contact.PhoneNumber
-import com.trenako.contact.WebsiteUrl
-import com.trenako.countries.Country
-import com.trenako.infrastructure.persistence.catalog.converters.BrandKindWritingConverter
-import com.trenako.infrastructure.persistence.catalog.converters.BrandStatusWritingConverter
-import com.trenako.infrastructure.persistence.catalog.converters.CountryWritingConverter
-import com.trenako.infrastructure.persistence.catalog.converters.MailAddressWritingConverter
-import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberWritingConverter
-import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlWritingConverter
+import com.trenako.infrastructure.persistence.catalog.converters.BrandKindConverter
+import com.trenako.infrastructure.persistence.catalog.converters.BrandStatusConverter
+import com.trenako.infrastructure.persistence.catalog.converters.CountryReadConverter
+import com.trenako.infrastructure.persistence.catalog.converters.CountryWriteConverter
+import com.trenako.infrastructure.persistence.catalog.converters.MailAddressReadConverter
+import com.trenako.infrastructure.persistence.catalog.converters.MailAddressWriteConverter
+import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberReadConverter
+import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberWriteConverter
+import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlReadConverter
+import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlWriteConverter
 import io.netty.util.internal.StringUtil
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
@@ -45,7 +45,6 @@ import org.springframework.boot.autoconfigure.r2dbc.R2dbcProperties
 import org.springframework.boot.context.properties.PropertyMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.convert.converter.Converter
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.data.r2dbc.convert.R2dbcCustomConversions
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
@@ -59,33 +58,19 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
     @Bean
     override fun r2dbcCustomConversions(): R2dbcCustomConversions {
         val converters = listOf(
-            brandKindWritingConverter(),
-            brandStatusWritingConverter(),
-            countryWritingConverter(),
-            mailAddressWritingConverter(),
-            phoneNumberWritingConverter(),
-            websiteUrlWritingConverter()
+            BrandKindConverter,
+            BrandStatusConverter,
+            CountryReadConverter,
+            CountryWriteConverter,
+            MailAddressReadConverter,
+            MailAddressWriteConverter(),
+            PhoneNumberReadConverter(),
+            PhoneNumberWriteConverter(),
+            WebsiteUrlReadConverter(),
+            WebsiteUrlWriteConverter()
         )
         return R2dbcCustomConversions(storeConversions, converters)
     }
-
-    @Bean
-    fun brandStatusWritingConverter(): Converter<BrandStatus, BrandStatus> = BrandStatusWritingConverter()
-
-    @Bean
-    fun brandKindWritingConverter(): Converter<BrandKind, BrandKind> = BrandKindWritingConverter()
-
-    @Bean
-    fun countryWritingConverter(): Converter<Country, String> = CountryWritingConverter()
-
-    @Bean
-    fun mailAddressWritingConverter(): Converter<MailAddress, String> = MailAddressWritingConverter()
-
-    @Bean
-    fun phoneNumberWritingConverter(): Converter<PhoneNumber, String> = PhoneNumberWritingConverter()
-
-    @Bean
-    fun websiteUrlWritingConverter(): Converter<WebsiteUrl, String> = WebsiteUrlWritingConverter()
 
     @Bean(destroyMethod = "dispose")
     override fun connectionFactory(): ConnectionPool {

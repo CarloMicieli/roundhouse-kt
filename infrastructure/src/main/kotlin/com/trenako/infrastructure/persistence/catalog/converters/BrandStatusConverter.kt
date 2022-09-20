@@ -18,22 +18,11 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.contact
+package com.trenako.infrastructure.persistence.catalog.converters
 
-/**
- * A phone number
- */
-data class PhoneNumber(val value: String)
+import com.trenako.catalog.brands.BrandStatus
+import org.springframework.data.convert.WritingConverter
+import org.springframework.data.r2dbc.convert.EnumWriteSupport
 
-/**
- * Convert a nullable String in to a {@code PhoneNumber}.
- *
- * When the {@code String} is blank the method will return {@code null}
- *
- * @return a PhoneNumber, or {@code null} if the input is not a valid phone number
- */
-fun String?.toPhoneNumberOrNull(): PhoneNumber? = if (this.isNullOrBlank()) {
-    null
-} else {
-    PhoneNumber(this)
-}
+@WritingConverter
+object BrandStatusConverter : EnumWriteSupport<BrandStatus>()

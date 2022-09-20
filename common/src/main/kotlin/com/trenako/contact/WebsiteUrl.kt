@@ -22,8 +22,7 @@ package com.trenako.contact
 
 import java.net.URI
 
-@JvmInline
-value class WebsiteUrl(val value: URI) {
+data class WebsiteUrl(val value: URI) {
 
     companion object {
         fun tryCreate(url: String): Result<WebsiteUrl> = kotlin.runCatching {

@@ -21,37 +21,8 @@
 package com.trenako.infrastructure.persistence.catalog.converters
 
 import com.trenako.catalog.brands.BrandKind
-import com.trenako.catalog.brands.BrandStatus
-import com.trenako.contact.MailAddress
-import com.trenako.contact.PhoneNumber
-import com.trenako.contact.WebsiteUrl
-import com.trenako.countries.Country
-import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.WritingConverter
 import org.springframework.data.r2dbc.convert.EnumWriteSupport
 
 @WritingConverter
-class BrandStatusWritingConverter : EnumWriteSupport<BrandStatus>()
-
-@WritingConverter
-class BrandKindWritingConverter : EnumWriteSupport<BrandKind>()
-
-@WritingConverter
-class PhoneNumberWritingConverter : Converter<PhoneNumber, String> {
-    override fun convert(source: PhoneNumber): String = source.value
-}
-
-@WritingConverter
-class WebsiteUrlWritingConverter : Converter<WebsiteUrl, String> {
-    override fun convert(source: WebsiteUrl): String = source.value.toString()
-}
-
-@WritingConverter
-class MailAddressWritingConverter : Converter<MailAddress, String> {
-    override fun convert(source: MailAddress): String = source.value
-}
-
-@WritingConverter
-class CountryWritingConverter : Converter<Country, String> {
-    override fun convert(source: Country): String = source.code
-}
+object BrandKindConverter : EnumWriteSupport<BrandKind>()

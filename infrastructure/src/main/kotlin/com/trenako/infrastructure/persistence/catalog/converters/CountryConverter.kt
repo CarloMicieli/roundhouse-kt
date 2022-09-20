@@ -18,22 +18,19 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.contact
+package com.trenako.infrastructure.persistence.catalog.converters
 
-/**
- * A phone number
- */
-data class PhoneNumber(val value: String)
+import com.trenako.countries.Country
+import org.springframework.core.convert.converter.Converter
+import org.springframework.data.convert.ReadingConverter
+import org.springframework.data.convert.WritingConverter
 
-/**
- * Convert a nullable String in to a {@code PhoneNumber}.
- *
- * When the {@code String} is blank the method will return {@code null}
- *
- * @return a PhoneNumber, or {@code null} if the input is not a valid phone number
- */
-fun String?.toPhoneNumberOrNull(): PhoneNumber? = if (this.isNullOrBlank()) {
-    null
-} else {
-    PhoneNumber(this)
+@ReadingConverter
+object CountryReadConverter : Converter<String, Country> {
+    override fun convert(source: String): Country? = runCatching { Country.of(source) }.getOrNull()
+}
+
+@WritingConverter
+object CountryWriteConverter : Converter<Country, String> {
+    override fun convert(source: Country): String = source.code
 }
