@@ -18,9 +18,9 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.queries.criteria
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
-
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+/**
+ * A marker interface for all data types that represents a predicate for a query.
+ */
+interface Criteria

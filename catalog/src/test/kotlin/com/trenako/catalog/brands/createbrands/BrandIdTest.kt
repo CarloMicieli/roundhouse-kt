@@ -20,6 +20,7 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.catalog.brands.BrandId
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName

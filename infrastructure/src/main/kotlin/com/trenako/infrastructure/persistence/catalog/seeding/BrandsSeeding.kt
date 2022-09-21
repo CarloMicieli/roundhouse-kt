@@ -21,10 +21,11 @@
 package com.trenako.infrastructure.persistence.catalog.seeding
 
 import com.trenako.address.Address
+import com.trenako.catalog.brands.BrandId
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
-import com.trenako.catalog.brands.createbrands.BrandId
 import com.trenako.catalog.brands.createbrands.CreateBrandRepository
+import com.trenako.catalog.brands.createbrands.NewBrand
 import com.trenako.contact.ContactInfo
 import com.trenako.contact.MailAddress
 import com.trenako.contact.WebsiteUrl
@@ -62,13 +63,13 @@ class BrandsSeeding(private val createBrandRepository: CreateBrandRepository) {
         insert(vitrains())
     }
 
-    private suspend fun insert(b: CreateBrandRepository.NewBrand) {
+    private suspend fun insert(b: NewBrand) {
         createBrandRepository.insert(b)
         log.info("Brand ${b.name} inserted.")
     }
 }
 
-fun acme(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun acme(): NewBrand = NewBrand(
     id = BrandId.of("acme"),
     name = "ACME",
     registeredCompanyName = "Associazione Costruzioni Modellistiche Esatte",
@@ -91,7 +92,7 @@ fun acme(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun arnold(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun arnold(): NewBrand = NewBrand(
     id = BrandId.of("arnold"),
     name = "Arnold",
     registeredCompanyName = "Arnold model",
@@ -107,7 +108,7 @@ fun arnold(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun bemo(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun bemo(): NewBrand = NewBrand(
     id = BrandId.of("bemo"),
     name = "BEMO",
     registeredCompanyName = "BEMO Modelleisenbahnen GmbH u. Co KG",
@@ -130,7 +131,7 @@ fun bemo(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun brawa(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun brawa(): NewBrand = NewBrand(
     id = BrandId.of("brawa"),
     name = "Brawa",
     registeredCompanyName = "BRAWA Artur Braun Modellspielwarenfabrik GmbH & Co. KG",
@@ -153,7 +154,7 @@ fun brawa(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun electrotren(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun electrotren(): NewBrand = NewBrand(
     id = BrandId.of("electrotren"),
     name = "Electrotren",
     registeredCompanyName = "Electrotren",
@@ -169,7 +170,7 @@ fun electrotren(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBra
     description = ""
 )
 
-fun fleischmann(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun fleischmann(): NewBrand = NewBrand(
     id = BrandId.of("fleischmann"),
     name = "Fleischmann",
     registeredCompanyName = "Modelleisenbahn GmbH",
@@ -192,7 +193,7 @@ fun fleischmann(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBra
     description = ""
 )
 
-fun heris(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun heris(): NewBrand = NewBrand(
     id = BrandId.of("heris"),
     name = "Heris",
     registeredCompanyName = "Heris-Modelleisenbahn",
@@ -215,7 +216,7 @@ fun heris(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun jagerndorfer(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun jagerndorfer(): NewBrand = NewBrand(
     id = BrandId(Slug("Jägerndorfer Collection")),
     name = "Jägerndorfer Collection",
     registeredCompanyName = "Jägerndorfer Ges.m.b.H.",
@@ -238,7 +239,7 @@ fun jagerndorfer(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBr
     description = ""
 )
 
-fun liliput(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun liliput(): NewBrand = NewBrand(
     id = BrandId.of("liliput"),
     name = "Liliput",
     registeredCompanyName = null,
@@ -261,7 +262,7 @@ fun liliput(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun lima(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun lima(): NewBrand = NewBrand(
     id = BrandId.of("lima"),
     name = "Lima",
     registeredCompanyName = "Lima model",
@@ -277,7 +278,7 @@ fun lima(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun lsModels(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun lsModels(): NewBrand = NewBrand(
     id = BrandId.of("ls-models"),
     name = "L.S. Models",
     registeredCompanyName = "L.S. MODELS EXCLUSIVE SPRL",
@@ -300,7 +301,7 @@ fun lsModels(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun maerklin(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun maerklin(): NewBrand = NewBrand(
     id = BrandId(Slug("Märklin")),
     name = "Märklin",
     registeredCompanyName = "Gebr. Märklin & Cie. GmbH",
@@ -323,7 +324,7 @@ fun maerklin(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun oskar(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun oskar(): NewBrand = NewBrand(
     id = BrandId.of("oskar"),
     name = "Os.Kar",
     registeredCompanyName = "Os.kar international",
@@ -339,7 +340,7 @@ fun oskar(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun piko(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun piko(): NewBrand = NewBrand(
     id = BrandId.of("piko"),
     name = "PIKO",
     registeredCompanyName = "PIKO Spielwaren GmbH",
@@ -362,7 +363,7 @@ fun piko(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun pirata(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun pirata(): NewBrand = NewBrand(
     id = BrandId.of("pirata"),
     name = "Pi.R.A.T.A.",
     registeredCompanyName = "PIKO Spielwaren GmbH",
@@ -385,7 +386,7 @@ fun pirata(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun rivarossi(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun rivarossi(): NewBrand = NewBrand(
     id = BrandId.of("rivarossi"),
     name = "Rivarossi",
     registeredCompanyName = "Rivarossi",
@@ -401,7 +402,7 @@ fun rivarossi(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand
     description = ""
 )
 
-fun roco(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun roco(): NewBrand = NewBrand(
     id = BrandId.of("roco"),
     name = "Roco",
     registeredCompanyName = "Modelleisenbahn GmbH",
@@ -424,7 +425,7 @@ fun roco(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun sudexpress(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun sudexpress(): NewBrand = NewBrand(
     id = BrandId.of("sudexpress-models"),
     name = "Sudexpress models",
     registeredCompanyName = "AVALIARE Engenharia Lda.",
@@ -447,7 +448,7 @@ fun sudexpress(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBran
     description = ""
 )
 
-fun trix(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun trix(): NewBrand = NewBrand(
     id = BrandId(Slug("trix")),
     name = "Trix",
     registeredCompanyName = "Gebr. Märklin & Cie. GmbH",
@@ -470,7 +471,7 @@ fun trix(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
     description = ""
 )
 
-fun vitrains(): CreateBrandRepository.NewBrand = CreateBrandRepository.NewBrand(
+fun vitrains(): NewBrand = NewBrand(
     id = BrandId.of("vitrains"),
     name = "ViTrains",
     registeredCompanyName = "Modelleisenbahn GmbH",

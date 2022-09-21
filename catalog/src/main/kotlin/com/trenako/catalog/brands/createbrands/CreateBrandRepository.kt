@@ -20,11 +20,6 @@
  */
 package com.trenako.catalog.brands.createbrands
 
-import com.trenako.address.Address
-import com.trenako.catalog.brands.BrandKind
-import com.trenako.catalog.brands.BrandStatus
-import com.trenako.contact.ContactInfo
-
 /**
  * A repository for the {@code CreateBrandUseCase} to handle all persistence requirements
  */
@@ -45,19 +40,4 @@ interface CreateBrandRepository {
      * @return either an {@code Error} or Unit
      */
     suspend fun insert(newBrand: NewBrand)
-
-    /**
-     * A DTO for a new brand
-     */
-    data class NewBrand(
-        val id: BrandId,
-        val name: String,
-        val registeredCompanyName: String?,
-        val groupName: String?,
-        val description: String?,
-        val kind: BrandKind,
-        val contactInfo: ContactInfo?,
-        val address: Address?,
-        val status: BrandStatus?
-    )
 }

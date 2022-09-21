@@ -18,9 +18,29 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.util.Slug
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+/**
+ * It represents a brand unique identifier. The value should be url encoded.
+ */
+data class BrandId(private val value: Slug) : Comparable<BrandId> {
+    override fun compareTo(other: BrandId): Int = this.toString().compareTo(other.toString())
+
+    override fun toString(): String = value.toString()
+
+    companion object {
+        /**
+         * Creates a new {@code BrandId} from the input string.
+         *
+         * Throws an {@code IllegalArgumentException} when the input string is blank.
+         *
+         * @return a new {@code BrandId}
+         */
+        fun of(value: String): BrandId {
+            require(value.isNotBlank()) { "Brand id cannot be blank" }
+            return BrandId(Slug(value))
+        }
+    }
+}

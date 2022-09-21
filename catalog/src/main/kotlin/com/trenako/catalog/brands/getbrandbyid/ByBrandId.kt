@@ -18,9 +18,9 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands.getbrandbyid
 
 import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.queries.criteria.Criteria
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+data class ByBrandId(val brandId: BrandId) : Criteria

@@ -18,9 +18,8 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.web.api.catalog.brands
+package com.trenako
 
-import org.junit.jupiter.api.DisplayName
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
@@ -28,17 +27,20 @@ import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.testcontainers.containers.PostgreSQLContainer
-import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
-@DisplayName("POST /api/brands")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("it")
 @Testcontainers
 abstract class AbstractWebApiTest {
+
     companion object {
-        @Container
-        private val postgresContainer = PostgreSQLContainer<Nothing>("postgres:14.5-alpine")
+        private val postgresContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:14.5-alpine")
+            .withReuse(true)
+
+        init {
+            postgresContainer.start()
+        }
 
         @DynamicPropertySource
         @JvmStatic

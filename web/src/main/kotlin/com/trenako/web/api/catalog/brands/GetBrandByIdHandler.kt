@@ -18,9 +18,26 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.web.api.catalog.brands
 
 import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.catalog.brands.BrandView
+import com.trenako.catalog.brands.getbrandbyid.ByBrandId
+import com.trenako.catalog.brands.getbrandbyid.GetBrandByIdQuery
+import com.trenako.web.api.queries.QueryResultPresenter
+import com.trenako.web.api.queries.SingleResultQueryHandler
+import org.springframework.web.reactive.function.server.ServerRequest
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+class GetBrandByIdHandler(
+    override val query: GetBrandByIdQuery,
+    override val presenter: QueryResultPresenter<BrandView>
+) : SingleResultQueryHandler<ByBrandId, BrandView> {
+    override suspend fun extractCriteria(serverRequest: ServerRequest): ByBrandId? {
+        val pathVariable = serverRequest.pathVariable("brand")
+        return if (pathVariable.isBlank()) {
+            null
+        } else {
+            ByBrandId(BrandId.of(pathVariable))
+        }
+    }
+}

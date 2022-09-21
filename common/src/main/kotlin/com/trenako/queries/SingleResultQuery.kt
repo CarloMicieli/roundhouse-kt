@@ -18,9 +18,17 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.queries
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.queries.criteria.Criteria
+import com.trenako.queries.result.SingleResult
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+/**
+ * A query that can produce one or zero results.
+ *
+ * @param <C> the criteria data type
+ * @param <T> the view model data type
+ */
+interface SingleResultQuery<C : Criteria, T> : Query<C, T> {
+    suspend fun execute(criteria: C): SingleResult<T?>
+}

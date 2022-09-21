@@ -22,6 +22,8 @@ package com.trenako.infrastructure.persistence
 
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
+import com.trenako.infrastructure.persistence.catalog.converters.BrandIdReadConverter
+import com.trenako.infrastructure.persistence.catalog.converters.BrandIdWriteConverter
 import com.trenako.infrastructure.persistence.catalog.converters.BrandKindConverter
 import com.trenako.infrastructure.persistence.catalog.converters.BrandStatusConverter
 import com.trenako.infrastructure.persistence.catalog.converters.CountryReadConverter
@@ -58,6 +60,8 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
     @Bean
     override fun r2dbcCustomConversions(): R2dbcCustomConversions {
         val converters = listOf(
+            BrandIdReadConverter,
+            BrandIdWriteConverter,
             BrandKindConverter,
             BrandStatusConverter,
             CountryReadConverter,

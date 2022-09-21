@@ -18,9 +18,19 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands.getbrandbyid
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.catalog.brands.BrandView
+import com.trenako.queries.SingleResultQuery
+import com.trenako.queries.result.SingleResult
+import com.trenako.queries.result.toQueryError
+import com.trenako.queries.result.toSingleResult
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+class GetBrandByIdQuery(private val repository: GetBrandByIdRepository) : SingleResultQuery<ByBrandId, BrandView> {
+    override suspend fun execute(criteria: ByBrandId): SingleResult<BrandView?> = try {
+        val id = criteria.brandId
+        repository.findById(id).toSingleResult()
+    } catch (ex: Exception) {
+        ex.toQueryError()
+    }
+}

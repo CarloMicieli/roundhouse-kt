@@ -20,6 +20,7 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.catalog.brands.BrandId
 import com.trenako.catalog.brands.BrandStatus
 import com.trenako.usecases.UseCase
 import com.trenako.usecases.UseCaseResult
@@ -48,8 +49,8 @@ class CreateBrandUseCase(private val validator: Validator, private val repositor
         return UseCaseResult.withOutput(BrandCreated(newBrand.id, LocalDateTime.now()))
     }
 
-    private fun CreateBrand.toNewBrand(): CreateBrandRepository.NewBrand {
-        return CreateBrandRepository.NewBrand(
+    private fun CreateBrand.toNewBrand(): NewBrand {
+        return NewBrand(
             id = BrandId.of(this.name),
             name = this.name,
             registeredCompanyName = this.registeredCompanyName,

@@ -20,11 +20,11 @@
  */
 package com.trenako.infrastructure.persistence.catalog.seeding
 
-import com.trenako.infrastructure.persistence.catalog.R2dbcBrandsRepository
+import com.trenako.infrastructure.persistence.catalog.BrandsRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class CatalogSeeding(private val brands: R2dbcBrandsRepository) {
+class CatalogSeeding(private val brands: BrandsRepository) {
     companion object {
         val log: Logger = LoggerFactory.getLogger(CatalogSeeding::class.java)
     }

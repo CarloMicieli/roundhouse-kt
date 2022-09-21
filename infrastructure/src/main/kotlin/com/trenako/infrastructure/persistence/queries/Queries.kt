@@ -18,9 +18,16 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+@file:Suppress("ktlint:filename")
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+package com.trenako.infrastructure.persistence.queries
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+import org.springframework.data.relational.core.query.CriteriaDefinition
+import org.springframework.data.relational.core.query.Query
+
+/**
+ * Build a select query which returns a single result
+ * @param criteriaSupplier the criteria supplier
+ * @return a {@code Query}
+ */
+fun selectOne(criteriaSupplier: () -> CriteriaDefinition): Query = Query.query(criteriaSupplier())

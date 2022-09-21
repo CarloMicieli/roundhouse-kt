@@ -18,9 +18,19 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.infrastructure.persistence.catalog.converters
 
 import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import org.springframework.core.convert.converter.Converter
+import org.springframework.data.convert.ReadingConverter
+import org.springframework.data.convert.WritingConverter
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+@WritingConverter
+object BrandIdWriteConverter : Converter<BrandId, String> {
+    override fun convert(source: BrandId): String = source.toString()
+}
+
+@ReadingConverter
+object BrandIdReadConverter : Converter<String, BrandId> {
+    override fun convert(source: String): BrandId = BrandId.of(source)
+}

@@ -43,12 +43,14 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 class BrandRoutingTest {
 
     private lateinit var createBrandHandler: CreateBrandHandler
+    private lateinit var getBrandByIdHandler: GetBrandByIdHandler
     private lateinit var webclient: WebTestClient
 
     @BeforeAll
     fun setup() {
         createBrandHandler = mock()
-        webclient = WebTestClient.bindToRouterFunction(Brands.routes(createBrandHandler)).build()
+        getBrandByIdHandler = mock()
+        webclient = WebTestClient.bindToRouterFunction(Brands.routes(createBrandHandler, getBrandByIdHandler)).build()
     }
 
     @Test
@@ -63,6 +65,18 @@ class BrandRoutingTest {
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(bodyValue)
+            .exchange()
+            .expectStatus().isOk
+    }
+
+    @Test
+    @DisplayName("GET /api/brands/{brand} is mapped correctly")
+    fun getBrandByIdTest() = runTest {
+        whenever(getBrandByIdHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+
+        webclient.get()
+            .uri("/api/brands/{brand}", "acme")
+            .accept(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus().isOk
     }

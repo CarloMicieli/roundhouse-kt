@@ -18,9 +18,8 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.metadata
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import java.time.Instant
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+data class MetadataInfo(val version: Int = 0, val createdAt: Instant, val lastModified: Instant? = null)

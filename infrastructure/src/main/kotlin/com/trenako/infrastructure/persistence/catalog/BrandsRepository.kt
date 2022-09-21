@@ -22,25 +22,34 @@
 
 package com.trenako.infrastructure.persistence.catalog
 
-import com.trenako.catalog.brands.BrandKind
-import com.trenako.catalog.brands.BrandStatus
+import com.trenako.catalog.brands.BrandId
+import com.trenako.catalog.brands.BrandView
 import com.trenako.catalog.brands.createbrands.CreateBrandRepository
-import com.trenako.contact.MailAddress
-import com.trenako.contact.PhoneNumber
-import com.trenako.contact.WebsiteUrl
-import com.trenako.countries.Country
-import org.springframework.data.annotation.Id
-import org.springframework.data.annotation.Version
-import org.springframework.data.relational.core.mapping.Table
-import org.springframework.data.repository.kotlin.CoroutineCrudRepository
-import java.time.Instant
+import com.trenako.catalog.brands.createbrands.NewBrand
+import com.trenako.catalog.brands.getbrandbyid.GetBrandByIdRepository
+import com.trenako.infrastructure.persistence.queries.selectOne
+import kotlinx.coroutines.reactive.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
+import org.springframework.data.relational.core.query.Criteria.where
+import java.time.Clock
 
-class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepository) : CreateBrandRepository {
-    override suspend fun exists(name: String): Boolean = repository.existsByName(name)
+class BrandsRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, private val clock: Clock) :
+    CreateBrandRepository,
+    GetBrandByIdRepository {
 
-    override suspend fun insert(newBrand: CreateBrandRepository.NewBrand) {
-        val dto = BrandDto(
-            brandId = newBrand.id.toString(),
+    override suspend fun exists(name: String): Boolean {
+        val query = selectOne {
+            where("name").`is`(name)
+        }
+        return r2dbcEntityTemplate
+            .exists(query, ENTITY)
+            .awaitSingle()
+    }
+
+    override suspend fun insert(newBrand: NewBrand) {
+        val newRow = BrandRow(
+            brandId = newBrand.id,
             name = newBrand.name,
             registeredCompanyName = newBrand.registeredCompanyName,
             groupName = newBrand.groupName,
@@ -57,39 +66,23 @@ class R2dbcBrandsRepository(private val repository: CoroutineBrandsCrudRepositor
             addressCountry = newBrand.address?.country,
             status = newBrand.status,
             version = 0,
-            created = Instant.now()
+            created = clock.instant(),
+            lastModified = null
         )
-        repository.save(dto)
+        r2dbcEntityTemplate.insert(newRow).awaitSingle()
+    }
+
+    override suspend fun findById(brandId: BrandId): BrandView? {
+        val query = selectOne {
+            where("brand_id").`is`(brandId.toString())
+        }
+        return r2dbcEntityTemplate
+            .selectOne(query, ENTITY)
+            .map { it.toView() }
+            .awaitSingleOrNull()
+    }
+
+    companion object {
+        private val ENTITY: Class<BrandRow> = BrandRow::class.java
     }
 }
-
-interface CoroutineBrandsCrudRepository : CoroutineCrudRepository<BrandDto, String> {
-    suspend fun existsByName(name: String): Boolean
-}
-
-@Table("brands")
-data class BrandDto(
-    @Id
-    val brandId: String,
-    val name: String,
-    val registeredCompanyName: String?,
-    val groupName: String?,
-    val description: String?,
-    val kind: BrandKind,
-    val phoneNumber: PhoneNumber?,
-    val websiteUrl: WebsiteUrl?,
-    val email: MailAddress?,
-
-    val addressStreetAddress: String?,
-    val addressExtendedAddress: String?,
-    val addressCity: String?,
-    val addressRegion: String?,
-    val addressPostalCode: String?,
-    val addressCountry: Country?,
-
-    val status: BrandStatus?,
-    @Version
-    var version: Int = 0,
-    val created: Instant,
-    val lastModified: Instant? = null
-)

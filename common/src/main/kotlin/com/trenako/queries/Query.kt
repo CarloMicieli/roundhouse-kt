@@ -18,9 +18,17 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.queries
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.queries.criteria.Criteria
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+/**
+ * It represents a generic {@code Query}.
+ *
+ * <p>Queries never modify the database. A query returns a view models that does not encapsulate any
+ * domain knowledge.
+ *
+ * @param <C> the {@code Criteria} data type
+ * @param <T> the view model data type
+ */
+interface Query<C : Criteria, T>

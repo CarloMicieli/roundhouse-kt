@@ -18,30 +18,11 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands.getbrandbyid
 
-import com.trenako.util.Slug
+import com.trenako.catalog.brands.BrandId
+import com.trenako.catalog.brands.BrandView
 
-/**
- * It represents a brand unique identifier. The value should be url encoded.
- */
-@JvmInline
-value class BrandId(private val value: Slug) : Comparable<BrandId> {
-    override fun compareTo(other: BrandId): Int = this.toString().compareTo(other.toString())
-
-    override fun toString(): String = value.toString()
-
-    companion object {
-        /**
-         * Creates a new {@code BrandId} from the input string.
-         *
-         * Throws an {@code IllegalArgumentException} when the input string is blank.
-         *
-         * @return a new {@code BrandId}
-         */
-        fun of(value: String): BrandId {
-            require(value.isNotBlank()) { "Brand id cannot be blank" }
-            return BrandId(Slug(value))
-        }
-    }
+interface GetBrandByIdRepository {
+    suspend fun findById(brandId: BrandId): BrandView?
 }

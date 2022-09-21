@@ -18,9 +18,16 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.queries.errors
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import java.lang.Exception
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+sealed interface QueryError {
+
+    val reason: String
+
+    data class DatabaseError(val exception: Exception) : QueryError {
+        override val reason: String
+            get() = exception.message ?: "An error has occurred"
+    }
+}

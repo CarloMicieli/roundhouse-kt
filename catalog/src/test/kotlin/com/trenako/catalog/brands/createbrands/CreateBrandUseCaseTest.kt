@@ -20,6 +20,7 @@
  */
 package com.trenako.catalog.brands.createbrands
 
+import com.trenako.catalog.brands.BrandId
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.usecases.UseCaseResult
 import io.kotest.matchers.shouldBe

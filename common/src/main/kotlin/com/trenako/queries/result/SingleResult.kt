@@ -18,9 +18,19 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.queries.result
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.queries.errors.QueryError
+import java.lang.Exception
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+/**
+ * A query result: either a single value or an error
+ */
+sealed interface SingleResult<T> {
+    data class Result<T>(val value: T?) : SingleResult<T>
+    data class Error<T>(val queryError: QueryError) : SingleResult<T>
+}
+
+fun <T> T?.toSingleResult(): SingleResult<T> = SingleResult.Result(this)
+
+fun <T> Exception.toQueryError(): SingleResult<T> = SingleResult.Error(QueryError.DatabaseError(this))

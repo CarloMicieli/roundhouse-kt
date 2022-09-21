@@ -18,9 +18,21 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.catalog.brands.createbrands
+package com.trenako.catalog.brands
 
-import com.trenako.catalog.brands.BrandId
-import java.time.LocalDateTime
+import com.trenako.address.Address
+import com.trenako.contact.ContactInfo
+import com.trenako.metadata.MetadataInfo
 
-data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)
+data class BrandView(
+    val id: BrandId,
+    val name: String,
+    val registeredCompanyName: String?,
+    val groupName: String?,
+    val description: String?,
+    val kind: BrandKind,
+    val contactInfo: ContactInfo?,
+    val address: Address?,
+    val status: BrandStatus?,
+    val metadata: MetadataInfo
+)
