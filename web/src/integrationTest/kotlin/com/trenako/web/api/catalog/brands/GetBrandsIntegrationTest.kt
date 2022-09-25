@@ -18,16 +18,22 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.queries.errors
+package com.trenako.web.api.catalog.brands
 
-import java.lang.Exception
+import com.trenako.AbstractWebApiTest
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.http.MediaType
 
-sealed interface QueryError {
-
-    val reason: String
-
-    data class DatabaseError(val exception: Exception) : QueryError {
-        override val reason: String
-            get() = "An error has occurred"
+@DisplayName("GET /api/brands")
+class GetBrandsIntegrationTest : AbstractWebApiTest() {
+    @Test
+    fun `should return OK when the brand is found`() {
+        webClient.get()
+            .uri("/api/brands")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
     }
 }

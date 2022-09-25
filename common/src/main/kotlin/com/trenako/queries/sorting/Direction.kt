@@ -18,16 +18,19 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.queries.errors
+package com.trenako.queries.sorting
 
-import java.lang.Exception
+/**
+ * Sorting direction: either ascending or descending
+ */
+enum class Direction {
+    /**
+     * The ascending sorting direction
+     */
+    ASC,
 
-sealed interface QueryError {
-
-    val reason: String
-
-    data class DatabaseError(val exception: Exception) : QueryError {
-        override val reason: String
-            get() = "An error has occurred"
-    }
+    /**
+     * The descending sorting direction
+     */
+    DESC
 }

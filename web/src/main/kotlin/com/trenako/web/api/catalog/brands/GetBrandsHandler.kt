@@ -18,16 +18,21 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.queries.errors
+package com.trenako.web.api.catalog.brands
 
-import java.lang.Exception
+import com.trenako.catalog.brands.getbrands.GetBrandsQuery
+import com.trenako.queries.sorting.Direction
+import com.trenako.queries.sorting.Sorting
+import com.trenako.web.api.page
+import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
 
-sealed interface QueryError {
+class GetBrandsHandler(private val getBrandsQuery: GetBrandsQuery, private val presenter: GetBrandsPresenter) {
+    suspend fun handle(serverRequest: ServerRequest): ServerResponse {
+        val page = serverRequest.page()
+        val sorting = Sorting.by("brand_id", Direction.ASC).build()
 
-    val reason: String
-
-    data class DatabaseError(val exception: Exception) : QueryError {
-        override val reason: String
-            get() = "An error has occurred"
+        val result = getBrandsQuery.execute(page, sorting)
+        return presenter.toServerResponse(result)
     }
 }

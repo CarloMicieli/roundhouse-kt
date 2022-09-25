@@ -18,16 +18,15 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.queries.errors
+package com.trenako.queries
 
-import java.lang.Exception
+import com.trenako.queries.pagination.Page
+import com.trenako.queries.result.PaginatedResultSet
+import com.trenako.queries.sorting.Sorting
 
-sealed interface QueryError {
-
-    val reason: String
-
-    data class DatabaseError(val exception: Exception) : QueryError {
-        override val reason: String
-            get() = "An error has occurred"
-    }
+interface PaginatedQuery<T> : Query<Nothing, T> {
+    /**
+     * Execute this `Query` in order to select one page of the corresponding data.
+     */
+    suspend fun execute(currentPage: Page, orderBy: Sorting = Sorting.DEFAULT_SORT): PaginatedResultSet<T>
 }

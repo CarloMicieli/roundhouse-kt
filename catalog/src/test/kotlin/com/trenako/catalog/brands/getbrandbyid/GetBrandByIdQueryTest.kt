@@ -84,7 +84,7 @@ class GetBrandByIdQueryTest {
 
         val errorResult = result as? SingleResult.Error
         errorResult shouldNotBe null
-        errorResult?.queryError?.reason shouldBe "Ops, something went wrong"
+        errorResult?.queryError?.reason shouldBe "An error has occurred"
     }
 
     private fun brandView(id: BrandId) = BrandView(

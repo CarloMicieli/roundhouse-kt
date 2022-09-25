@@ -22,6 +22,7 @@ package com.trenako.web.api.catalog.brands
 
 import com.trenako.catalog.brands.createbrands.CreateBrandUseCase
 import com.trenako.catalog.brands.getbrandbyid.GetBrandByIdQuery
+import com.trenako.catalog.brands.getbrands.GetBrandsQuery
 import com.trenako.infrastructure.persistence.catalog.BrandsRepository
 import org.springframework.context.support.beans
 import org.springframework.http.MediaType
@@ -39,21 +40,31 @@ object Brands {
         bean<GetBrandByIdQuery>()
         bean<GetBrandByIdPresenter>()
 
+        bean<GetBrandsHandler>()
+        bean<GetBrandsQuery>()
+        bean<GetBrandsPresenter>()
+
         bean<BrandsRepository>()
 
         bean {
             val createBrandHandler = ref<CreateBrandHandler>()
             val getBrandByIdHandler = ref<GetBrandByIdHandler>()
-            routes(createBrandHandler, getBrandByIdHandler)
+            val getBrandsHandler = ref<GetBrandsHandler>()
+            routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)
         }
     }
 
-    internal fun routes(createBrandHandler: CreateBrandHandler, getBrandByIdHandler: GetBrandByIdHandler): RouterFunction<ServerResponse> = coRouter {
+    internal fun routes(
+        createBrandHandler: CreateBrandHandler,
+        getBrandByIdHandler: GetBrandByIdHandler,
+        getBrandsHandler: GetBrandsHandler
+    ): RouterFunction<ServerResponse> = coRouter {
         "/api/brands".nest {
             accept(MediaType.APPLICATION_JSON).nest {
                 POST("", createBrandHandler::handle)
             }
 
+            GET("", getBrandsHandler::handle)
             GET("{brand}", getBrandByIdHandler::handle)
         }
     }

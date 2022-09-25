@@ -18,16 +18,11 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.queries.errors
+package com.trenako.queries.sorting
 
-import java.lang.Exception
-
-sealed interface QueryError {
-
-    val reason: String
-
-    data class DatabaseError(val exception: Exception) : QueryError {
-        override val reason: String
-            get() = "An error has occurred"
-    }
-}
+/**
+ * A sorting criteria, typically includes a property name and the sorting direction (asc,desc).
+ * @param propertyName the property name used for the sorting criteria
+ * @param direction the sorting direction
+ */
+data class SortCriteria(val propertyName: String, val direction: Direction)

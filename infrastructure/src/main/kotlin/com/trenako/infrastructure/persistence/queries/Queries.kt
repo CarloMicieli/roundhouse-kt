@@ -18,12 +18,38 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-@file:Suppress("ktlint:filename")
-
 package com.trenako.infrastructure.persistence.queries
 
+import com.trenako.queries.pagination.Page
+import com.trenako.queries.sorting.Direction
+import com.trenako.queries.sorting.SortCriteria
+import com.trenako.queries.sorting.Sorting
+import org.springframework.data.domain.Sort
+import org.springframework.data.relational.core.query.Criteria
 import org.springframework.data.relational.core.query.CriteriaDefinition
 import org.springframework.data.relational.core.query.Query
+
+/**
+ * Build a select query with pagination, sorting and a criteria
+ * @param page the paging
+ * @param sort the query sorting
+ * @return a {@code Query}
+ */
+fun select(page: Page = Page.DEFAULT_PAGE, sort: Sorting = Sorting.DEFAULT_SORT): Query = select(page, sort) { Criteria.empty() }
+
+/**
+ * Build a select query with pagination, sorting and a criteria
+ * @param page the paging
+ * @param sort the query sorting
+ * @param criteriaSupplier the criteria supplier
+ * @return a {@code Query}
+ */
+fun select(page: Page = Page.DEFAULT_PAGE, sort: Sorting = Sorting.DEFAULT_SORT, criteriaSupplier: () -> CriteriaDefinition): Query {
+    return Query.query(criteriaSupplier())
+        .sort(sort.toSort())
+        .limit(page.limit)
+        .offset(page.start.toLong())
+}
 
 /**
  * Build a select query which returns a single result
@@ -31,3 +57,25 @@ import org.springframework.data.relational.core.query.Query
  * @return a {@code Query}
  */
 fun selectOne(criteriaSupplier: () -> CriteriaDefinition): Query = Query.query(criteriaSupplier())
+
+private fun Sorting.toSort(): Sort {
+    return if (this.size == 0) {
+        Sort.unsorted()
+    } else {
+        val first = this.criteriaList.first()
+        val others = this.criteriaList.drop(1)
+
+        var output: Sort = Sort.by(first.toSortDirection(), first.propertyName)
+
+        others.forEach {
+            output = output.and(Sort.by(it.toSortDirection(), it.propertyName))
+        }
+
+        return output
+    }
+}
+
+private fun SortCriteria.toSortDirection(): Sort.Direction = when (this.direction) {
+    Direction.ASC -> Sort.Direction.ASC
+    Direction.DESC -> Sort.Direction.DESC
+}

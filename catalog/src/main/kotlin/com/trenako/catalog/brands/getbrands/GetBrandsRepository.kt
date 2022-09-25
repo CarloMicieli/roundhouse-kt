@@ -18,16 +18,13 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.queries.errors
+package com.trenako.catalog.brands.getbrands
 
-import java.lang.Exception
+import com.trenako.catalog.brands.BrandView
+import com.trenako.queries.pagination.Page
+import com.trenako.queries.sorting.Sorting
+import kotlinx.coroutines.flow.Flow
 
-sealed interface QueryError {
-
-    val reason: String
-
-    data class DatabaseError(val exception: Exception) : QueryError {
-        override val reason: String
-            get() = "An error has occurred"
-    }
+interface GetBrandsRepository {
+    fun findAll(currentPage: Page, orderBy: Sorting): Flow<BrandView>
 }

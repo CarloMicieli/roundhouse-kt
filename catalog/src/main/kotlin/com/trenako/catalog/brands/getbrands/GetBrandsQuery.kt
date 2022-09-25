@@ -18,16 +18,21 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.queries.errors
+package com.trenako.catalog.brands.getbrands
 
-import java.lang.Exception
+import com.trenako.catalog.brands.BrandView
+import com.trenako.queries.PaginatedQuery
+import com.trenako.queries.errors.QueryError
+import com.trenako.queries.pagination.Page
+import com.trenako.queries.result.PaginatedResultSet
+import com.trenako.queries.sorting.Sorting
+import kotlinx.coroutines.flow.toList
 
-sealed interface QueryError {
-
-    val reason: String
-
-    data class DatabaseError(val exception: Exception) : QueryError {
-        override val reason: String
-            get() = "An error has occurred"
+class GetBrandsQuery(private val getBrandsRepository: GetBrandsRepository) : PaginatedQuery<BrandView> {
+    override suspend fun execute(currentPage: Page, orderBy: Sorting): PaginatedResultSet<BrandView> = try {
+        val results: List<BrandView> = getBrandsRepository.findAll(currentPage, orderBy).toList()
+        PaginatedResultSet.Results(currentPage, results)
+    } catch (ex: Exception) {
+        PaginatedResultSet.Error(QueryError.DatabaseError(ex))
     }
 }

@@ -44,13 +44,15 @@ class BrandRoutingTest {
 
     private lateinit var createBrandHandler: CreateBrandHandler
     private lateinit var getBrandByIdHandler: GetBrandByIdHandler
+    private lateinit var getBrandsHandler: GetBrandsHandler
     private lateinit var webclient: WebTestClient
 
     @BeforeAll
     fun setup() {
         createBrandHandler = mock()
         getBrandByIdHandler = mock()
-        webclient = WebTestClient.bindToRouterFunction(Brands.routes(createBrandHandler, getBrandByIdHandler)).build()
+        getBrandsHandler = mock()
+        webclient = WebTestClient.bindToRouterFunction(Brands.routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)).build()
     }
 
     @Test
@@ -76,6 +78,18 @@ class BrandRoutingTest {
 
         webclient.get()
             .uri("/api/brands/{brand}", "acme")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isOk
+    }
+
+    @Test
+    @DisplayName("GET /api/brands is mapped correctly")
+    fun getBrandsTest() = runTest {
+        whenever(getBrandsHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+
+        webclient.get()
+            .uri("/api/brands")
             .accept(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus().isOk

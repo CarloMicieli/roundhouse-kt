@@ -18,8 +18,6 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-@file:Suppress("SpringDataRepositoryMethodReturnTypeInspection")
-
 package com.trenako.infrastructure.persistence.catalog
 
 import com.trenako.catalog.brands.BrandId
@@ -27,7 +25,13 @@ import com.trenako.catalog.brands.BrandView
 import com.trenako.catalog.brands.createbrands.CreateBrandRepository
 import com.trenako.catalog.brands.createbrands.NewBrand
 import com.trenako.catalog.brands.getbrandbyid.GetBrandByIdRepository
+import com.trenako.catalog.brands.getbrands.GetBrandsRepository
+import com.trenako.infrastructure.persistence.queries.select
 import com.trenako.infrastructure.persistence.queries.selectOne
+import com.trenako.queries.pagination.Page
+import com.trenako.queries.sorting.Sorting
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
@@ -36,7 +40,8 @@ import java.time.Clock
 
 class BrandsRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, private val clock: Clock) :
     CreateBrandRepository,
-    GetBrandByIdRepository {
+    GetBrandByIdRepository,
+    GetBrandsRepository {
 
     override suspend fun exists(name: String): Boolean {
         val query = selectOne {
@@ -80,6 +85,14 @@ class BrandsRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, pri
             .selectOne(query, ENTITY)
             .map { it.toView() }
             .awaitSingleOrNull()
+    }
+
+    override fun findAll(currentPage: Page, orderBy: Sorting): Flow<BrandView> {
+        val query = select(currentPage, orderBy)
+        return r2dbcEntityTemplate
+            .select(query, ENTITY)
+            .map { it.toView() }
+            .asFlow()
     }
 
     companion object {
