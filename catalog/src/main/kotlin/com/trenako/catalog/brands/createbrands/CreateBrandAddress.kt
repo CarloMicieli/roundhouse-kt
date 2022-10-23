@@ -23,8 +23,8 @@ package com.trenako.catalog.brands.createbrands
 import com.trenako.address.Address
 import com.trenako.countries.Country
 import com.trenako.validation.annotation.constraints.ISOCountryCode
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
 
 class CreateBrandAddress(
     @field:NotBlank

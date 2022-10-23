@@ -24,6 +24,7 @@ import com.trenako.catalog.brands.BrandId
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.usecases.UseCaseResult
 import io.kotest.matchers.shouldBe
+import jakarta.validation.Validation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
@@ -33,7 +34,6 @@ import org.junit.jupiter.api.TestInstance
 import org.mockito.kotlin.doSuspendableAnswer
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import javax.validation.Validation
 
 @DisplayName("Create brand use case")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

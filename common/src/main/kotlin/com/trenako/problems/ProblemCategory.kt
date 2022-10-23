@@ -27,5 +27,5 @@ enum class ProblemCategory {
     AlreadyExists,
     Error,
     InvalidRequest,
-    UnprocessableEntity,
+    UnprocessableEntity
 }

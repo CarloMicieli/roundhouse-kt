@@ -27,8 +27,8 @@ import com.trenako.usecases.UseCaseResult
 import com.trenako.util.EnumUtils.toEnum
 import com.trenako.validation.Validated
 import com.trenako.validation.inputValidator
+import jakarta.validation.Validator
 import java.time.LocalDateTime
-import javax.validation.Validator
 
 class CreateBrandUseCase(private val validator: Validator, private val repository: CreateBrandRepository) : UseCase<CreateBrand, BrandCreated, CreateBrandError> {
     override suspend fun execute(input: CreateBrand): UseCaseResult<BrandCreated, CreateBrandError> {

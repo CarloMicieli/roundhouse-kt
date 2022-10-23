@@ -21,9 +21,9 @@
 package com.trenako.validation.annotation
 
 import com.trenako.validation.annotation.constraints.ValidWebsiteUrl
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
 import java.net.URI
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
 
 class ValidWebsiteUrlValidator : ConstraintValidator<ValidWebsiteUrl, String> {
 

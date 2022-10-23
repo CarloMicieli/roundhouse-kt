@@ -4,3 +4,4 @@ spring:
     url: jdbc:${DB_URL:postgresql://localhost:5432/trenako}
     user: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:mysecretpassword}
+    change-log: classpath:db/changelog/db.changelog-master.xml

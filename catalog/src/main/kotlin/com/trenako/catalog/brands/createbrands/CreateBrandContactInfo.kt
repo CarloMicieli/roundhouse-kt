@@ -25,8 +25,8 @@ import com.trenako.contact.MailAddress
 import com.trenako.contact.PhoneNumber
 import com.trenako.contact.WebsiteUrl
 import com.trenako.validation.annotation.constraints.ValidWebsiteUrl
+import jakarta.validation.constraints.Size
 import java.net.URI
-import javax.validation.constraints.Size
 
 data class CreateBrandContactInfo(
     @field:Size(min = 3, max = 100)

@@ -2,7 +2,6 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
@@ -60,7 +59,6 @@ testing {
                         maxHeapSize = "2G"
 
                         failFast = false
-                        ignoreFailures = true
 
                         testLogging {
                             showStandardStreams = false
@@ -79,12 +77,6 @@ testing {
 
 tasks.named("check") {
     dependsOn(testing.suites.named("integrationTest"))
-}
-
-tasks.named<BootBuildImage>("bootBuildImage") {
-    builder = "paketobuildpacks/builder:tiny"
-    imageName = "ghcr.io/carlomicieli/trenako:${project.version}"
-    tags = listOf("ghcr.io/carlomicieli/trenako:latest")
 }
 
 springBoot {

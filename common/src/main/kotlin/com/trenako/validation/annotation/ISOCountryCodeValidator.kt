@@ -22,8 +22,8 @@ package com.trenako.validation.annotation
 
 import com.trenako.countries.isValidCountryCode
 import com.trenako.validation.annotation.constraints.ISOCountryCode
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
 
 class ISOCountryCodeValidator : ConstraintValidator<ISOCountryCode, String> {
 

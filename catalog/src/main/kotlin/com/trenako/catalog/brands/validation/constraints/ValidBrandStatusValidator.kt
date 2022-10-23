@@ -22,8 +22,8 @@ package com.trenako.catalog.brands.validation.constraints
 
 import com.trenako.catalog.brands.BrandStatus
 import com.trenako.util.EnumUtils.isValidName
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
 
 class ValidBrandStatusValidator : ConstraintValidator<ValidBrandStatus, String> {
     override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean =

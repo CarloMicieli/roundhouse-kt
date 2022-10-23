@@ -20,8 +20,8 @@
  */
 package com.trenako.validation
 
-import javax.validation.ConstraintViolation
-import javax.validation.Validator
+import jakarta.validation.ConstraintViolation
+import jakarta.validation.Validator
 
 class InputValidator<T>(private val validator: Validator) {
 

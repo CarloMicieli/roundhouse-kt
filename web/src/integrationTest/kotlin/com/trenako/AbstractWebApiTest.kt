@@ -45,15 +45,18 @@ abstract class AbstractWebApiTest {
         @DynamicPropertySource
         @JvmStatic
         fun registerDynamicProperties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.liquibase.enabled") { "true" }
-            registry.add("spring.liquibase.url", postgresContainer::getJdbcUrl)
-            registry.add("spring.liquibase.user", postgresContainer::getUsername)
-            registry.add("spring.liquibase.password", postgresContainer::getPassword)
+            with(registry) {
+                add("spring.liquibase.enabled") { "true" }
+                add("spring.liquibase.url", postgresContainer::getJdbcUrl)
+                add("spring.liquibase.user", postgresContainer::getUsername)
+                add("spring.liquibase.password", postgresContainer::getPassword)
+                add("spring.liquibase.change-log") { "classpath:db/changelog/db.changelog-master.xml" }
 
-            val url = postgresContainer.jdbcUrl.replace("jdbc:", "r2dbc:")
-            registry.add("spring.r2dbc.url") { url }
-            registry.add("spring.r2dbc.username", postgresContainer::getUsername)
-            registry.add("spring.r2dbc.password", postgresContainer::getPassword)
+                val url = postgresContainer.jdbcUrl.replace("jdbc:", "r2dbc:")
+                add("spring.r2dbc.url") { url }
+                add("spring.r2dbc.username", postgresContainer::getUsername)
+                add("spring.r2dbc.password", postgresContainer::getPassword)
+            }
         }
     }
 

@@ -86,5 +86,7 @@ data class Country(
 fun String?.isValidCountryCode(): Boolean {
     return if (this.isNullOrBlank()) {
         true
-    } else Arrays.binarySearch(Locale.getISOCountries(), this.uppercase(Locale.getDefault())) >= 0
+    } else {
+        Arrays.binarySearch(Locale.getISOCountries(), this.uppercase(Locale.getDefault())) >= 0
+    }
 }

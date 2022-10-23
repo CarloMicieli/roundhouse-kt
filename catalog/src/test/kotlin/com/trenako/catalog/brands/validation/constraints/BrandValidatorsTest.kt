@@ -24,6 +24,9 @@ import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import jakarta.validation.Validation
+import jakarta.validation.Validator
+import jakarta.validation.ValidatorFactory
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -33,9 +36,6 @@ import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import javax.validation.Validation
-import javax.validation.Validator
-import javax.validation.ValidatorFactory
 
 @DisplayName("Brand validators")
 @TestInstance(Lifecycle.PER_CLASS)

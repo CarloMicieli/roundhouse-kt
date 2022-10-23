@@ -23,16 +23,16 @@ package com.trenako.validation
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import jakarta.validation.Validation
+import jakarta.validation.ValidatorFactory
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.Positive
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
-import javax.validation.Validation
-import javax.validation.ValidatorFactory
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.Positive
 
 @DisplayName("UseCaseInputValidator")
 @TestInstance(Lifecycle.PER_CLASS)
