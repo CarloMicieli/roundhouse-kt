@@ -25,7 +25,13 @@ import com.trenako.catalog.scales.ScaleView
 import com.trenako.catalog.scales.createscales.CreateScaleRepository
 import com.trenako.catalog.scales.createscales.NewScale
 import com.trenako.catalog.scales.getscalebyid.GetScaleByIdRepository
+import com.trenako.catalog.scales.getscales.GetScalesRepository
+import com.trenako.infrastructure.persistence.queries.select
 import com.trenako.infrastructure.persistence.queries.selectOne
+import com.trenako.queries.pagination.Page
+import com.trenako.queries.sorting.Sorting
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
@@ -34,7 +40,8 @@ import java.time.Clock
 
 class ScalesRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, private val clock: Clock) :
     CreateScaleRepository,
-    GetScaleByIdRepository {
+    GetScaleByIdRepository,
+    GetScalesRepository {
 
     override suspend fun exists(name: String): Boolean {
         val query = selectOne {
@@ -70,6 +77,14 @@ class ScalesRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, pri
             .selectOne(query, ENTITY)
             .map { it.toView() }
             .awaitSingleOrNull()
+    }
+
+    override fun findAll(currentPage: Page, orderBy: Sorting): Flow<ScaleView> {
+        val query = select(currentPage, orderBy)
+        return r2dbcEntityTemplate
+            .select(query, ENTITY)
+            .map { it.toView() }
+            .asFlow()
     }
 
     companion object {
