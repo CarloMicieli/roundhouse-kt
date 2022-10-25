@@ -263,9 +263,9 @@ fun liliput(): NewBrand = NewBrand(
 )
 
 fun lima(): NewBrand = NewBrand(
-    id = BrandId.of("lima"),
-    name = "Lima",
-    registeredCompanyName = "Lima model",
+    id = BrandId.of("Lima Models"),
+    name = "Lima Models",
+    registeredCompanyName = "Lima Models",
     groupName = "hornby",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -366,13 +366,13 @@ fun piko(): NewBrand = NewBrand(
 fun pirata(): NewBrand = NewBrand(
     id = BrandId.of("pirata"),
     name = "Pi.R.A.T.A.",
-    registeredCompanyName = "PIKO Spielwaren GmbH",
+    registeredCompanyName = "Piccole Riproduzioni Artigianali Treni e Affini",
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
     contactInfo = ContactInfo(
         email = MailAddress("info@piratamodels.it"),
-        websiteUrl = WebsiteUrl(URI("hhttps://www.piratamodels.it")),
+        websiteUrl = WebsiteUrl(URI("https://www.piratamodels.it")),
         phone = null
     ),
     address = Address(
