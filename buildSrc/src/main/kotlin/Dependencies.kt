@@ -21,7 +21,7 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
 object R2dbcPostgresql {
-    val version = "0.9.2.RELEASE"
+    val version = "1.0.0.RELEASE"
 }
 
 object Testcontainers {
