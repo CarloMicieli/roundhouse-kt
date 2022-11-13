@@ -33,6 +33,7 @@ tasks.getByName<BootRun>("bootRun") {
     mainClass.set("com.trenako.ApplicationKt")
 }
 
+@Suppress("UnstableApiUsage")
 testing {
     suites {
         val test by getting(JvmTestSuite::class) {
@@ -41,7 +42,7 @@ testing {
 
         val integrationTest by registering(JvmTestSuite::class) {
             dependencies {
-                implementation(project)
+                implementation(project())
                 implementation("org.springframework.boot:spring-boot-starter-test")
                 implementation("org.springframework:spring-web")
                 implementation("io.kotest:kotest-assertions-core:${Kotest.version}")
