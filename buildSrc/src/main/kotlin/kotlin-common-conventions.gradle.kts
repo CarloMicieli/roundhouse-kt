@@ -65,7 +65,7 @@ tasks {
     }
 }
 
-extra["kotestVersion"] = "5.4.1"
+extra["kotestVersion"] = "5.5.4"
 
 configurations {
     all {
