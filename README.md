@@ -1,4 +1,4 @@
-# roundhouse.kt
+# roundhouse-kt
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![GitHub last commit](https://img.shields.io/github/last-commit/CarloMicieli/roundhouse-kt)
@@ -32,7 +32,7 @@ To run the `postgres` database:
 
 ```bash
   git clone https://github.com/CarloMicieli/roundhouse-kt.git
-  cd trenako
+  cd roundhouse-kt
   
   ./gradlew web:bootRun  --args='--spring.profiles.active=local'
   
