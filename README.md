@@ -1,11 +1,11 @@
-# trenako
+# roundhouse.kt
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![GitHub last commit](https://img.shields.io/github/last-commit/CarloMicieli/trenako)
-[![CI with Gradle](https://github.com/CarloMicieli/trenako/actions/workflows/ci.yml/badge.svg)](https://github.com/CarloMicieli/trenako/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/CarloMicieli/trenako/branch/main/graph/badge.svg?token=4Y0V0EL0V7)](https://codecov.io/gh/CarloMicieli/trenako)
+![GitHub last commit](https://img.shields.io/github/last-commit/CarloMicieli/roundhouse-kt)
+[![CI with Gradle](https://github.com/CarloMicieli/roundhouse-kt/actions/workflows/ci.yml/badge.svg)](https://github.com/CarloMicieli/roundhouse-kt/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/CarloMicieli/roundhouse-kt/branch/main/graph/badge.svg?token=DHN9KCK3GA)](https://codecov.io/gh/CarloMicieli/roundhouse-kt)
 
-A web application for model railways collectors.
+A web application for model railways collectors with spring boot and webflux.
 
 ## Requirements
 
@@ -31,7 +31,7 @@ To run the `postgres` database:
 ### Start the server
 
 ```bash
-  git clone https://github.com/CarloMicieli/trenako.git
+  git clone https://github.com/CarloMicieli/roundhouse-kt.git
   cd trenako
   
   ./gradlew web:bootRun  --args='--spring.profiles.active=local'
@@ -42,7 +42,7 @@ To run the `postgres` database:
      \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
       '  |____| .__|_| |_|_| |_\__, | / / / /
      =========|_|==============|___/=/_/_/_/
-     :: Spring Boot ::                (v3.0.0-RC1)
+     :: Spring Boot ::                (v3.0.0-RC2)
 ```
 
 ### Docker 
