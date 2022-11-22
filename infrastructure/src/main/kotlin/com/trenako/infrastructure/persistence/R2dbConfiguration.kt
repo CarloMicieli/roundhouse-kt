@@ -22,6 +22,7 @@ package com.trenako.infrastructure.persistence
 
 import com.trenako.catalog.brands.BrandKind
 import com.trenako.catalog.brands.BrandStatus
+import com.trenako.catalog.scales.TrackGauge
 import com.trenako.infrastructure.persistence.catalog.converters.BrandIdReadConverter
 import com.trenako.infrastructure.persistence.catalog.converters.BrandIdWriteConverter
 import com.trenako.infrastructure.persistence.catalog.converters.BrandKindConverter
@@ -32,6 +33,9 @@ import com.trenako.infrastructure.persistence.catalog.converters.MailAddressRead
 import com.trenako.infrastructure.persistence.catalog.converters.MailAddressWriteConverter
 import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberReadConverter
 import com.trenako.infrastructure.persistence.catalog.converters.PhoneNumberWriteConverter
+import com.trenako.infrastructure.persistence.catalog.converters.ScaleIdReadConverter
+import com.trenako.infrastructure.persistence.catalog.converters.ScaleIdWriteConverter
+import com.trenako.infrastructure.persistence.catalog.converters.TrackGaugeConverter
 import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlReadConverter
 import com.trenako.infrastructure.persistence.catalog.converters.WebsiteUrlWriteConverter
 import io.netty.util.internal.StringUtil
@@ -70,6 +74,9 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
             MailAddressWriteConverter(),
             PhoneNumberReadConverter(),
             PhoneNumberWriteConverter(),
+            ScaleIdReadConverter,
+            ScaleIdWriteConverter,
+            TrackGaugeConverter,
             WebsiteUrlReadConverter(),
             WebsiteUrlWriteConverter()
         )
@@ -97,6 +104,7 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
         val codecRegistrar: CodecRegistrar = EnumCodec.builder()
             .withEnum("brand_kind", BrandKind::class.java)
             .withEnum("brand_status", BrandStatus::class.java)
+            .withEnum("track_gauge", TrackGauge::class.java)
             .build()
 
         val builder = ConnectionFactoryOptions.parse(r2dbcProperties.url).mutate()

@@ -18,29 +18,11 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.infrastructure.persistence.catalog.seeding
+package com.trenako.infrastructure.persistence.catalog.converters
 
-import com.trenako.infrastructure.persistence.catalog.BrandsRepository
-import com.trenako.infrastructure.persistence.catalog.ScalesRepository
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import com.trenako.catalog.scales.TrackGauge
+import org.springframework.data.convert.WritingConverter
+import org.springframework.data.r2dbc.convert.EnumWriteSupport
 
-class CatalogSeeding(private val brands: BrandsRepository, private val scales: ScalesRepository) {
-    companion object {
-        val log: Logger = LoggerFactory.getLogger(CatalogSeeding::class.java)
-    }
-
-    suspend fun seed() {
-        if (brands.exists("ACME")) {
-            log.info("Database already contains data - seeding skipped")
-            return
-        }
-
-        log.info("Running catalog database seeding...")
-        val brandsSeeding = BrandsSeeding(brands)
-        brandsSeeding.seed()
-
-        val scalesSeeding = ScalesSeeding(scales)
-        scalesSeeding.seed()
-    }
-}
+@WritingConverter
+object TrackGaugeConverter : EnumWriteSupport<TrackGauge>()

@@ -18,29 +18,19 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.infrastructure.persistence.catalog.seeding
+package com.trenako.infrastructure.persistence.catalog.converters
 
-import com.trenako.infrastructure.persistence.catalog.BrandsRepository
-import com.trenako.infrastructure.persistence.catalog.ScalesRepository
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import com.trenako.catalog.scales.ScaleId
+import org.springframework.core.convert.converter.Converter
+import org.springframework.data.convert.ReadingConverter
+import org.springframework.data.convert.WritingConverter
 
-class CatalogSeeding(private val brands: BrandsRepository, private val scales: ScalesRepository) {
-    companion object {
-        val log: Logger = LoggerFactory.getLogger(CatalogSeeding::class.java)
-    }
+@WritingConverter
+object ScaleIdWriteConverter : Converter<ScaleId, String> {
+    override fun convert(source: ScaleId): String = source.toString()
+}
 
-    suspend fun seed() {
-        if (brands.exists("ACME")) {
-            log.info("Database already contains data - seeding skipped")
-            return
-        }
-
-        log.info("Running catalog database seeding...")
-        val brandsSeeding = BrandsSeeding(brands)
-        brandsSeeding.seed()
-
-        val scalesSeeding = ScalesSeeding(scales)
-        scalesSeeding.seed()
-    }
+@ReadingConverter
+object ScaleIdReadConverter : Converter<String, ScaleId> {
+    override fun convert(source: String): ScaleId = ScaleId.of(source)
 }

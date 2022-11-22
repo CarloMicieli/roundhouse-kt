@@ -20,27 +20,38 @@
  */
 package com.trenako.infrastructure.persistence.catalog.seeding
 
-import com.trenako.infrastructure.persistence.catalog.BrandsRepository
-import com.trenako.infrastructure.persistence.catalog.ScalesRepository
+import com.trenako.catalog.scales.Gauge
+import com.trenako.catalog.scales.Ratio
+import com.trenako.catalog.scales.ScaleId
+import com.trenako.catalog.scales.Standard
+import com.trenako.catalog.scales.TrackGauge
+import com.trenako.catalog.scales.createscales.CreateScaleRepository
+import com.trenako.catalog.scales.createscales.NewScale
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.math.BigDecimal
 
-class CatalogSeeding(private val brands: BrandsRepository, private val scales: ScalesRepository) {
+class ScalesSeeding(private val createScaleRepository: CreateScaleRepository) {
     companion object {
-        val log: Logger = LoggerFactory.getLogger(CatalogSeeding::class.java)
+        val log: Logger = LoggerFactory.getLogger(ScalesSeeding::class.java)
     }
 
     suspend fun seed() {
-        if (brands.exists("ACME")) {
-            log.info("Database already contains data - seeding skipped")
-            return
-        }
+        insert(H0())
+    }
 
-        log.info("Running catalog database seeding...")
-        val brandsSeeding = BrandsSeeding(brands)
-        brandsSeeding.seed()
-
-        val scalesSeeding = ScalesSeeding(scales)
-        scalesSeeding.seed()
+    private suspend fun insert(b: NewScale) {
+        createScaleRepository.insert(b)
+        log.info("Scale ${b.name} inserted.")
     }
 }
+
+@Suppress("FunctionName")
+fun H0(): NewScale = NewScale(
+    id = ScaleId.of("H0"),
+    name = "H0",
+    description = "",
+    ratio = Ratio.of(87f),
+    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(16.5), TrackGauge.STANDARD),
+    standards = setOf(Standard.NEM)
+)

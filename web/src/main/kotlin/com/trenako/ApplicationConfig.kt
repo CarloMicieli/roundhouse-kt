@@ -31,6 +31,7 @@ import com.trenako.problems.ProblemDetailsGenerator
 import com.trenako.util.RandomUuidSource
 import com.trenako.util.UuidSource
 import com.trenako.web.api.catalog.brands.Brands
+import com.trenako.web.api.catalog.scales.Scales
 import com.trenako.web.api.customSerializerModule
 import kotlinx.coroutines.runBlocking
 import org.springframework.boot.CommandLineRunner
@@ -43,7 +44,8 @@ object ApplicationConfig {
     )
 
     val catalog = listOf(
-        Brands.beans
+        Brands.beans,
+        Scales.beans
     )
 }
 

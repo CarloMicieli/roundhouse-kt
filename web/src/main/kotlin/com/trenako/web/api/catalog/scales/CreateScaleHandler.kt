@@ -18,29 +18,26 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package com.trenako.infrastructure.persistence.catalog.seeding
+package com.trenako.web.api.catalog.scales
 
-import com.trenako.infrastructure.persistence.catalog.BrandsRepository
-import com.trenako.infrastructure.persistence.catalog.ScalesRepository
+import com.trenako.catalog.scales.createscales.CreateScale
+import com.trenako.catalog.scales.createscales.CreateScaleError
+import com.trenako.catalog.scales.createscales.CreateScaleUseCase
+import com.trenako.catalog.scales.createscales.ScaleCreated
+import com.trenako.web.api.usecases.UseCaseHandler
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.awaitBodyOrNull
 
-class CatalogSeeding(private val brands: BrandsRepository, private val scales: ScalesRepository) {
+class CreateScaleHandler(
+    override val useCase: CreateScaleUseCase,
+    override val presenter: CreateScalePresenter,
+    override val logger: Logger = CreateScaleHandler.logger
+) : UseCaseHandler<CreateScale, ScaleCreated, CreateScaleError> {
+    override suspend fun extractInput(serverRequest: ServerRequest): CreateScale? = serverRequest.awaitBodyOrNull()
+
     companion object {
-        val log: Logger = LoggerFactory.getLogger(CatalogSeeding::class.java)
-    }
-
-    suspend fun seed() {
-        if (brands.exists("ACME")) {
-            log.info("Database already contains data - seeding skipped")
-            return
-        }
-
-        log.info("Running catalog database seeding...")
-        val brandsSeeding = BrandsSeeding(brands)
-        brandsSeeding.seed()
-
-        val scalesSeeding = ScalesSeeding(scales)
-        scalesSeeding.seed()
+        private val logger = LoggerFactory.getLogger("CreateScaleHandler")
     }
 }

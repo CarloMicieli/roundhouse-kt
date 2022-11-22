@@ -28,3 +28,25 @@ CREATE TABLE public.brands
 CREATE UNIQUE INDEX "Idx_brands_name"
     ON brands USING btree
         (name ASC NULLS LAST);
+
+CREATE TYPE track_gauge AS ENUM ('BROAD', 'MEDIUM', 'MINIMUM', 'NARROW', 'STANDARD');
+
+CREATE TABLE public.scales
+(
+    scale_id          varchar(25)    NOT NULL,
+    name              varchar(25)    NOT NULL,
+    ratio             numeric(19, 5) NOT NULL,
+    gauge_millimeters numeric(19, 5),
+    gauge_inches      numeric(19, 5),
+    track_gauge       track_gauge    NOT NULL,
+    description       varchar(2500),
+    standards         varchar(100),
+    created           timestamp without time zone NOT NULL,
+    last_modified     timestamp without time zone,
+    version           integer        NOT NULL DEFAULT 1,
+    CONSTRAINT "PK_scales" PRIMARY KEY (scale_id)
+);
+
+CREATE UNIQUE INDEX "Idx_scales_name"
+    ON scales USING btree
+    (name ASC NULLS LAST);
