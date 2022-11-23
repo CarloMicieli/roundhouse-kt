@@ -7,7 +7,7 @@ services:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_DB: trenako
+      POSTGRES_DB: roundhouse
       POSTGRES_PASSWORD: mysecretpassword
     volumes:
       - db-data:/var/lib/postgresql/data
@@ -37,7 +37,7 @@ services:
       - backend
 
   webapp:
-    image: ghcr.io/carlomicieli/trenako:latest
+    image: ghcr.io/carlomicieli/roundhouse:latest
     depends_on:
       db:
         condition: service_healthy
@@ -47,7 +47,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=local
       - JAVA_TOOL_OPTIONS=-Xss512k -Xmx256M -XX:ReservedCodeCacheSize=64M -XX:MaxMetaspaceSize=64M
-      - DB_URL=postgresql://db:5432/trenako
+      - DB_URL=postgresql://db:5432/roundhouse
       - DB_USERNAME=postgres
       - DB_PASSWORD=mysecretpassword
     deploy:
