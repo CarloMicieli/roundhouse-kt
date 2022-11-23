@@ -20,16 +20,21 @@
  */
 package com.trenako.infrastructure.persistence.catalog
 
+import com.trenako.catalog.scales.ScaleId
+import com.trenako.catalog.scales.ScaleView
 import com.trenako.catalog.scales.createscales.CreateScaleRepository
 import com.trenako.catalog.scales.createscales.NewScale
+import com.trenako.catalog.scales.getscalebyid.GetScaleByIdRepository
 import com.trenako.infrastructure.persistence.queries.selectOne
 import kotlinx.coroutines.reactive.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
 import org.springframework.data.relational.core.query.Criteria
 import java.time.Clock
 
 class ScalesRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, private val clock: Clock) :
-    CreateScaleRepository {
+    CreateScaleRepository,
+    GetScaleByIdRepository {
 
     override suspend fun exists(name: String): Boolean {
         val query = selectOne {
@@ -55,6 +60,16 @@ class ScalesRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, pri
             lastModified = null
         )
         r2dbcEntityTemplate.insert(newRow).awaitSingle()
+    }
+
+    override suspend fun findById(scaleId: ScaleId): ScaleView? {
+        val query = selectOne {
+            Criteria.where("scale_id").`is`(scaleId.toString())
+        }
+        return r2dbcEntityTemplate
+            .selectOne(query, ENTITY)
+            .map { it.toView() }
+            .awaitSingleOrNull()
     }
 
     companion object {

@@ -6,7 +6,7 @@ spring:
   liquibase:
     enabled: false
   r2dbc:
-    url: r2dbc:${DB_URL:postgresql://localhost:5432/trenako}
+    url: r2dbc:${DB_URL:postgresql://localhost:5432/roundhouse}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:mysecretpassword}
     pool:

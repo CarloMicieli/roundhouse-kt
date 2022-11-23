@@ -1,7 +1,7 @@
 spring:
   liquibase:
     enabled: true
-    url: jdbc:${DB_URL:postgresql://localhost:5432/trenako}
+    url: jdbc:${DB_URL:postgresql://localhost:5432/roundhouse}
     user: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:mysecretpassword}
     change-log: classpath:db/changelog/db.changelog-master.xml

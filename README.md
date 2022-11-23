@@ -20,11 +20,11 @@ A web application for model railways collectors with spring boot and webflux.
 To run the `postgres` database:
 
 ```bash
-  docker run -it --rm --name postgres-dev \
+  docker run -it --rm --name roundhouse-db-dev \
     -e POSTGRES_PASSWORD=mysecretpassword \
-    -e POSTGRES_DB=trenako \
+    -e POSTGRES_DB=roundhouse \
     -d -p 5432:5432 \
-    -v postgres_data_dev:/var/lib/postgresql/data \
+    -v roundhouse_db_dev:/var/lib/postgresql/data \
     postgres:14.5-alpine
 ```
 

@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.trenako.catalog.brands.BrandId
+import com.trenako.catalog.scales.ScaleId
 import com.trenako.contact.MailAddress
 import com.trenako.contact.PhoneNumber
 import com.trenako.contact.WebsiteUrl
@@ -61,6 +62,12 @@ object PhoneNumberSerializer : StdSerializer<PhoneNumber>(PhoneNumber::class.jav
     }
 }
 
+object ScaleIdSerializer : StdSerializer<ScaleId>(ScaleId::class.java) {
+    override fun serialize(value: ScaleId?, gen: JsonGenerator, provider: SerializerProvider) {
+        gen.writeString(value?.toString())
+    }
+}
+
 object WebsiteUrlSerializer : StdSerializer<WebsiteUrl>(WebsiteUrl::class.java) {
     override fun serialize(value: WebsiteUrl?, gen: JsonGenerator, provider: SerializerProvider) {
         gen.writeString(value?.toString())
@@ -73,6 +80,7 @@ fun customSerializerModule(): SimpleModule {
         addSerializer(BrandIdSerializer)
         addSerializer(MailAddressSerializer)
         addSerializer(PhoneNumberSerializer)
+        addSerializer(ScaleIdSerializer)
         addSerializer(SlugSerializer)
         addSerializer(URNSerializer)
         addSerializer(WebsiteUrlSerializer)

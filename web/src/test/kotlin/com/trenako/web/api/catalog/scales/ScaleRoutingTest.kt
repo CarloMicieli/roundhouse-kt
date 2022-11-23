@@ -41,12 +41,14 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 @OptIn(ExperimentalCoroutinesApi::class)
 class ScaleRoutingTest {
     private lateinit var createScaleHandler: CreateScaleHandler
+    private lateinit var getScaleByIdHandler: GetScaleByIdHandler
     private lateinit var webclient: WebTestClient
 
     @BeforeAll
     fun setup() {
         createScaleHandler = mock()
-        webclient = WebTestClient.bindToRouterFunction(Scales.routes(createScaleHandler)).build()
+        getScaleByIdHandler = mock()
+        webclient = WebTestClient.bindToRouterFunction(Scales.routes(createScaleHandler, getScaleByIdHandler)).build()
     }
 
     @Test
@@ -61,6 +63,18 @@ class ScaleRoutingTest {
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(bodyValue)
+            .exchange()
+            .expectStatus().isOk
+    }
+
+    @Test
+    @DisplayName("GET /api/scales/{scale} is mapped correctly")
+    fun getBrandByIdTest() = runTest {
+        whenever(getScaleByIdHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+
+        webclient.get()
+            .uri("/api/scales/{scale}", "H0")
+            .accept(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus().isOk
     }

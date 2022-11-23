@@ -21,6 +21,7 @@
 package com.trenako.web.api.catalog.scales
 
 import com.trenako.catalog.scales.createscales.CreateScaleUseCase
+import com.trenako.catalog.scales.getscalebyid.GetScaleByIdQuery
 import com.trenako.infrastructure.persistence.catalog.ScalesRepository
 import org.springframework.context.support.beans
 import org.springframework.http.MediaType
@@ -34,21 +35,29 @@ object Scales {
         bean<CreateScaleUseCase>()
         bean<CreateScalePresenter>()
 
+        bean<GetScaleByIdHandler>()
+        bean<GetScaleByIdQuery>()
+        bean<GetScaleByIdPresenter>()
+
         bean<ScalesRepository>()
 
         bean {
             val createScaleHandler = ref<CreateScaleHandler>()
-            routes(createScaleHandler)
+            val getScaleByIdHandler = ref<GetScaleByIdHandler>()
+            routes(createScaleHandler, getScaleByIdHandler)
         }
     }
 
     fun routes(
-        createScaleHandler: CreateScaleHandler
+        createScaleHandler: CreateScaleHandler,
+        getScaleByIdHandler: GetScaleByIdHandler
     ): RouterFunction<ServerResponse> = coRouter {
         "/api/scales".nest {
             accept(MediaType.APPLICATION_JSON).nest {
                 POST("", createScaleHandler::handle)
             }
+
+            GET("{scale}", getScaleByIdHandler::handle)
         }
     }
 }
