@@ -83,8 +83,8 @@ tasks.named("check") {
 
 tasks.named<BootBuildImage>("bootBuildImage") {
     builder.set("paketobuildpacks/builder:tiny")
-    imageName.set("ghcr.io/carlomicieli/trenako:${project.version}")
-    tags.set(listOf("ghcr.io/carlomicieli/trenako:latest"))
+    imageName.set("ghcr.io/carlomicieli/roundhouse:${project.version}")
+    tags.set(listOf("ghcr.io/carlomicieli/roundhouse:latest"))
 }
 
 springBoot {

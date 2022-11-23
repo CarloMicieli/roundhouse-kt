@@ -5,7 +5,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "trenako"
+rootProject.name = "roundhouse"
 include("web")
 include("catalog")
 include("common")
