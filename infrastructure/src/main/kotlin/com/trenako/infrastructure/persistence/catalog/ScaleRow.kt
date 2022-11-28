@@ -59,10 +59,19 @@ fun ScaleRow.toView(): ScaleView = ScaleView(
         trackGauge = trackGauge
     ),
     ratio = Ratio.of(this.ratio.toDouble()),
-    standards = this.standards?.splitToSequence(',')?.map { Standard.valueOf(it) }?.toSet() ?: setOf(),
+    standards = this.standards?.splitToSequence(',')?.map { fromString(it) }?.toSet() ?: setOf(),
     metadata = MetadataInfo(
         version = this.version,
         createdAt = this.created,
         lastModified = this.lastModified
     )
 )
+
+// TODO: fix me
+fun fromString(s: String): Standard {
+    return if (s.isNotBlank()) {
+        Standard.valueOf(s)
+    } else {
+        Standard.NEM
+    }
+}

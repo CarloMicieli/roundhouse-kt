@@ -38,6 +38,9 @@ class ScalesSeeding(private val createScaleRepository: CreateScaleRepository) {
 
     suspend fun seed() {
         insert(H0())
+        insert(TT())
+        insert(N())
+        insert(Z())
     }
 
     private suspend fun insert(b: NewScale) {
@@ -53,5 +56,35 @@ fun H0(): NewScale = NewScale(
     description = "",
     ratio = Ratio.of(87f),
     gauge = Gauge.ofMillimetres(BigDecimal.valueOf(16.5), TrackGauge.STANDARD),
+    standards = setOf(Standard.NEM)
+)
+
+@Suppress("FunctionName")
+fun TT(): NewScale = NewScale(
+    id = ScaleId.of("TT"),
+    name = "TT",
+    description = "",
+    ratio = Ratio.of(120f),
+    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(12.0), TrackGauge.STANDARD),
+    standards = setOf(Standard.NEM)
+)
+
+@Suppress("FunctionName")
+fun N(): NewScale = NewScale(
+    id = ScaleId.of("N"),
+    name = "N",
+    description = "",
+    ratio = Ratio.of(160f),
+    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(9.0), TrackGauge.STANDARD),
+    standards = setOf(Standard.NEM)
+)
+
+@Suppress("FunctionName")
+fun Z(): NewScale = NewScale(
+    id = ScaleId.of("Z"),
+    name = "Z",
+    description = "",
+    ratio = Ratio.of(220f),
+    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(6.5), TrackGauge.STANDARD),
     standards = setOf(Standard.NEM)
 )

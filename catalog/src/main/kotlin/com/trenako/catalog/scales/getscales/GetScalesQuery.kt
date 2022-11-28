@@ -27,12 +27,18 @@ import com.trenako.queries.pagination.Page
 import com.trenako.queries.result.PaginatedResultSet
 import com.trenako.queries.sorting.Sorting
 import kotlinx.coroutines.flow.toList
+import org.slf4j.LoggerFactory
 
 class GetScalesQuery(private val getScalesRepository: GetScalesRepository) : PaginatedQuery<ScaleView> {
+    companion object {
+        val log = LoggerFactory.getLogger(GetScalesQuery::class.java)
+    }
+
     override suspend fun execute(currentPage: Page, orderBy: Sorting): PaginatedResultSet<ScaleView> = try {
         val results: List<ScaleView> = getScalesRepository.findAll(currentPage, orderBy).toList()
         PaginatedResultSet.Results(currentPage, results)
     } catch (ex: Exception) {
+        log.error("GetScalesQuery", ex)
         PaginatedResultSet.Error(QueryError.DatabaseError(ex))
     }
 }
