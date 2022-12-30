@@ -14,7 +14,7 @@ plugins {
     kotlin("plugin.spring")
 }
 
-group = "com.trenako"
+group = "io.github.carlomicieli.roundhouse"
 version = "0.0.0-SNAPSHOT"
 gitVersioning.apply {
     refs {

@@ -23,7 +23,7 @@ logging:
     org.springframework: INFO
     org.springframework.r2dbc: INFO
     org.springframework.web.reactive: INFO
-    com.trenako: DEBUG
+    io.github.carlomicieli.roundhouse: DEBUG
 
 management:
   server:

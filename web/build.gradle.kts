@@ -30,7 +30,7 @@ dependencies {
 }
 
 tasks.getByName<BootRun>("bootRun") {
-    mainClass.set("com.trenako.ApplicationKt")
+    mainClass.set("io.github.carlomicieli.roundhouse.ApplicationKt")
 }
 
 @Suppress("UnstableApiUsage")
