@@ -35,7 +35,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 abstract class AbstractWebApiTest {
 
     companion object {
-        private val postgresContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:14.5-alpine")
+        private val postgresContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:15.1-alpine")
             .withReuse(true)
 
         init {
