@@ -91,7 +91,8 @@ fun acme(): NewBrand = NewBrand(
         region = "MI",
         country = Country.of("it")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun arnold(): NewBrand = NewBrand(
@@ -108,7 +109,8 @@ fun arnold(): NewBrand = NewBrand(
         phone = null
     ),
     address = null,
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun bemo(): NewBrand = NewBrand(
@@ -132,7 +134,8 @@ fun bemo(): NewBrand = NewBrand(
         region = null,
         country = Country.of("DE")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun brawa(): NewBrand = NewBrand(
@@ -156,7 +159,8 @@ fun brawa(): NewBrand = NewBrand(
         region = null,
         country = Country.of("DE")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun electrotren(): NewBrand = NewBrand(
@@ -173,7 +177,8 @@ fun electrotren(): NewBrand = NewBrand(
         phone = null
     ),
     address = null,
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun fleischmann(): NewBrand = NewBrand(
@@ -197,7 +202,8 @@ fun fleischmann(): NewBrand = NewBrand(
         region = null,
         country = Country.of("AT")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun heris(): NewBrand = NewBrand(
@@ -221,7 +227,8 @@ fun heris(): NewBrand = NewBrand(
         region = null,
         country = Country.of("DE")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun jagerndorfer(): NewBrand = NewBrand(
@@ -245,7 +252,8 @@ fun jagerndorfer(): NewBrand = NewBrand(
         region = null,
         country = Country.of("AT")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun liliput(): NewBrand = NewBrand(
@@ -269,7 +277,8 @@ fun liliput(): NewBrand = NewBrand(
         country = Country.of("AT"),
         region = null
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun lima(): NewBrand = NewBrand(
@@ -286,7 +295,8 @@ fun lima(): NewBrand = NewBrand(
         phone = null
     ),
     address = null,
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun lsModels(): NewBrand = NewBrand(
@@ -310,7 +320,8 @@ fun lsModels(): NewBrand = NewBrand(
         region = null,
         country = Country.of("BE")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun maerklin(): NewBrand = NewBrand(
@@ -334,7 +345,8 @@ fun maerklin(): NewBrand = NewBrand(
         country = Country.of("DE"),
         region = null
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun oskar(): NewBrand = NewBrand(
@@ -351,7 +363,8 @@ fun oskar(): NewBrand = NewBrand(
         phone = null
     ),
     address = null,
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun piko(): NewBrand = NewBrand(
@@ -375,7 +388,8 @@ fun piko(): NewBrand = NewBrand(
         region = null,
         country = Country.of("DE")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun pirata(): NewBrand = NewBrand(
@@ -399,7 +413,8 @@ fun pirata(): NewBrand = NewBrand(
         region = null,
         country = Country.of("IT")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun rivarossi(): NewBrand = NewBrand(
@@ -416,7 +431,8 @@ fun rivarossi(): NewBrand = NewBrand(
         phone = null
     ),
     address = null,
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun roco(): NewBrand = NewBrand(
@@ -440,7 +456,8 @@ fun roco(): NewBrand = NewBrand(
         region = null,
         country = Country.of("AT")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun sudexpress(): NewBrand = NewBrand(
@@ -464,7 +481,8 @@ fun sudexpress(): NewBrand = NewBrand(
         region = null,
         country = Country.of("PT")
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun trix(): NewBrand = NewBrand(
@@ -488,7 +506,8 @@ fun trix(): NewBrand = NewBrand(
         country = Country.of("DE"),
         region = null
     ),
-    description = ""
+    description = "",
+    socials = null
 )
 
 fun vitrains(): NewBrand = NewBrand(
@@ -512,5 +531,6 @@ fun vitrains(): NewBrand = NewBrand(
         region = "PD",
         country = Country.of("IT")
     ),
-    description = ""
+    description = "",
+    socials = null
 )

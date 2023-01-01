@@ -32,6 +32,8 @@ import io.github.carlomicieli.roundhouse.contact.WebsiteUrl
 import io.github.carlomicieli.roundhouse.countries.Country
 import io.github.carlomicieli.roundhouse.metadata.MetadataInfo
 import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
+import io.github.carlomicieli.roundhouse.socials.Handler
+import io.github.carlomicieli.roundhouse.socials.Socials
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.Instant
@@ -57,6 +59,12 @@ data class BrandRow(
     val addressPostalCode: String?,
     val addressCountry: Country?,
 
+    val socialsFacebook: String?,
+    val socialsInstagram: String?,
+    val socialsLinkedin: String?,
+    val socialsTwitter: String?,
+    val socialsYoutube: String?,
+
     val status: BrandStatus?,
     val version: Int,
     val created: Instant,
@@ -72,6 +80,7 @@ fun BrandRow.toView(): BrandView = BrandView(
     description = this.description,
     address = this.address(),
     contactInfo = this.contactInfo(),
+    socials = this.socials(),
     kind = this.kind,
     status = this.status,
     metadata = MetadataInfo(
@@ -112,4 +121,27 @@ fun BrandRow.contactInfo(): ContactInfo? {
             websiteUrl = this.contactWebsiteUrl
         )
     }
+}
+
+fun BrandRow.socials(): Socials? {
+    return if (this.socialsFacebook == null &&
+        this.socialsInstagram == null &&
+        this.socialsLinkedin == null &&
+        this.socialsTwitter == null &&
+        this.socialsYoutube == null
+    ) {
+        null
+    } else {
+        Socials(
+            facebook = this.socialsFacebook.toSocialHandler(),
+            instagram = this.socialsInstagram.toSocialHandler(),
+            linkedin = this.socialsLinkedin.toSocialHandler(),
+            twitter = this.socialsTwitter.toSocialHandler(),
+            youtube = this.socialsYoutube.toSocialHandler()
+        )
+    }
+}
+
+fun String?.toSocialHandler(): Handler {
+    return Handler(this!!)
 }

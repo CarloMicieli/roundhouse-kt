@@ -96,6 +96,7 @@ class GetBrandByIdQueryTest {
         description = "My test brand",
         address = null,
         contactInfo = null,
+        socials = null,
         kind = BrandKind.INDUSTRIAL,
         status = BrandStatus.ACTIVE,
         metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))

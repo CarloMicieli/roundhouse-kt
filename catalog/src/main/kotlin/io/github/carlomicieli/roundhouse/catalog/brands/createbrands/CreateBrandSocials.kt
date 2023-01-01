@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2021-2022 (C) Carlo Micieli
+ *   Copyright (c) 2021-2023 (C) Carlo Micieli
  *
  *    Licensed to the Apache Software Foundation (ASF) under one
  *    or more contributor license agreements.  See the NOTICE file
@@ -18,25 +18,31 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package io.github.carlomicieli.roundhouse.catalog.brands
+package io.github.carlomicieli.roundhouse.catalog.brands.createbrands
 
-import io.github.carlomicieli.roundhouse.address.Address
-import io.github.carlomicieli.roundhouse.contact.ContactInfo
-import io.github.carlomicieli.roundhouse.metadata.MetadataInfo
-import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
+import io.github.carlomicieli.roundhouse.socials.Handler
 import io.github.carlomicieli.roundhouse.socials.Socials
 
-data class BrandView(
-    val id: BrandId,
-    val name: String,
-    val registeredCompanyName: String?,
-    val organizationEntityType: OrganizationEntityType?,
-    val groupName: String?,
-    val description: String?,
-    val kind: BrandKind,
-    val contactInfo: ContactInfo?,
-    val address: Address?,
-    val socials: Socials?,
-    val status: BrandStatus?,
-    val metadata: MetadataInfo
-)
+data class CreateBrandSocials(
+    val facebook: String?,
+    val instagram: String?,
+    val linkedin: String?,
+    val twitter: String?,
+    val youtube: String?
+) {
+    fun toSocials(): Socials = Socials(
+        facebook = this.facebook.toHandler(),
+        instagram = this.instagram.toHandler(),
+        linkedin = this.linkedin.toHandler(),
+        twitter = this.twitter.toHandler(),
+        youtube = this.youtube.toHandler()
+    )
+}
+
+fun String?.toHandler(): Handler? {
+    return if (this.isNullOrBlank()) {
+        null
+    } else {
+        Handler(this)
+    }
+}

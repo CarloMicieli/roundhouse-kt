@@ -54,6 +54,8 @@ data class CreateBrand(
     @field:Valid
     val address: CreateBrandAddress? = null,
 
+    val socials: CreateBrandSocials? = null,
+
     @field:ValidBrandStatus
     val status: String? = null
 )
