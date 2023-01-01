@@ -46,9 +46,9 @@ data class BrandRow(
     val groupName: String?,
     val description: String?,
     val kind: BrandKind,
-    val phoneNumber: PhoneNumber?,
-    val websiteUrl: WebsiteUrl?,
-    val email: MailAddress?,
+    val contactPhoneNumber: PhoneNumber?,
+    val contactWebsiteUrl: WebsiteUrl?,
+    val contactEmail: MailAddress?,
 
     val addressStreetAddress: String?,
     val addressExtendedAddress: String?,
@@ -100,16 +100,16 @@ fun BrandRow.address(): Address? {
 }
 
 fun BrandRow.contactInfo(): ContactInfo? {
-    return if (this.phoneNumber == null &&
-        this.websiteUrl == null &&
-        this.email == null
+    return if (this.contactPhoneNumber == null &&
+        this.contactWebsiteUrl == null &&
+        this.contactEmail == null
     ) {
         null
     } else {
         ContactInfo(
-            email = this.email,
-            phone = this.phoneNumber,
-            websiteUrl = this.websiteUrl
+            email = this.contactEmail,
+            phone = this.contactPhoneNumber,
+            websiteUrl = this.contactWebsiteUrl
         )
     }
 }
