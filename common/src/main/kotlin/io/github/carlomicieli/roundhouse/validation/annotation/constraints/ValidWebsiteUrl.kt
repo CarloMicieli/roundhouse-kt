@@ -29,7 +29,7 @@ import kotlin.reflect.KClass
 @Constraint(validatedBy = [ValidWebsiteUrlValidator::class])
 @MustBeDocumented
 annotation class ValidWebsiteUrl(
-    val message: String = "{ io.github.carlomicieli.roundhouse.website.url.invalid}",
+    val message: String = "{io.github.carlomicieli.roundhouse.website.url.invalid}",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = []
 )

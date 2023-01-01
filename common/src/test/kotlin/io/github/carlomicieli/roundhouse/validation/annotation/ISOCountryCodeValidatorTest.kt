@@ -66,7 +66,7 @@ class ISOCountryCodeValidatorTest {
     }
 
     @Test
-    fun `should fail to validate invalid urls`() {
+    fun `should fail to validate invalid country codes`() {
         val value = TestClass("yy")
 
         val errors = validator.validate(value)
@@ -75,7 +75,7 @@ class ISOCountryCodeValidatorTest {
         val firstError = errors.first()
         firstError.propertyPath.toString() shouldBe "countryCode"
         firstError.invalidValue shouldBe "yy"
-        firstError.message shouldBe "{ io.github.carlomicieli.roundhouse.country.code.invalid}"
+        firstError.message shouldBe "{io.github.carlomicieli.roundhouse.country.code.invalid}"
     }
 
     data class TestClass(

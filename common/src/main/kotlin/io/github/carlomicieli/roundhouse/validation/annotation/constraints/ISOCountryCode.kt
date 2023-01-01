@@ -29,7 +29,7 @@ import kotlin.reflect.KClass
 @Constraint(validatedBy = [ISOCountryCodeValidator::class])
 @MustBeDocumented
 annotation class ISOCountryCode(
-    val message: String = "{ io.github.carlomicieli.roundhouse.country.code.invalid}",
+    val message: String = "{io.github.carlomicieli.roundhouse.country.code.invalid}",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = []
 )

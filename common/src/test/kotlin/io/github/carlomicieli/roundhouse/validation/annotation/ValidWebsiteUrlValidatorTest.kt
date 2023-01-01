@@ -75,7 +75,7 @@ class ValidWebsiteUrlValidatorTest {
         val firstError = errors.first()
         firstError.propertyPath.toString() shouldBe "websiteUrl"
         firstError.invalidValue shouldBe "invalid url"
-        firstError.message shouldBe "{ io.github.carlomicieli.roundhouse.website.url.invalid}"
+        firstError.message shouldBe "{io.github.carlomicieli.roundhouse.website.url.invalid}"
     }
 
     data class TestClass(
