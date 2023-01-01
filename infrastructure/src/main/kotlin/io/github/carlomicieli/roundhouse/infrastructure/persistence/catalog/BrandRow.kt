@@ -31,6 +31,7 @@ import io.github.carlomicieli.roundhouse.contact.PhoneNumber
 import io.github.carlomicieli.roundhouse.contact.WebsiteUrl
 import io.github.carlomicieli.roundhouse.countries.Country
 import io.github.carlomicieli.roundhouse.metadata.MetadataInfo
+import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.Instant
@@ -38,9 +39,10 @@ import java.time.Instant
 @Table("brands")
 data class BrandRow(
     @Id
-    val brandId: io.github.carlomicieli.roundhouse.catalog.brands.BrandId,
+    val brandId: BrandId,
     val name: String,
     val registeredCompanyName: String?,
+    val organizationEntityType: OrganizationEntityType?,
     val groupName: String?,
     val description: String?,
     val kind: BrandKind,
@@ -65,6 +67,7 @@ fun BrandRow.toView(): BrandView = BrandView(
     id = this.brandId,
     name = this.name,
     registeredCompanyName = this.registeredCompanyName,
+    organizationEntityType = this.organizationEntityType,
     groupName = this.groupName,
     description = this.description,
     address = this.address(),

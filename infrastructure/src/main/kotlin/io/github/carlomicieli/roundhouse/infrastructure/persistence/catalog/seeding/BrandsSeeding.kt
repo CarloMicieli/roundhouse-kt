@@ -30,6 +30,7 @@ import io.github.carlomicieli.roundhouse.contact.ContactInfo
 import io.github.carlomicieli.roundhouse.contact.MailAddress
 import io.github.carlomicieli.roundhouse.contact.WebsiteUrl
 import io.github.carlomicieli.roundhouse.countries.Country
+import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
 import io.github.carlomicieli.roundhouse.util.Slug
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -70,9 +71,10 @@ class BrandsSeeding(private val createBrandRepository: CreateBrandRepository) {
 }
 
 fun acme(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("acme"),
+    id = BrandId.of("acme"),
     name = "ACME",
     registeredCompanyName = "Associazione Costruzioni Modellistiche Esatte",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -93,9 +95,10 @@ fun acme(): NewBrand = NewBrand(
 )
 
 fun arnold(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("arnold"),
+    id = BrandId.of("arnold"),
     name = "Arnold",
     registeredCompanyName = "Arnold model",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "hornby",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -109,9 +112,10 @@ fun arnold(): NewBrand = NewBrand(
 )
 
 fun bemo(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("bemo"),
+    id = BrandId.of("bemo"),
     name = "BEMO",
     registeredCompanyName = "BEMO Modelleisenbahnen GmbH u. Co KG",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -132,9 +136,10 @@ fun bemo(): NewBrand = NewBrand(
 )
 
 fun brawa(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("brawa"),
+    id = BrandId.of("brawa"),
     name = "Brawa",
     registeredCompanyName = "BRAWA Artur Braun Modellspielwarenfabrik GmbH & Co. KG",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -155,9 +160,10 @@ fun brawa(): NewBrand = NewBrand(
 )
 
 fun electrotren(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("electrotren"),
+    id = BrandId.of("electrotren"),
     name = "Electrotren",
     registeredCompanyName = "Electrotren",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "hornby",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -171,9 +177,10 @@ fun electrotren(): NewBrand = NewBrand(
 )
 
 fun fleischmann(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("fleischmann"),
+    id = BrandId.of("fleischmann"),
     name = "Fleischmann",
     registeredCompanyName = "Modelleisenbahn GmbH",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "modelleisenbahn",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -194,9 +201,10 @@ fun fleischmann(): NewBrand = NewBrand(
 )
 
 fun heris(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("heris"),
+    id = BrandId.of("heris"),
     name = "Heris",
     registeredCompanyName = "Heris-Modelleisenbahn",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -217,9 +225,10 @@ fun heris(): NewBrand = NewBrand(
 )
 
 fun jagerndorfer(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId(Slug("Jägerndorfer Collection")),
+    id = BrandId(Slug("Jägerndorfer Collection")),
     name = "Jägerndorfer Collection",
     registeredCompanyName = "Jägerndorfer Ges.m.b.H.",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -240,9 +249,10 @@ fun jagerndorfer(): NewBrand = NewBrand(
 )
 
 fun liliput(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("liliput"),
+    id = BrandId.of("liliput"),
     name = "Liliput",
     registeredCompanyName = null,
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "bachmann",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -263,9 +273,10 @@ fun liliput(): NewBrand = NewBrand(
 )
 
 fun lima(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("Lima Models"),
+    id = BrandId.of("Lima Models"),
     name = "Lima Models",
     registeredCompanyName = "Lima Models",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "hornby",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -279,9 +290,10 @@ fun lima(): NewBrand = NewBrand(
 )
 
 fun lsModels(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("ls-models"),
+    id = BrandId.of("ls-models"),
     name = "L.S. Models",
     registeredCompanyName = "L.S. MODELS EXCLUSIVE SPRL",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -302,9 +314,10 @@ fun lsModels(): NewBrand = NewBrand(
 )
 
 fun maerklin(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId(Slug("Märklin")),
+    id = BrandId(Slug("Märklin")),
     name = "Märklin",
     registeredCompanyName = "Gebr. Märklin & Cie. GmbH",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "märklin",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -325,9 +338,10 @@ fun maerklin(): NewBrand = NewBrand(
 )
 
 fun oskar(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("oskar"),
+    id = BrandId.of("oskar"),
     name = "Os.Kar",
     registeredCompanyName = "Os.kar international",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -341,9 +355,10 @@ fun oskar(): NewBrand = NewBrand(
 )
 
 fun piko(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("piko"),
+    id = BrandId.of("piko"),
     name = "PIKO",
     registeredCompanyName = "PIKO Spielwaren GmbH",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -364,9 +379,10 @@ fun piko(): NewBrand = NewBrand(
 )
 
 fun pirata(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("pirata"),
+    id = BrandId.of("pirata"),
     name = "Pi.R.A.T.A.",
     registeredCompanyName = "Piccole Riproduzioni Artigianali Treni e Affini",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -387,9 +403,10 @@ fun pirata(): NewBrand = NewBrand(
 )
 
 fun rivarossi(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("rivarossi"),
+    id = BrandId.of("rivarossi"),
     name = "Rivarossi",
     registeredCompanyName = "Rivarossi",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "hornby",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -403,9 +420,10 @@ fun rivarossi(): NewBrand = NewBrand(
 )
 
 fun roco(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("roco"),
+    id = BrandId.of("roco"),
     name = "Roco",
     registeredCompanyName = "Modelleisenbahn GmbH",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "modelleisenbahn",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -426,9 +444,10 @@ fun roco(): NewBrand = NewBrand(
 )
 
 fun sudexpress(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("sudexpress-models"),
+    id = BrandId.of("sudexpress-models"),
     name = "Sudexpress models",
     registeredCompanyName = "AVALIARE Engenharia Lda.",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = null,
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -449,9 +468,10 @@ fun sudexpress(): NewBrand = NewBrand(
 )
 
 fun trix(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId(Slug("trix")),
+    id = BrandId(Slug("trix")),
     name = "Trix",
     registeredCompanyName = "Gebr. Märklin & Cie. GmbH",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "märklin",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,
@@ -472,9 +492,10 @@ fun trix(): NewBrand = NewBrand(
 )
 
 fun vitrains(): NewBrand = NewBrand(
-    id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("vitrains"),
+    id = BrandId.of("vitrains"),
     name = "ViTrains",
     registeredCompanyName = "Modelleisenbahn GmbH",
+    organizationEntityType = OrganizationEntityType.OTHER,
     groupName = "modelleisenbahn",
     kind = BrandKind.INDUSTRIAL,
     status = BrandStatus.ACTIVE,

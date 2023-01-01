@@ -31,6 +31,7 @@ import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.conv
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.CountryWriteConverter
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.MailAddressReadConverter
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.MailAddressWriteConverter
+import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.OrganizationEntityTypeConverter
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.PhoneNumberReadConverter
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.PhoneNumberWriteConverter
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.ScaleIdReadConverter
@@ -38,6 +39,7 @@ import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.conv
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.TrackGaugeConverter
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.WebsiteUrlReadConverter
 import io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters.WebsiteUrlWriteConverter
+import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
 import io.netty.util.internal.StringUtil
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
@@ -57,7 +59,7 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @Configuration
-@EnableR2dbcRepositories(basePackages = [" io.github.carlomicieli.roundhouse.infrastructure.persistence"])
+@EnableR2dbcRepositories(basePackages = ["io.github.carlomicieli.roundhouse.infrastructure.persistence"])
 @EnableTransactionManagement
 class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcConfiguration() {
 
@@ -72,6 +74,7 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
             CountryWriteConverter,
             MailAddressReadConverter,
             MailAddressWriteConverter(),
+            OrganizationEntityTypeConverter,
             PhoneNumberReadConverter(),
             PhoneNumberWriteConverter(),
             ScaleIdReadConverter,
@@ -104,6 +107,7 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
         val codecRegistrar: CodecRegistrar = EnumCodec.builder()
             .withEnum("brand_kind", BrandKind::class.java)
             .withEnum("brand_status", BrandStatus::class.java)
+            .withEnum("organization_entity_type", OrganizationEntityType::class.java)
             .withEnum("track_gauge", TrackGauge::class.java)
             .build()
 

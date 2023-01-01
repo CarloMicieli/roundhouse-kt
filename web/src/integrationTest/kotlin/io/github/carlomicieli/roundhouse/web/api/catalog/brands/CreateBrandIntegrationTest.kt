@@ -107,6 +107,7 @@ class CreateBrandIntegrationTest : AbstractWebApiTest() {
             groupName = "group",
             description = "Description goes here",
             registeredCompanyName = "Company & co",
+            organizationEntityType = "OTHER",
             kind = "INDUSTRIAL",
             contactInfo = ContactInfo(
                 email = "mail@mail.com",
@@ -150,6 +151,7 @@ class CreateBrandIntegrationTest : AbstractWebApiTest() {
         val kind: String = "",
         val groupName: String? = null,
         val registeredCompanyName: String? = null,
+        val organizationEntityType: String? = null,
         val description: String? = null,
         val contactInfo: ContactInfo? = null,
         val address: Address? = null,

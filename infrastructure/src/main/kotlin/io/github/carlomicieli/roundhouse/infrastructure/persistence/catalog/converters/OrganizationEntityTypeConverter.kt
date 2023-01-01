@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2021-2022 (C) Carlo Micieli
+ *   Copyright (c) 2021-2023 (C) Carlo Micieli
  *
  *    Licensed to the Apache Software Foundation (ASF) under one
  *    or more contributor license agreements.  See the NOTICE file
@@ -18,23 +18,11 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package io.github.carlomicieli.roundhouse.catalog.brands
+package io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog.converters
 
-import io.github.carlomicieli.roundhouse.address.Address
-import io.github.carlomicieli.roundhouse.contact.ContactInfo
-import io.github.carlomicieli.roundhouse.metadata.MetadataInfo
 import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
+import org.springframework.data.convert.WritingConverter
+import org.springframework.data.r2dbc.convert.EnumWriteSupport
 
-data class BrandView(
-    val id: BrandId,
-    val name: String,
-    val registeredCompanyName: String?,
-    val organizationEntityType: OrganizationEntityType?,
-    val groupName: String?,
-    val description: String?,
-    val kind: BrandKind,
-    val contactInfo: ContactInfo?,
-    val address: Address?,
-    val status: BrandStatus?,
-    val metadata: MetadataInfo
-)
+@WritingConverter
+object OrganizationEntityTypeConverter : EnumWriteSupport<OrganizationEntityType>()

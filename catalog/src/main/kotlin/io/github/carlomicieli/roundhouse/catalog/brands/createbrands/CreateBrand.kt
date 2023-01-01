@@ -22,6 +22,7 @@ package io.github.carlomicieli.roundhouse.catalog.brands.createbrands
 
 import io.github.carlomicieli.roundhouse.catalog.brands.validation.constraints.ValidBrandKind
 import io.github.carlomicieli.roundhouse.catalog.brands.validation.constraints.ValidBrandStatus
+import io.github.carlomicieli.roundhouse.validation.annotation.constraints.ValidOrganizationEntityType
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -37,6 +38,9 @@ data class CreateBrand(
 
     @field:Size(min = 3, max = 100)
     val registeredCompanyName: String? = null,
+
+    @field:ValidOrganizationEntityType
+    val organizationEntityType: String? = null,
 
     @field:Size(min = 3, max = 50)
     val groupName: String? = null,

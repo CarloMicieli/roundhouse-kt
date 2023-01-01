@@ -25,14 +25,16 @@ import io.github.carlomicieli.roundhouse.catalog.brands.BrandId
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandKind
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandStatus
 import io.github.carlomicieli.roundhouse.contact.ContactInfo
+import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
 
 /**
  * A new brand
  */
 data class NewBrand(
-    val id: io.github.carlomicieli.roundhouse.catalog.brands.BrandId,
+    val id: BrandId,
     val name: String,
     val registeredCompanyName: String?,
+    val organizationEntityType: OrganizationEntityType?,
     val groupName: String?,
     val description: String?,
     val kind: BrandKind,

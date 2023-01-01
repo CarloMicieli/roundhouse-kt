@@ -20,7 +20,9 @@
  */
 package io.github.carlomicieli.roundhouse.catalog.brands.createbrands
 
+import io.github.carlomicieli.roundhouse.catalog.brands.BrandId
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandStatus
+import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
 import io.github.carlomicieli.roundhouse.usecases.UseCase
 import io.github.carlomicieli.roundhouse.usecases.UseCaseResult
 import io.github.carlomicieli.roundhouse.util.EnumUtils.toEnum
@@ -50,9 +52,10 @@ class CreateBrandUseCase(private val validator: Validator, private val repositor
 
     private fun CreateBrand.toNewBrand(): NewBrand {
         return NewBrand(
-            id = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of(this.name),
+            id = BrandId.of(this.name),
             name = this.name,
             registeredCompanyName = this.registeredCompanyName,
+            organizationEntityType = this.organizationEntityType?.toEnum<OrganizationEntityType>(),
             groupName = this.groupName,
             description = this.description,
             contactInfo = this.contactInfo?.toContactInfo(),

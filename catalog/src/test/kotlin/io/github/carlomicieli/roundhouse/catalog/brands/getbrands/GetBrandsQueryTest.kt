@@ -97,17 +97,18 @@ class GetBrandsQueryTest {
 
     private fun brandsList(): List<BrandView> = (1 until 10)
         .map { "Brand$it" }
-        .map { brandView(io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of(it)) }
+        .map { brandView(BrandId.of(it)) }
 
     private fun brandsFlow(): Flow<BrandView> = flow {
         brandsList()
             .forEach { emit(it) }
     }
 
-    private fun brandView(id: io.github.carlomicieli.roundhouse.catalog.brands.BrandId) = BrandView(
+    private fun brandView(id: BrandId) = BrandView(
         id = id,
         name = id.toString(),
         registeredCompanyName = null,
+        organizationEntityType = null,
         groupName = null,
         description = "My test brand",
         address = null,

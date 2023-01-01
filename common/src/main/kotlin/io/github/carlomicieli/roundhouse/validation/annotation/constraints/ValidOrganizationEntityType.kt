@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2021-2022 (C) Carlo Micieli
+ *   Copyright (c) 2021-2023 (C) Carlo Micieli
  *
  *    Licensed to the Apache Software Foundation (ASF) under one
  *    or more contributor license agreements.  See the NOTICE file
@@ -18,23 +18,18 @@
  *    specific language governing permissions and limitations
  *    under the License.
  */
-package io.github.carlomicieli.roundhouse.catalog.brands
+package io.github.carlomicieli.roundhouse.validation.annotation.constraints
 
-import io.github.carlomicieli.roundhouse.address.Address
-import io.github.carlomicieli.roundhouse.contact.ContactInfo
-import io.github.carlomicieli.roundhouse.metadata.MetadataInfo
-import io.github.carlomicieli.roundhouse.organizations.OrganizationEntityType
+import io.github.carlomicieli.roundhouse.validation.annotation.ValidOrganizationEntityTypeValidator
+import jakarta.validation.Constraint
+import jakarta.validation.Payload
+import kotlin.reflect.KClass
 
-data class BrandView(
-    val id: BrandId,
-    val name: String,
-    val registeredCompanyName: String?,
-    val organizationEntityType: OrganizationEntityType?,
-    val groupName: String?,
-    val description: String?,
-    val kind: BrandKind,
-    val contactInfo: ContactInfo?,
-    val address: Address?,
-    val status: BrandStatus?,
-    val metadata: MetadataInfo
+@Target(AnnotationTarget.FIELD)
+@Constraint(validatedBy = [ValidOrganizationEntityTypeValidator::class])
+@MustBeDocumented
+annotation class ValidOrganizationEntityType(
+    val message: String = "{io.github.carlomicieli.roundhouse.organization.entity.type.invalid}",
+    val groups: Array<KClass<*>> = [],
+    val payload: Array<KClass<out Payload>> = []
 )

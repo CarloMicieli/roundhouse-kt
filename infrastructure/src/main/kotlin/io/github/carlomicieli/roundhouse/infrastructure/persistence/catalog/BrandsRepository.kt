@@ -20,7 +20,6 @@
  */
 package io.github.carlomicieli.roundhouse.infrastructure.persistence.catalog
 
-import io.github.carlomicieli.roundhouse.catalog.brands.BrandId
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandView
 import io.github.carlomicieli.roundhouse.catalog.brands.createbrands.CreateBrandRepository
 import io.github.carlomicieli.roundhouse.catalog.brands.createbrands.NewBrand
@@ -57,6 +56,7 @@ class BrandsRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, pri
             brandId = newBrand.id,
             name = newBrand.name,
             registeredCompanyName = newBrand.registeredCompanyName,
+            organizationEntityType = newBrand.organizationEntityType,
             groupName = newBrand.groupName,
             description = newBrand.description,
             phoneNumber = newBrand.contactInfo?.phone,

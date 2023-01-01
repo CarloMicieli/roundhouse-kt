@@ -54,7 +54,7 @@ class GetBrandByIdQueryTest {
 
     @Test
     fun `should return a result when the brand is found`() = runTest {
-        val brandId = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("acme")
+        val brandId = BrandId.of("acme")
         whenever(getBrandByIdRepository.findById(brandId)).doSuspendableAnswer { brandView(brandId) }
 
         val criteria = ByBrandId(brandId)
@@ -65,7 +65,7 @@ class GetBrandByIdQueryTest {
 
     @Test
     fun `should return a result when the brand is not found`() = runTest {
-        val brandId = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("acme")
+        val brandId = BrandId.of("acme")
         whenever(getBrandByIdRepository.findById(brandId)).doSuspendableAnswer { null }
 
         val criteria = ByBrandId(brandId)
@@ -76,7 +76,7 @@ class GetBrandByIdQueryTest {
 
     @Test
     fun `should handle exception executing the query`() = runTest {
-        val brandId = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("bad")
+        val brandId = BrandId.of("bad")
         whenever(getBrandByIdRepository.findById(brandId)).thenThrow(RuntimeException("Ops, something went wrong"))
 
         val criteria = ByBrandId(brandId)
@@ -87,10 +87,11 @@ class GetBrandByIdQueryTest {
         errorResult?.queryError?.reason shouldBe "An error has occurred"
     }
 
-    private fun brandView(id: io.github.carlomicieli.roundhouse.catalog.brands.BrandId) = BrandView(
+    private fun brandView(id: BrandId) = BrandView(
         id = id,
         name = id.toString(),
         registeredCompanyName = null,
+        organizationEntityType = null,
         groupName = null,
         description = "My test brand",
         address = null,
