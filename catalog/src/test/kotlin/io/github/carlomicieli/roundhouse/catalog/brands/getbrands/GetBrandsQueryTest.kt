@@ -74,7 +74,9 @@ class GetBrandsQueryTest {
         val currentPage = Page.DEFAULT_PAGE
         val sorting = Sorting.DEFAULT_SORT
 
-        whenever(getBrandsRepository.findAll(currentPage, sorting)).thenThrow(RuntimeException("Ops, something went wrong"))
+        whenever(getBrandsRepository.findAll(currentPage, sorting)).thenThrow(
+            RuntimeException("Ops, something went wrong")
+        )
 
         val result = query.execute(currentPage, sorting)
 

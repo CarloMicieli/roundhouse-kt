@@ -134,6 +134,7 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
         return PostgresqlConnectionFactory(connectionConfiguration)
     }
 
-    private fun ConnectionFactoryOptions.getOptionAsString(option: Option<*>): String = getRequiredValue(option) as String
+    private fun ConnectionFactoryOptions.getOptionAsString(option: Option<*>): String =
+        getRequiredValue(option) as String
     private fun ConnectionFactoryOptions.getOptionAsInt(option: Option<*>): Int = getRequiredValue(option) as Int
 }

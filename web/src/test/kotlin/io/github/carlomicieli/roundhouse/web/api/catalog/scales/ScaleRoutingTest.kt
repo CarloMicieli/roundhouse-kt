@@ -51,13 +51,17 @@ class ScaleRoutingTest {
         createScaleHandler = mock()
         getScaleByIdHandler = mock()
         getScalesHandler = mock()
-        webclient = WebTestClient.bindToRouterFunction(Scales.routes(createScaleHandler, getScaleByIdHandler, getScalesHandler)).build()
+        webclient = WebTestClient.bindToRouterFunction(
+            Scales.routes(createScaleHandler, getScaleByIdHandler, getScalesHandler)
+        ).build()
     }
 
     @Test
     @DisplayName("POST /api/scales is mapped correctly")
     fun postNewScaleTest() = runTest {
-        whenever(createScaleHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+        whenever(createScaleHandler.handle(any())).doSuspendableAnswer {
+            ServerResponse.ok().bodyValueAndAwait("works")
+        }
 
         val bodyValue = CreateScale()
 
@@ -73,7 +77,9 @@ class ScaleRoutingTest {
     @Test
     @DisplayName("GET /api/scales/{scale} is mapped correctly")
     fun getScaleByIdTest() = runTest {
-        whenever(getScaleByIdHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+        whenever(getScaleByIdHandler.handle(any())).doSuspendableAnswer {
+            ServerResponse.ok().bodyValueAndAwait("works")
+        }
 
         webclient.get()
             .uri("/api/scales/{scale}", "acme")

@@ -78,7 +78,9 @@ class GetScalesQueryTest {
         val currentPage = Page.DEFAULT_PAGE
         val sorting = Sorting.DEFAULT_SORT
 
-        whenever(getScalesRepository.findAll(currentPage, sorting)).thenThrow(RuntimeException("Ops, something went wrong"))
+        whenever(getScalesRepository.findAll(currentPage, sorting)).thenThrow(
+            RuntimeException("Ops, something went wrong")
+        )
 
         val result = query.execute(currentPage, sorting)
 
@@ -112,7 +114,11 @@ class GetScalesQueryTest {
         id = id,
         name = id.toString(),
         ratio = Ratio.of(87.0f),
-        gauge = Gauge(Length.valueOf(16.5, MeasureUnit.MILLIMETERS), Length.valueOf(0.65, MeasureUnit.INCHES), TrackGauge.STANDARD),
+        gauge = Gauge(
+            Length.valueOf(16.5, MeasureUnit.MILLIMETERS),
+            Length.valueOf(0.65, MeasureUnit.INCHES),
+            TrackGauge.STANDARD
+        ),
         description = "My test Scale",
         standards = setOf(Standard.NEM),
         metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))

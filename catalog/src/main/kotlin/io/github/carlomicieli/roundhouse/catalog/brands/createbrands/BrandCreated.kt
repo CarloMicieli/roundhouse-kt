@@ -23,4 +23,4 @@ package io.github.carlomicieli.roundhouse.catalog.brands.createbrands
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandId
 import java.time.LocalDateTime
 
-data class BrandCreated(val id: io.github.carlomicieli.roundhouse.catalog.brands.BrandId, val createdAt: LocalDateTime)
+data class BrandCreated(val id: BrandId, val createdAt: LocalDateTime)

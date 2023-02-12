@@ -31,7 +31,8 @@ import io.github.carlomicieli.roundhouse.validation.inputValidator
 import jakarta.validation.Validator
 import java.time.LocalDateTime
 
-class CreateBrandUseCase(private val validator: Validator, private val repository: CreateBrandRepository) : UseCase<CreateBrand, BrandCreated, CreateBrandError> {
+class CreateBrandUseCase(private val validator: Validator, private val repository: CreateBrandRepository) :
+    UseCase<CreateBrand, BrandCreated, CreateBrandError> {
     override suspend fun execute(input: CreateBrand): UseCaseResult<BrandCreated, CreateBrandError> {
         val inputValidator = validator.inputValidator<CreateBrand>()
         return when (val result = inputValidator.validate(input)) {

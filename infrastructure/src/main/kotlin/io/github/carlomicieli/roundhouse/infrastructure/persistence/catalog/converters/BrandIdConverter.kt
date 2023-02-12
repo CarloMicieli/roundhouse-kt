@@ -26,11 +26,11 @@ import org.springframework.data.convert.ReadingConverter
 import org.springframework.data.convert.WritingConverter
 
 @WritingConverter
-object BrandIdWriteConverter : Converter<io.github.carlomicieli.roundhouse.catalog.brands.BrandId, String> {
-    override fun convert(source: io.github.carlomicieli.roundhouse.catalog.brands.BrandId): String = source.toString()
+object BrandIdWriteConverter : Converter<BrandId, String> {
+    override fun convert(source: BrandId): String = source.toString()
 }
 
 @ReadingConverter
-object BrandIdReadConverter : Converter<String, io.github.carlomicieli.roundhouse.catalog.brands.BrandId> {
-    override fun convert(source: String): io.github.carlomicieli.roundhouse.catalog.brands.BrandId = io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of(source)
+object BrandIdReadConverter : Converter<String, BrandId> {
+    override fun convert(source: String): BrandId = BrandId.of(source)
 }

@@ -34,7 +34,9 @@ fun ServerRequest.page(): Page {
 
 private fun Optional<String>.asInt(): Optional<Int> = this.map { it.toIntOrNull() }
 
-fun ServerRequest.sorting(): Sorting = this.queryParam("sort_by").map { extractSorting(it) }.orElseGet { Sorting.DEFAULT_SORT }
+fun ServerRequest.sorting(): Sorting = this.queryParam("sort_by").map {
+    extractSorting(it)
+}.orElseGet { Sorting.DEFAULT_SORT }
 
 private fun extractSorting(input: String): Sorting {
     val tokens = input.split(',')

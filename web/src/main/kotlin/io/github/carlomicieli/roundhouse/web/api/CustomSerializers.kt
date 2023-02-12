@@ -44,8 +44,8 @@ object SlugSerializer : StdSerializer<Slug>(Slug::class.java) {
     }
 }
 
-object BrandIdSerializer : StdSerializer<io.github.carlomicieli.roundhouse.catalog.brands.BrandId>(io.github.carlomicieli.roundhouse.catalog.brands.BrandId::class.java) {
-    override fun serialize(value: io.github.carlomicieli.roundhouse.catalog.brands.BrandId?, gen: JsonGenerator, provider: SerializerProvider) {
+object BrandIdSerializer : StdSerializer<BrandId>(BrandId::class.java) {
+    override fun serialize(value: BrandId?, gen: JsonGenerator, provider: SerializerProvider) {
         gen.writeString(value?.toString())
     }
 }

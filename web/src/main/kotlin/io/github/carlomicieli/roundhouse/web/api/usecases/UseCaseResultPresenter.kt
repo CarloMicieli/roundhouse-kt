@@ -53,7 +53,9 @@ interface UseCaseResultPresenter<O, E> {
         errorToProblemDetails(it).toServerResponse()
     }.get()
 
-    suspend fun toEmptyRequestResponse(): ServerResponse = problemDetailsGenerator.unprocessableEntity("Request body is empty").toServerResponse()
+    suspend fun toEmptyRequestResponse(): ServerResponse = problemDetailsGenerator.unprocessableEntity(
+        "Request body is empty"
+    ).toServerResponse()
 }
 
 suspend fun ProblemDetails.toServerResponse(): ServerResponse = toServerResponseMono().awaitSingle()

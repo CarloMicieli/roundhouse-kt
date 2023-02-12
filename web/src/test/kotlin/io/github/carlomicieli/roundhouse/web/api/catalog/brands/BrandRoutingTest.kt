@@ -52,13 +52,17 @@ class BrandRoutingTest {
         createBrandHandler = mock()
         getBrandByIdHandler = mock()
         getBrandsHandler = mock()
-        webclient = WebTestClient.bindToRouterFunction(Brands.routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)).build()
+        webclient = WebTestClient.bindToRouterFunction(
+            Brands.routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)
+        ).build()
     }
 
     @Test
     @DisplayName("POST /api/brands is mapped correctly")
     fun postNewBrandTest() = runTest {
-        whenever(createBrandHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+        whenever(createBrandHandler.handle(any())).doSuspendableAnswer {
+            ServerResponse.ok().bodyValueAndAwait("works")
+        }
 
         val bodyValue = CreateBrand()
 
@@ -74,7 +78,9 @@ class BrandRoutingTest {
     @Test
     @DisplayName("GET /api/brands/{brand} is mapped correctly")
     fun getBrandByIdTest() = runTest {
-        whenever(getBrandByIdHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+        whenever(getBrandByIdHandler.handle(any())).doSuspendableAnswer {
+            ServerResponse.ok().bodyValueAndAwait("works")
+        }
 
         webclient.get()
             .uri("/api/brands/{brand}", "acme")

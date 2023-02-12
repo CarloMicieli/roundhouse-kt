@@ -41,7 +41,9 @@ data class Country(
 ) {
 
     init {
-        require(code.length == 2 && code.isValidCountryCode()) { "'$code' is not a valid Alpha-2 ISO 3166 country code" }
+        require(code.length == 2 && code.isValidCountryCode()) {
+            "'$code' is not a valid Alpha-2 ISO 3166 country code"
+        }
     }
 
     companion object {
@@ -70,7 +72,10 @@ data class Country(
             putCountry("us", "United States")
         )
 
-        private fun putCountry(code: String, englishName: String): Pair<String, Country> = Pair(code, Country(code, englishName))
+        private fun putCountry(code: String, englishName: String): Pair<String, Country> = Pair(
+            code,
+            Country(code, englishName)
+        )
 
         fun of(code: String): Country {
             return countries[code.lowercase()] ?: Country(code.lowercase())

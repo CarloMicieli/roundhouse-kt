@@ -30,7 +30,8 @@ import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
-class GetBrandByIdPresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) : QueryResultPresenter<BrandView> {
+class GetBrandByIdPresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) :
+    QueryResultPresenter<BrandView> {
     override suspend fun result(value: BrandView): ServerResponse {
         val self = Link.of("/api/brands/${value.id}", IanaLinkRelations.SELF)
         val body = EntityModel.of(value, self)

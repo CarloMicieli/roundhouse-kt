@@ -35,7 +35,8 @@ import io.github.carlomicieli.roundhouse.validation.inputValidator
 import jakarta.validation.Validator
 import java.time.Instant
 
-class CreateScaleUseCase(private val validator: Validator, private val repository: CreateScaleRepository) : UseCase<CreateScale, ScaleCreated, CreateScaleError> {
+class CreateScaleUseCase(private val validator: Validator, private val repository: CreateScaleRepository) :
+    UseCase<CreateScale, ScaleCreated, CreateScaleError> {
     private val twoLengths = TwoLengths(MeasureUnit.MILLIMETERS, MeasureUnit.INCHES)
 
     override suspend fun execute(input: CreateScale): UseCaseResult<ScaleCreated, CreateScaleError> {
@@ -66,7 +67,9 @@ class CreateScaleUseCase(private val validator: Validator, private val repositor
     )
 
     private fun CreateScaleGauge.toGauge(): Gauge {
-        val trackGauge: TrackGauge = this.trackGauge?.toEnum<TrackGauge>() ?: throw IllegalArgumentException("track gauge is required")
+        val trackGauge: TrackGauge = this.trackGauge?.toEnum<TrackGauge>() ?: throw IllegalArgumentException(
+            "track gauge is required"
+        )
         return twoLengths(this.millimeters?.toDouble(), this.inches?.toDouble())?.let {
             Gauge(
                 it.first,

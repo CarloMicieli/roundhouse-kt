@@ -70,7 +70,9 @@ class UseCaseHandlerTest {
         }
 
         val presenter = mock<UseCaseResultPresenter<String, Exception>> {
-            onBlocking { toServerResponse(result) } doReturn ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).buildAndAwait()
+            onBlocking {
+                toServerResponse(result)
+            } doReturn ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).buildAndAwait()
         }
 
         val request = mock<ServerRequest>()

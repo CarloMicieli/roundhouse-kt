@@ -25,8 +25,8 @@ import io.github.carlomicieli.roundhouse.util.Slug
 /**
  * It represents a brand unique identifier. The value should be url encoded.
  */
-data class BrandId(private val value: Slug) : Comparable<io.github.carlomicieli.roundhouse.catalog.brands.BrandId> {
-    override fun compareTo(other: io.github.carlomicieli.roundhouse.catalog.brands.BrandId): Int = this.toString().compareTo(other.toString())
+data class BrandId(private val value: Slug) : Comparable<BrandId> {
+    override fun compareTo(other: BrandId): Int = this.toString().compareTo(other.toString())
 
     override fun toString(): String = value.toString()
 
@@ -38,9 +38,9 @@ data class BrandId(private val value: Slug) : Comparable<io.github.carlomicieli.
          *
          * @return a new {@code BrandId}
          */
-        fun of(value: String): io.github.carlomicieli.roundhouse.catalog.brands.BrandId {
+        fun of(value: String): BrandId {
             require(value.isNotBlank()) { "Brand id cannot be blank" }
-            return io.github.carlomicieli.roundhouse.catalog.brands.BrandId(Slug(value))
+            return BrandId(Slug(value))
         }
     }
 }

@@ -29,7 +29,8 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.buildAndAwait
 import java.net.URI
 
-class CreateScalePresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) : UseCaseResultPresenter<ScaleCreated, CreateScaleError> {
+class CreateScalePresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) :
+    UseCaseResultPresenter<ScaleCreated, CreateScaleError> {
     override suspend fun outputToResponse(output: ScaleCreated): ServerResponse {
         val location = URI("/api/scales/${output.id}")
         return ServerResponse.created(location).buildAndAwait()

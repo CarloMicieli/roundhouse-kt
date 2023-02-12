@@ -88,7 +88,11 @@ class CreateScaleUseCaseTest {
 
         val input = CreateScale(
             name = "H0",
-            gauge = CreateScaleGauge(trackGauge = "STANDARD", millimeters = BigDecimal.valueOf(16.5), inches = BigDecimal.valueOf(0.65)),
+            gauge = CreateScaleGauge(
+                trackGauge = "STANDARD",
+                millimeters = BigDecimal.valueOf(16.5),
+                inches = BigDecimal.valueOf(0.65)
+            ),
             description = "Description goes here",
             ratio = BigDecimal.valueOf(87),
             standards = setOf("NEM")

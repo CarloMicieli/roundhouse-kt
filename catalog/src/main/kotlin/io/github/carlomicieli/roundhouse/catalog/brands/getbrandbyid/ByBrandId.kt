@@ -23,4 +23,4 @@ package io.github.carlomicieli.roundhouse.catalog.brands.getbrandbyid
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandId
 import io.github.carlomicieli.roundhouse.queries.criteria.Criteria
 
-data class ByBrandId(val brandId: io.github.carlomicieli.roundhouse.catalog.brands.BrandId) : Criteria
+data class ByBrandId(val brandId: BrandId) : Criteria

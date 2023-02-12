@@ -24,5 +24,5 @@ import io.github.carlomicieli.roundhouse.catalog.brands.BrandId
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandView
 
 interface GetBrandByIdRepository {
-    suspend fun findById(brandId: io.github.carlomicieli.roundhouse.catalog.brands.BrandId): BrandView?
+    suspend fun findById(brandId: BrandId): BrandView?
 }

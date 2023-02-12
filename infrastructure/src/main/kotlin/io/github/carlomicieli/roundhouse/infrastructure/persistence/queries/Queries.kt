@@ -35,7 +35,9 @@ import org.springframework.data.relational.core.query.Query
  * @param sort the query sorting
  * @return a {@code Query}
  */
-fun select(page: Page = Page.DEFAULT_PAGE, sort: Sorting = Sorting.DEFAULT_SORT): Query = select(page, sort) { Criteria.empty() }
+fun select(page: Page = Page.DEFAULT_PAGE, sort: Sorting = Sorting.DEFAULT_SORT): Query = select(page, sort) {
+    Criteria.empty()
+}
 
 /**
  * Build a select query with pagination, sorting and a criteria
@@ -44,7 +46,11 @@ fun select(page: Page = Page.DEFAULT_PAGE, sort: Sorting = Sorting.DEFAULT_SORT)
  * @param criteriaSupplier the criteria supplier
  * @return a {@code Query}
  */
-fun select(page: Page = Page.DEFAULT_PAGE, sort: Sorting = Sorting.DEFAULT_SORT, criteriaSupplier: () -> CriteriaDefinition): Query {
+fun select(
+    page: Page = Page.DEFAULT_PAGE,
+    sort: Sorting = Sorting.DEFAULT_SORT,
+    criteriaSupplier: () -> CriteriaDefinition
+): Query {
     return Query.query(criteriaSupplier())
         .sort(sort.toSort())
         .limit(page.limit)

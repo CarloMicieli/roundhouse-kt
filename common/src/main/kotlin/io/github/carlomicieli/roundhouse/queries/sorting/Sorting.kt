@@ -36,7 +36,9 @@ class Sorting private constructor(val criteriaList: List<SortCriteria>) {
      * @param propertyName the property name
      * @return a {@code SortCriteria}
      */
-    operator fun get(propertyName: String): SortCriteria? = criteriaList.firstOrNull { it.propertyName.equals(propertyName, true) }
+    operator fun get(propertyName: String): SortCriteria? = criteriaList.firstOrNull {
+        it.propertyName.equals(propertyName, true)
+    }
 
     companion object {
         val DEFAULT_SORT = Sorting(emptyList())

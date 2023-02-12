@@ -67,7 +67,10 @@ class GlobalErrorWebExceptionHandler(
     }
 
     private fun renderErrorResponse(request: ServerRequest): Mono<ServerResponse> {
-        val errorPropertiesMap = getErrorAttributes(request, ErrorAttributeOptions.of(ErrorAttributeOptions.Include.EXCEPTION))
+        val errorPropertiesMap = getErrorAttributes(
+            request,
+            ErrorAttributeOptions.of(ErrorAttributeOptions.Include.EXCEPTION)
+        )
 
         log.debug("{}", errorPropertiesMap)
         val ex = getError(request)

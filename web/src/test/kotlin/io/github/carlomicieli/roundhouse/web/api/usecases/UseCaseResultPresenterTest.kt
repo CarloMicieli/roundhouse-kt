@@ -38,15 +38,17 @@ import java.util.*
 @TestInstance(Lifecycle.PER_CLASS)
 class UseCaseResultPresenterTest {
 
-    private val useCaseResultPresenter: UseCaseResultPresenter<String, String> = object : UseCaseResultPresenter<String, String> {
-        override suspend fun outputToResponse(output: String): ServerResponse = ServerResponse.ok().bodyValueAndAwait(output)
+    private val useCaseResultPresenter: UseCaseResultPresenter<String, String> =
+        object : UseCaseResultPresenter<String, String> {
+            override suspend fun outputToResponse(output: String): ServerResponse =
+                ServerResponse.ok().bodyValueAndAwait(output)
 
-        override suspend fun errorToProblemDetails(error: String): ProblemDetails =
-            ProblemDetailsGenerator.fixed(LocalDateTime.now(), UUID.randomUUID()).unprocessableEntity(error)
+            override suspend fun errorToProblemDetails(error: String): ProblemDetails =
+                ProblemDetailsGenerator.fixed(LocalDateTime.now(), UUID.randomUUID()).unprocessableEntity(error)
 
-        override val problemDetailsGenerator: ProblemDetailsGenerator
-            get() = ProblemDetailsGenerator.default()
-    }
+            override val problemDetailsGenerator: ProblemDetailsGenerator
+                get() = ProblemDetailsGenerator.default()
+        }
 
     @Test
     fun `should produce the server response for use case outputs`() = runBlocking {

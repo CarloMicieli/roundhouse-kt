@@ -29,7 +29,8 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.buildAndAwait
 import java.net.URI
 
-class CreateBrandPresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) : UseCaseResultPresenter<BrandCreated, CreateBrandError> {
+class CreateBrandPresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) :
+    UseCaseResultPresenter<BrandCreated, CreateBrandError> {
     override suspend fun outputToResponse(output: BrandCreated): ServerResponse {
         val location = URI("/api/brands/${output.id}")
         return ServerResponse.created(location).buildAndAwait()
