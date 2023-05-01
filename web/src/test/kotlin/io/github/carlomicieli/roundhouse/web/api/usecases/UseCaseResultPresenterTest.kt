@@ -33,7 +33,7 @@ import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @TestInstance(Lifecycle.PER_CLASS)
 class UseCaseResultPresenterTest {

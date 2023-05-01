@@ -20,7 +20,7 @@
  */
 package io.github.carlomicieli.roundhouse.util
 
-import java.util.*
+import java.util.UUID
 
 /**
  * A Uniform Resource Name (URN) is a Uniform Resource Identifier (URI) that uses the urn scheme. URNs are globally

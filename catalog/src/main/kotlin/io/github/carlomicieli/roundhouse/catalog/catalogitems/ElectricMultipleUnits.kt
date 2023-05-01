@@ -20,7 +20,7 @@
  */
 package io.github.carlomicieli.roundhouse.catalog.catalogitems
 
-import java.util.*
+import java.util.UUID
 
 /**
  * an electric multiple unit rolling stock

@@ -20,7 +20,7 @@
  */
 package io.github.carlomicieli.roundhouse.catalog.catalogitems
 
-import java.util.*
+import java.util.UUID
 
 /**
  * a freight car rolling stock

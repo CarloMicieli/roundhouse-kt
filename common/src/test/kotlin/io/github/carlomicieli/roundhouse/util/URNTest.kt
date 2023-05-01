@@ -24,7 +24,7 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.UUID
 
 @DisplayName("URN")
 class URNTest {
