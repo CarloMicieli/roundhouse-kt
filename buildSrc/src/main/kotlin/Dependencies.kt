@@ -25,9 +25,9 @@ object R2dbcPostgresql {
 }
 
 object Testcontainers {
-    val version = "1.18.0"
+    val version = "1.18.3"
 }
 
 object Kotest {
-    val version = "5.6.1"
+    val version = "5.6.2"
 }

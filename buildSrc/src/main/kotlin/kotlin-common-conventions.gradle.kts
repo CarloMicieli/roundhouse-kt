@@ -150,16 +150,6 @@ spotless {
     }
 }
 
-koverMerged {
-    enable()
-    xmlReport {
-        onCheck.set(false)
-    }
-    htmlReport {
-        onCheck.set(false)
-    }
-}
-
 tasks.check {
     dependsOn(tasks.spotlessCheck)
 }
