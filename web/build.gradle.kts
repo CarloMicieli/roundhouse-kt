@@ -2,11 +2,13 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     id("kotlin-application-conventions")
+    id("org.openapi.generator")
 }
 
 dependencies {
@@ -31,6 +33,50 @@ dependencies {
 
 tasks.getByName<BootRun>("bootRun") {
     mainClass.set("io.github.carlomicieli.roundhouse.ApplicationKt")
+}
+
+openApiGenerate {
+    generatorName.set("java")
+    inputSpec.set("${project.projectDir}/src/main/resources/openapi/api-schema.yaml")
+    outputDir.set("${project.buildDir}/generated")
+    apiPackage.set("io.github.carlomicieli.roundhouse.api")
+    modelPackage.set("io.github.carlomicieli.roundhouse.model")
+    globalProperties.set(
+        mapOf(
+            "apis" to "false",
+            "invokers" to "false",
+            "models" to ""
+        )
+    )
+    configOptions.set(
+        mapOf(
+            "hideGenerationTimestamp" to "true",
+            "useJakartaEe" to "true",
+            "dateLibrary" to "java8",
+            "library" to "webclient",
+            "enumPropertyNaming" to "UPPERCASE"
+        )
+    )
+    logToStderr.set(false)
+    generateApiDocumentation.set(false)
+    generateApiTests.set(false)
+    generateModelDocumentation.set(false)
+    generateModelTests.set(false)
+    enablePostProcessFile.set(false)
+}
+
+tasks {
+    withType<KotlinCompile> {
+        dependsOn(openApiGenerate)
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("${project.buildDir}/generated/src/main/java")
+        }
+    }
 }
 
 @Suppress("UnstableApiUsage")
