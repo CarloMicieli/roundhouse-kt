@@ -29,6 +29,10 @@ dependencies {
     implementation("org.springframework:spring-jdbc")
     runtimeOnly("org.postgresql:r2dbc-postgresql:${R2dbcPostgresql.version}")
     runtimeOnly("org.postgresql:postgresql")
+
+    kover(project(":common"))
+    kover(project(":catalog"))
+    kover(project(":infrastructure"))
 }
 
 tasks.getByName<BootRun>("bootRun") {
