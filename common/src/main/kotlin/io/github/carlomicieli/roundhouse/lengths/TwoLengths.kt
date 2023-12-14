@@ -21,12 +21,14 @@
 package io.github.carlomicieli.roundhouse.lengths
 
 data class TwoLengths(val measureUnit1: MeasureUnit, val measureUnit2: MeasureUnit) {
-
     init {
         require(measureUnit1 != measureUnit2) { "the two measure units must be different" }
     }
 
-    operator fun invoke(lhs: Double?, rhs: Double?): Pair<Length, Length>? {
+    operator fun invoke(
+        lhs: Double?,
+        rhs: Double?
+    ): Pair<Length, Length>? {
         return if (lhs != null && rhs != null) {
             val len1 = Length.valueOf(lhs, measureUnit1)
             val len2 = Length.valueOf(rhs, measureUnit2)

@@ -34,9 +34,10 @@ fun ServerRequest.page(): Page {
 
 private fun Optional<String>.asInt(): Optional<Int> = this.map { it.toIntOrNull() }
 
-fun ServerRequest.sorting(): Sorting = this.queryParam("sort_by").map {
-    extractSorting(it)
-}.orElseGet { Sorting.DEFAULT_SORT }
+fun ServerRequest.sorting(): Sorting =
+    this.queryParam("sort_by").map {
+        extractSorting(it)
+    }.orElseGet { Sorting.DEFAULT_SORT }
 
 private fun extractSorting(input: String): Sorting {
     val tokens = input.split(',')
@@ -58,7 +59,12 @@ private fun extractSorting(input: String): Sorting {
 private fun extractCriteria(s: String): Pair<String, Direction> {
     val tokens = s.split('.')
     val propertyName = tokens[0].trim()
-    val dir = if (tokens.size == 2) { tokens[1].trim() } else { "asc" }
+    val dir =
+        if (tokens.size == 2) {
+            tokens[1].trim()
+        } else {
+            "asc"
+        }
     return Pair(propertyName, direction(dir))
 }
 

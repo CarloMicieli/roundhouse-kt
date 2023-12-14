@@ -51,44 +51,43 @@ data class BrandRow(
     val contactPhoneNumber: PhoneNumber?,
     val contactWebsiteUrl: WebsiteUrl?,
     val contactEmail: MailAddress?,
-
     val addressStreetAddress: String?,
     val addressExtendedAddress: String?,
     val addressCity: String?,
     val addressRegion: String?,
     val addressPostalCode: String?,
     val addressCountry: Country?,
-
     val socialsFacebook: String?,
     val socialsInstagram: String?,
     val socialsLinkedin: String?,
     val socialsTwitter: String?,
     val socialsYoutube: String?,
-
     val status: BrandStatus?,
     val version: Int,
     val created: Instant,
     val lastModified: Instant? = null
 )
 
-fun BrandRow.toView(): BrandView = BrandView(
-    id = this.brandId,
-    name = this.name,
-    registeredCompanyName = this.registeredCompanyName,
-    organizationEntityType = this.organizationEntityType,
-    groupName = this.groupName,
-    description = this.description,
-    address = this.address(),
-    contactInfo = this.contactInfo(),
-    socials = this.socials(),
-    kind = this.kind,
-    status = this.status,
-    metadata = MetadataInfo(
-        version = this.version,
-        createdAt = this.created,
-        lastModified = this.lastModified
+fun BrandRow.toView(): BrandView =
+    BrandView(
+        id = this.brandId,
+        name = this.name,
+        registeredCompanyName = this.registeredCompanyName,
+        organizationEntityType = this.organizationEntityType,
+        groupName = this.groupName,
+        description = this.description,
+        address = this.address(),
+        contactInfo = this.contactInfo(),
+        socials = this.socials(),
+        kind = this.kind,
+        status = this.status,
+        metadata =
+            MetadataInfo(
+                version = this.version,
+                createdAt = this.created,
+                lastModified = this.lastModified
+            )
     )
-)
 
 fun BrandRow.address(): Address? {
     return if (this.addressCountry == null &&

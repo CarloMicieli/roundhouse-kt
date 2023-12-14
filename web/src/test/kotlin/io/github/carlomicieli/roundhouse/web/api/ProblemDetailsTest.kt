@@ -34,53 +34,59 @@ import java.time.LocalDateTime
 @DisplayName("ProblemDetails")
 class ProblemDetailsTest {
     @Test
-    fun `should produce an unprocessable entity response`() = runBlocking {
-        val problemDetails = ProblemDetails(
-            type = URN("type"),
-            title = "title",
-            detail = "detail",
-            category = ProblemCategory.UnprocessableEntity,
-            timestamp = LocalDateTime.now(),
-            instance = URN("instance"),
-            fields = mapOf("field1" to "value1")
-        )
+    fun `should produce an unprocessable entity response`() =
+        runBlocking {
+            val problemDetails =
+                ProblemDetails(
+                    type = URN("type"),
+                    title = "title",
+                    detail = "detail",
+                    category = ProblemCategory.UnprocessableEntity,
+                    timestamp = LocalDateTime.now(),
+                    instance = URN("instance"),
+                    fields = mapOf("field1" to "value1")
+                )
 
-        val serverResponse = problemDetails.toServerResponse()
-        serverResponse.statusCode() shouldBe HttpStatus.UNPROCESSABLE_ENTITY
-        serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
-    }
-
-    @Test
-    fun `should produce a bad request response`() = runBlocking {
-        val problemDetails = ProblemDetails(
-            type = URN("type"),
-            title = "title",
-            detail = "detail",
-            category = ProblemCategory.InvalidRequest,
-            timestamp = LocalDateTime.now(),
-            instance = URN("instance"),
-            fields = mapOf("field1" to "value1")
-        )
-
-        val serverResponse = problemDetails.toServerResponse()
-        serverResponse.statusCode() shouldBe HttpStatus.BAD_REQUEST
-        serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
-    }
+            val serverResponse = problemDetails.toServerResponse()
+            serverResponse.statusCode() shouldBe HttpStatus.UNPROCESSABLE_ENTITY
+            serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
+        }
 
     @Test
-    fun `should produce a conflict response`() = runBlocking {
-        val problemDetails = ProblemDetails(
-            type = URN("type"),
-            title = "title",
-            detail = "detail",
-            category = ProblemCategory.AlreadyExists,
-            timestamp = LocalDateTime.now(),
-            instance = URN("instance"),
-            fields = mapOf("field1" to "value1")
-        )
+    fun `should produce a bad request response`() =
+        runBlocking {
+            val problemDetails =
+                ProblemDetails(
+                    type = URN("type"),
+                    title = "title",
+                    detail = "detail",
+                    category = ProblemCategory.InvalidRequest,
+                    timestamp = LocalDateTime.now(),
+                    instance = URN("instance"),
+                    fields = mapOf("field1" to "value1")
+                )
 
-        val serverResponse = problemDetails.toServerResponse()
-        serverResponse.statusCode() shouldBe HttpStatus.CONFLICT
-        serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
-    }
+            val serverResponse = problemDetails.toServerResponse()
+            serverResponse.statusCode() shouldBe HttpStatus.BAD_REQUEST
+            serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
+        }
+
+    @Test
+    fun `should produce a conflict response`() =
+        runBlocking {
+            val problemDetails =
+                ProblemDetails(
+                    type = URN("type"),
+                    title = "title",
+                    detail = "detail",
+                    category = ProblemCategory.AlreadyExists,
+                    timestamp = LocalDateTime.now(),
+                    instance = URN("instance"),
+                    fields = mapOf("field1" to "value1")
+                )
+
+            val serverResponse = problemDetails.toServerResponse()
+            serverResponse.statusCode() shouldBe HttpStatus.CONFLICT
+            serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
+        }
 }

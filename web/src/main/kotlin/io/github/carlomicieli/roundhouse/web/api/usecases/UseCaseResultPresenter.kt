@@ -47,15 +47,17 @@ interface UseCaseResultPresenter<O, E> {
 
     suspend fun errorToProblemDetails(error: E): ProblemDetails
 
-    suspend fun toServerResponse(result: UseCaseResult<O, E>): ServerResponse = result.map {
-        outputToResponse(it)
-    }.mapError {
-        errorToProblemDetails(it).toServerResponse()
-    }.get()
+    suspend fun toServerResponse(result: UseCaseResult<O, E>): ServerResponse =
+        result.map {
+            outputToResponse(it)
+        }.mapError {
+            errorToProblemDetails(it).toServerResponse()
+        }.get()
 
-    suspend fun toEmptyRequestResponse(): ServerResponse = problemDetailsGenerator.unprocessableEntity(
-        "Request body is empty"
-    ).toServerResponse()
+    suspend fun toEmptyRequestResponse(): ServerResponse =
+        problemDetailsGenerator.unprocessableEntity(
+            "Request body is empty"
+        ).toServerResponse()
 }
 
 suspend fun ProblemDetails.toServerResponse(): ServerResponse = toServerResponseMono().awaitSingle()
@@ -64,24 +66,26 @@ fun ProblemDetails.toServerResponseMono(): Mono<ServerResponse> {
     val mediaType = MediaType.APPLICATION_PROBLEM_JSON
     val httpStatus = categoryToHttpStatus(this.category)
 
-    val body = ProblemDetailsBody(
-        detail = this.detail,
-        fields = this.fields,
-        instance = this.instance.value,
-        timestamp = this.timestamp,
-        title = this.title,
-        type = this.type.value
-    )
+    val body =
+        ProblemDetailsBody(
+            detail = this.detail,
+            fields = this.fields,
+            instance = this.instance.value,
+            timestamp = this.timestamp,
+            title = this.title,
+            type = this.type.value
+        )
 
     return ServerResponse.status(httpStatus).contentType(mediaType).bodyValue(body)
 }
 
-private fun categoryToHttpStatus(category: ProblemCategory): HttpStatus = when (category) {
-    ProblemCategory.InvalidRequest -> HttpStatus.BAD_REQUEST
-    ProblemCategory.UnprocessableEntity -> HttpStatus.UNPROCESSABLE_ENTITY
-    ProblemCategory.AlreadyExists -> HttpStatus.CONFLICT
-    ProblemCategory.Error -> HttpStatus.INTERNAL_SERVER_ERROR
-}
+private fun categoryToHttpStatus(category: ProblemCategory): HttpStatus =
+    when (category) {
+        ProblemCategory.InvalidRequest -> HttpStatus.BAD_REQUEST
+        ProblemCategory.UnprocessableEntity -> HttpStatus.UNPROCESSABLE_ENTITY
+        ProblemCategory.AlreadyExists -> HttpStatus.CONFLICT
+        ProblemCategory.Error -> HttpStatus.INTERNAL_SERVER_ERROR
+    }
 
 data class ProblemDetailsBody(
     val type: String,

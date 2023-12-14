@@ -35,7 +35,10 @@ interface MeasureUnitConverter {
      * @param decimals the number of decimals to keep after the conversion
      * @return a converted value
      */
-    fun convert(value: BigDecimal, decimals: Int): BigDecimal
+    fun convert(
+        value: BigDecimal,
+        decimals: Int
+    ): BigDecimal
 
     /**
      * Convert {@code value} from its current measure unit to a second measure unit.

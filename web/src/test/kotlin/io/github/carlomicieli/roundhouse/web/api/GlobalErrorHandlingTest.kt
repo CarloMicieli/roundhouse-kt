@@ -29,7 +29,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @WebFluxTest(controllers = [TestController::class])
-class GlobalErrorHandlingTest(@Autowired private val webClient: WebTestClient) {
+class GlobalErrorHandlingTest(
+    @Autowired private val webClient: WebTestClient
+) {
     @Test
     fun `should produce a problem detail response when an unhandled exception is thrown`() {
         webClient.get()

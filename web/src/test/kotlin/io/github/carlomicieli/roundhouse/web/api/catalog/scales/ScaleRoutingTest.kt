@@ -40,7 +40,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(ExperimentalCoroutinesApi::class)
 class ScaleRoutingTest {
-
     private lateinit var createScaleHandler: CreateScaleHandler
     private lateinit var getScaleByIdHandler: GetScaleByIdHandler
     private lateinit var getScalesHandler: GetScalesHandler
@@ -51,52 +50,58 @@ class ScaleRoutingTest {
         createScaleHandler = mock()
         getScaleByIdHandler = mock()
         getScalesHandler = mock()
-        webclient = WebTestClient.bindToRouterFunction(
-            Scales.routes(createScaleHandler, getScaleByIdHandler, getScalesHandler)
-        ).build()
+        webclient =
+            WebTestClient.bindToRouterFunction(
+                Scales.routes(createScaleHandler, getScaleByIdHandler, getScalesHandler)
+            ).build()
     }
 
     @Test
     @DisplayName("POST /api/scales is mapped correctly")
-    fun postNewScaleTest() = runTest {
-        whenever(createScaleHandler.handle(any())).doSuspendableAnswer {
-            ServerResponse.ok().bodyValueAndAwait("works")
+    fun postNewScaleTest() =
+        runTest {
+            whenever(createScaleHandler.handle(any())).doSuspendableAnswer {
+                ServerResponse.ok().bodyValueAndAwait("works")
+            }
+
+            val bodyValue = CreateScale()
+
+            webclient.post()
+                .uri("/api/scales")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(bodyValue)
+                .exchange()
+                .expectStatus().isOk
         }
-
-        val bodyValue = CreateScale()
-
-        webclient.post()
-            .uri("/api/scales")
-            .accept(MediaType.APPLICATION_JSON)
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(bodyValue)
-            .exchange()
-            .expectStatus().isOk
-    }
 
     @Test
     @DisplayName("GET /api/scales/{scale} is mapped correctly")
-    fun getScaleByIdTest() = runTest {
-        whenever(getScaleByIdHandler.handle(any())).doSuspendableAnswer {
-            ServerResponse.ok().bodyValueAndAwait("works")
-        }
+    fun getScaleByIdTest() =
+        runTest {
+            whenever(getScaleByIdHandler.handle(any())).doSuspendableAnswer {
+                ServerResponse.ok().bodyValueAndAwait("works")
+            }
 
-        webclient.get()
-            .uri("/api/scales/{scale}", "acme")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk
-    }
+            webclient.get()
+                .uri("/api/scales/{scale}", "acme")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk
+        }
 
     @Test
     @DisplayName("GET /api/scales is mapped correctly")
-    fun getScalesTest() = runTest {
-        whenever(getScalesHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+    fun getScalesTest() =
+        runTest {
+            whenever(getScalesHandler.handle(any())).doSuspendableAnswer {
+                ServerResponse.ok().bodyValueAndAwait("works")
+            }
 
-        webclient.get()
-            .uri("/api/scales")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk
-    }
+            webclient.get()
+                .uri("/api/scales")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk
+        }
 }

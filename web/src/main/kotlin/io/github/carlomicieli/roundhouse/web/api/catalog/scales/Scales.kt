@@ -31,41 +31,43 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.coRouter
 
 object Scales {
-    val beans = beans {
-        bean<CreateScaleHandler>()
-        bean<CreateScaleUseCase>()
-        bean<CreateScalePresenter>()
+    val beans =
+        beans {
+            bean<CreateScaleHandler>()
+            bean<CreateScaleUseCase>()
+            bean<CreateScalePresenter>()
 
-        bean<GetScaleByIdHandler>()
-        bean<GetScaleByIdQuery>()
-        bean<GetScaleByIdPresenter>()
+            bean<GetScaleByIdHandler>()
+            bean<GetScaleByIdQuery>()
+            bean<GetScaleByIdPresenter>()
 
-        bean<GetScalesHandler>()
-        bean<GetScalesQuery>()
-        bean<GetScalesPresenter>()
+            bean<GetScalesHandler>()
+            bean<GetScalesQuery>()
+            bean<GetScalesPresenter>()
 
-        bean<ScalesRepository>()
+            bean<ScalesRepository>()
 
-        bean {
-            val createScaleHandler = ref<CreateScaleHandler>()
-            val getScaleByIdHandler = ref<GetScaleByIdHandler>()
-            val getScalesHandler = ref<GetScalesHandler>()
-            routes(createScaleHandler, getScaleByIdHandler, getScalesHandler)
+            bean {
+                val createScaleHandler = ref<CreateScaleHandler>()
+                val getScaleByIdHandler = ref<GetScaleByIdHandler>()
+                val getScalesHandler = ref<GetScalesHandler>()
+                routes(createScaleHandler, getScaleByIdHandler, getScalesHandler)
+            }
         }
-    }
 
     internal fun routes(
         createScaleHandler: CreateScaleHandler,
         getScaleByIdHandler: GetScaleByIdHandler,
         getScalesHandler: GetScalesHandler
-    ): RouterFunction<ServerResponse> = coRouter {
-        "/api/scales".nest {
-            accept(MediaType.APPLICATION_JSON).nest {
-                POST("", createScaleHandler::handle)
-            }
+    ): RouterFunction<ServerResponse> =
+        coRouter {
+            "/api/scales".nest {
+                accept(MediaType.APPLICATION_JSON).nest {
+                    POST("", createScaleHandler::handle)
+                }
 
-            GET("", getScalesHandler::handle)
-            GET("{scale}", getScaleByIdHandler::handle)
+                GET("", getScalesHandler::handle)
+                GET("{scale}", getScaleByIdHandler::handle)
+            }
         }
-    }
 }

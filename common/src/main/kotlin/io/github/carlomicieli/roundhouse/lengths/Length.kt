@@ -35,27 +35,26 @@ data class Length(val value: BigDecimal, val measureUnit: MeasureUnit) : Compara
         return this.value.compareTo(converted.value)
     }
 
-    override fun toString(): String =
-        measureUnit.buildString(value)
+    override fun toString(): String = measureUnit.buildString(value)
 
     companion object {
-        fun ofKilometers(value: BigDecimal): Length =
-            Length(value, MeasureUnit.KILOMETERS)
+        fun ofKilometers(value: BigDecimal): Length = Length(value, MeasureUnit.KILOMETERS)
 
-        fun ofMiles(value: BigDecimal): Length =
-            Length(value, MeasureUnit.MILES)
+        fun ofMiles(value: BigDecimal): Length = Length(value, MeasureUnit.MILES)
 
-        fun ofMillimeters(value: BigDecimal): Length =
-            Length(value, MeasureUnit.MILLIMETERS)
+        fun ofMillimeters(value: BigDecimal): Length = Length(value, MeasureUnit.MILLIMETERS)
 
-        fun ofInches(value: BigDecimal): Length =
-            Length(value, MeasureUnit.INCHES)
+        fun ofInches(value: BigDecimal): Length = Length(value, MeasureUnit.INCHES)
 
-        fun valueOf(value: Double, measureUnit: MeasureUnit): Length =
-            Length(BigDecimal.valueOf(value), measureUnit)
+        fun valueOf(
+            value: Double,
+            measureUnit: MeasureUnit
+        ): Length = Length(BigDecimal.valueOf(value), measureUnit)
 
-        fun valueOf(value: Long, measureUnit: MeasureUnit): Length =
-            Length(BigDecimal.valueOf(value), measureUnit)
+        fun valueOf(
+            value: Long,
+            measureUnit: MeasureUnit
+        ): Length = Length(BigDecimal.valueOf(value), measureUnit)
 
         /**
          * A constant length of zero millimeters

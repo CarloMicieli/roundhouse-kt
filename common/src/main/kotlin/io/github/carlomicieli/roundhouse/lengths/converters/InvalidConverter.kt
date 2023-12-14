@@ -27,6 +27,8 @@ import java.math.BigDecimal
  * A measure unit converter which always failing throwing an {@code UnsupportedOperationException}
  */
 class InvalidConverter(private val fromUnit: MeasureUnit, private val toUnit: MeasureUnit) : MeasureUnitConverter {
-    override fun convert(value: BigDecimal, decimals: Int): BigDecimal =
-        throw UnsupportedOperationException("Unable to find a suitable converter from $fromUnit to $toUnit")
+    override fun convert(
+        value: BigDecimal,
+        decimals: Int
+    ): BigDecimal = throw UnsupportedOperationException("Unable to find a suitable converter from $fromUnit to $toUnit")
 }

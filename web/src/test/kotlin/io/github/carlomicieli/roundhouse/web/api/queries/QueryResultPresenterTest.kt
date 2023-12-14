@@ -39,27 +39,31 @@ class QueryResultPresenterTest {
     private val presenter = queryResultPresenter()
 
     @Test
-    fun `should create a response with a single result`() = runTest {
-        val response = presenter.toServerResponse(SingleResult.Result("hello world"))
-        response.statusCode() shouldBe HttpStatus.OK
-    }
+    fun `should create a response with a single result`() =
+        runTest {
+            val response = presenter.toServerResponse(SingleResult.Result("hello world"))
+            response.statusCode() shouldBe HttpStatus.OK
+        }
 
     @Test
-    fun `should create a NOT_FOUND response`() = runTest {
-        val response = presenter.toServerResponse(SingleResult.Result(null))
-        response.statusCode() shouldBe HttpStatus.NOT_FOUND
-    }
+    fun `should create a NOT_FOUND response`() =
+        runTest {
+            val response = presenter.toServerResponse(SingleResult.Result(null))
+            response.statusCode() shouldBe HttpStatus.NOT_FOUND
+        }
 
     @Test
-    fun `should create a INTERNAL_SERVER_ERROR response`() = runTest {
-        val response = presenter.toServerResponse(SingleResult.Error(QueryError.DatabaseError(Exception("ops"))))
-        response.statusCode() shouldBe HttpStatus.INTERNAL_SERVER_ERROR
-    }
+    fun `should create a INTERNAL_SERVER_ERROR response`() =
+        runTest {
+            val response = presenter.toServerResponse(SingleResult.Error(QueryError.DatabaseError(Exception("ops"))))
+            response.statusCode() shouldBe HttpStatus.INTERNAL_SERVER_ERROR
+        }
 
-    private fun queryResultPresenter() = object : QueryResultPresenter<String> {
-        override val problemDetailsGenerator: ProblemDetailsGenerator
-            get() = ProblemDetailsGenerator.default()
+    private fun queryResultPresenter() =
+        object : QueryResultPresenter<String> {
+            override val problemDetailsGenerator: ProblemDetailsGenerator
+                get() = ProblemDetailsGenerator.default()
 
-        override suspend fun result(value: String) = ServerResponse.ok().bodyValueAndAwait(value)
-    }
+            override suspend fun result(value: String) = ServerResponse.ok().bodyValueAndAwait(value)
+        }
 }

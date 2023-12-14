@@ -54,63 +54,71 @@ class CreateScaleUseCaseTest {
     }
 
     @Test
-    fun `should validate the input`() = runTest {
-        val input = CreateScale(gauge = CreateScaleGauge())
-        val result = useCase.execute(input)
+    fun `should validate the input`() =
+        runTest {
+            val input = CreateScale(gauge = CreateScaleGauge())
+            val result = useCase.execute(input)
 
-        result.isError() shouldBe true
-        val error = result.extractError()
-        (error is CreateScaleError.InvalidRequest) shouldBe true
+            result.isError() shouldBe true
+            val error = result.extractError()
+            (error is CreateScaleError.InvalidRequest) shouldBe true
 
-        val invalidRequest = error as CreateScaleError.InvalidRequest
-        invalidRequest.errors shouldHaveSize 4
-    }
-
-    @Test
-    fun `should check if the scale already exists`() = runTest {
-        whenever(createScaleRepository.exists("H0")).doSuspendableAnswer { true }
-
-        val input = CreateScale(
-            name = "H0",
-            ratio = BigDecimal.valueOf(87),
-            gauge = CreateScaleGauge(trackGauge = "STANDARD")
-        )
-        val result = useCase.execute(input)
-
-        result.isError() shouldBe true
-        val error = result.extractError()
-        (error is CreateScaleError.ScaleAlreadyExists) shouldBe true
-    }
+            val invalidRequest = error as CreateScaleError.InvalidRequest
+            invalidRequest.errors shouldHaveSize 4
+        }
 
     @Test
-    fun `should create new scale`() = runTest {
-        whenever(createScaleRepository.exists("H0")).doSuspendableAnswer { false }
+    fun `should check if the scale already exists`() =
+        runTest {
+            whenever(createScaleRepository.exists("H0")).doSuspendableAnswer { true }
 
-        val input = CreateScale(
-            name = "H0",
-            gauge = CreateScaleGauge(
-                trackGauge = "STANDARD",
-                millimeters = BigDecimal.valueOf(16.5),
-                inches = BigDecimal.valueOf(0.65)
-            ),
-            description = "Description goes here",
-            ratio = BigDecimal.valueOf(87),
-            standards = setOf("NEM")
-        )
-        val result = useCase.execute(input)
+            val input =
+                CreateScale(
+                    name = "H0",
+                    ratio = BigDecimal.valueOf(87),
+                    gauge = CreateScaleGauge(trackGauge = "STANDARD")
+                )
+            val result = useCase.execute(input)
 
-        result.isError() shouldBe false
-        val output = result.extractOutput()
-        output.id shouldBe ScaleId.of("H0")
-    }
+            result.isError() shouldBe true
+            val error = result.extractError()
+            (error is CreateScaleError.ScaleAlreadyExists) shouldBe true
+        }
 
-    private fun UseCaseResult<ScaleCreated, CreateScaleError>.extractOutput(): ScaleCreated = when (this) {
-        is UseCaseResult.Output -> this.value
-        else -> throw AssertionError("this result is not a use case output")
-    }
+    @Test
+    fun `should create new scale`() =
+        runTest {
+            whenever(createScaleRepository.exists("H0")).doSuspendableAnswer { false }
 
-    private fun UseCaseResult<ScaleCreated, CreateScaleError>.extractError(): CreateScaleError = when (this) {
-        is UseCaseResult.Error -> this.value
-        else -> throw AssertionError("this result is not an error")
-    }
+            val input =
+                CreateScale(
+                    name = "H0",
+                    gauge =
+                        CreateScaleGauge(
+                            trackGauge = "STANDARD",
+                            millimeters = BigDecimal.valueOf(16.5),
+                            inches = BigDecimal.valueOf(0.65)
+                        ),
+                    description = "Description goes here",
+                    ratio = BigDecimal.valueOf(87),
+                    standards = setOf("NEM")
+                )
+            val result = useCase.execute(input)
+
+            result.isError() shouldBe false
+            val output = result.extractOutput()
+            output.id shouldBe ScaleId.of("H0")
+        }
+
+    private fun UseCaseResult<ScaleCreated, CreateScaleError>.extractOutput(): ScaleCreated =
+        when (this) {
+            is UseCaseResult.Output -> this.value
+            else -> throw AssertionError("this result is not a use case output")
+        }
+
+    private fun UseCaseResult<ScaleCreated, CreateScaleError>.extractError(): CreateScaleError =
+        when (this) {
+            is UseCaseResult.Error -> this.value
+            else -> throw AssertionError("this result is not an error")
+        }
 }

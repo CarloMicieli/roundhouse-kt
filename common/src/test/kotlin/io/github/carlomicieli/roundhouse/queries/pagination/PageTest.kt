@@ -29,17 +29,19 @@ import org.junit.jupiter.api.Test
 class PageTest {
     @Test
     fun `must have a non negative starting index`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            Page(-1, 25)
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                Page(-1, 25)
+            }
         ex.message shouldBe "Page starting index cannot be negative"
     }
 
     @Test
     fun `must have a non negative page size`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            Page(0, -1)
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                Page(0, -1)
+            }
         ex.message shouldBe "Page limit cannot be negative"
     }
 

@@ -32,7 +32,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
 class GetBrandsPresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) :
     QueryResultSetPresenter<BrandView> {
-
     override suspend fun results(results: PaginatedResultSet.Results<BrandView>): ServerResponse {
         val body = CollectionModel.of(results.items, results.paginationLinks("/api/brands"))
 

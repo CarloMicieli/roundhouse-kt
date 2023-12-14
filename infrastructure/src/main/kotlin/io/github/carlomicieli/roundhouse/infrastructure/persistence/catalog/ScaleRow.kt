@@ -49,23 +49,26 @@ data class ScaleRow(
     val lastModified: Instant? = null
 )
 
-fun ScaleRow.toView(): ScaleView = ScaleView(
-    id = this.scaleId,
-    name = this.name,
-    description = this.description,
-    gauge = Gauge(
-        millimetres = Length.ofMillimeters(this.gaugeMillimeters),
-        inches = Length.ofInches(this.gaugeInches),
-        trackGauge = trackGauge
-    ),
-    ratio = Ratio.of(this.ratio.toDouble()),
-    standards = this.standards?.splitToSequence(',')?.map { fromString(it) }?.toSet() ?: setOf(),
-    metadata = MetadataInfo(
-        version = this.version,
-        createdAt = this.created,
-        lastModified = this.lastModified
+fun ScaleRow.toView(): ScaleView =
+    ScaleView(
+        id = this.scaleId,
+        name = this.name,
+        description = this.description,
+        gauge =
+            Gauge(
+                millimetres = Length.ofMillimeters(this.gaugeMillimeters),
+                inches = Length.ofInches(this.gaugeInches),
+                trackGauge = trackGauge
+            ),
+        ratio = Ratio.of(this.ratio.toDouble()),
+        standards = this.standards?.splitToSequence(',')?.map { fromString(it) }?.toSet() ?: setOf(),
+        metadata =
+            MetadataInfo(
+                version = this.version,
+                createdAt = this.created,
+                lastModified = this.lastModified
+            )
     )
-)
 
 // TODO: fix me
 fun fromString(s: String): Standard {

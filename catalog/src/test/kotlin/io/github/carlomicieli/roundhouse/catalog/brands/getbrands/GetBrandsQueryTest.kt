@@ -58,66 +58,72 @@ class GetBrandsQueryTest {
     }
 
     @Test
-    fun `should return a result when the brands are found`() = runTest {
-        val currentPage = Page.DEFAULT_PAGE
-        val sorting = Sorting.DEFAULT_SORT
+    fun `should return a result when the brands are found`() =
+        runTest {
+            val currentPage = Page.DEFAULT_PAGE
+            val sorting = Sorting.DEFAULT_SORT
 
-        whenever(getBrandsRepository.findAll(currentPage, sorting)).doAnswer { brandsFlow() }
+            whenever(getBrandsRepository.findAll(currentPage, sorting)).doAnswer { brandsFlow() }
 
-        val result = query.execute(currentPage, sorting)
+            val result = query.execute(currentPage, sorting)
 
-        result shouldBe PaginatedResultSet.Results(currentPage, brandsList())
-    }
+            result shouldBe PaginatedResultSet.Results(currentPage, brandsList())
+        }
 
     @Test
-    fun `should handle exception executing the query`() = runTest {
-        val currentPage = Page.DEFAULT_PAGE
-        val sorting = Sorting.DEFAULT_SORT
+    fun `should handle exception executing the query`() =
+        runTest {
+            val currentPage = Page.DEFAULT_PAGE
+            val sorting = Sorting.DEFAULT_SORT
 
-        whenever(getBrandsRepository.findAll(currentPage, sorting)).thenThrow(
-            RuntimeException("Ops, something went wrong")
+            whenever(getBrandsRepository.findAll(currentPage, sorting)).thenThrow(
+                RuntimeException("Ops, something went wrong")
+            )
+
+            val result = query.execute(currentPage, sorting)
+
+            val errorResult = result as? PaginatedResultSet.Error
+            errorResult shouldNotBe null
+            errorResult?.queryError?.reason shouldBe "An error has occurred"
+        }
+
+    @Test
+    fun `should return a result when no brands are found`() =
+        runTest {
+            val currentPage = Page.DEFAULT_PAGE
+            val sorting = Sorting.DEFAULT_SORT
+
+            whenever(getBrandsRepository.findAll(currentPage, sorting)).doAnswer { emptyFlow() }
+
+            val result = query.execute(currentPage, sorting)
+
+            result shouldBe PaginatedResultSet.Results(currentPage, listOf())
+        }
+
+    private fun brandsList(): List<BrandView> =
+        (1 until 10)
+            .map { "Brand$it" }
+            .map { brandView(BrandId.of(it)) }
+
+    private fun brandsFlow(): Flow<BrandView> =
+        flow {
+            brandsList()
+                .forEach { emit(it) }
+        }
+
+    private fun brandView(id: BrandId) =
+        BrandView(
+            id = id,
+            name = id.toString(),
+            registeredCompanyName = null,
+            organizationEntityType = null,
+            groupName = null,
+            description = "My test brand",
+            address = null,
+            contactInfo = null,
+            socials = null,
+            kind = BrandKind.INDUSTRIAL,
+            status = BrandStatus.ACTIVE,
+            metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
         )
-
-        val result = query.execute(currentPage, sorting)
-
-        val errorResult = result as? PaginatedResultSet.Error
-        errorResult shouldNotBe null
-        errorResult?.queryError?.reason shouldBe "An error has occurred"
-    }
-
-    @Test
-    fun `should return a result when no brands are found`() = runTest {
-        val currentPage = Page.DEFAULT_PAGE
-        val sorting = Sorting.DEFAULT_SORT
-
-        whenever(getBrandsRepository.findAll(currentPage, sorting)).doAnswer { emptyFlow() }
-
-        val result = query.execute(currentPage, sorting)
-
-        result shouldBe PaginatedResultSet.Results(currentPage, listOf())
-    }
-
-    private fun brandsList(): List<BrandView> = (1 until 10)
-        .map { "Brand$it" }
-        .map { brandView(BrandId.of(it)) }
-
-    private fun brandsFlow(): Flow<BrandView> = flow {
-        brandsList()
-            .forEach { emit(it) }
-    }
-
-    private fun brandView(id: BrandId) = BrandView(
-        id = id,
-        name = id.toString(),
-        registeredCompanyName = null,
-        organizationEntityType = null,
-        groupName = null,
-        description = "My test brand",
-        address = null,
-        contactInfo = null,
-        socials = null,
-        kind = BrandKind.INDUSTRIAL,
-        status = BrandStatus.ACTIVE,
-        metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
-    )
 }

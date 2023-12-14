@@ -32,7 +32,6 @@ import java.time.ZonedDateTime
 import java.util.UUID
 
 class ProblemDetailsGenerator(private val clock: Clock, private val idSource: UuidSource) {
-
     /**
      * Create a {@code ProblemDetails} instance for unprocessable entity
      * @param message the message to detail this problem
@@ -71,16 +70,18 @@ class ProblemDetailsGenerator(private val clock: Clock, private val idSource: Uu
      * @param fields the fields to give additional information
      * @return a {@code ProblemDetails} instance
      */
-    fun alreadyExists(message: String, fields: Map<String, String>) =
-        ProblemDetails(
-            type = URN.fromProblemType("already-exists"),
-            title = "Already exists",
-            detail = message,
-            category = ProblemCategory.AlreadyExists,
-            timestamp = LocalDateTime.now(clock),
-            instance = URN.fromUUID(idSource.newId()),
-            fields = fields
-        )
+    fun alreadyExists(
+        message: String,
+        fields: Map<String, String>
+    ) = ProblemDetails(
+        type = URN.fromProblemType("already-exists"),
+        title = "Already exists",
+        detail = message,
+        category = ProblemCategory.AlreadyExists,
+        timestamp = LocalDateTime.now(clock),
+        instance = URN.fromUUID(idSource.newId()),
+        fields = fields
+    )
 
     /**
      * Create a {@code ProblemDetails} instance for a generic error
@@ -108,7 +109,10 @@ class ProblemDetailsGenerator(private val clock: Clock, private val idSource: Uu
         /**
          * Create a {@code ProblemDetailsGenerator} which generate problem details with a fixed timestamps and ids
          */
-        fun fixed(now: LocalDateTime, id: UUID): ProblemDetailsGenerator {
+        fun fixed(
+            now: LocalDateTime,
+            id: UUID
+        ): ProblemDetailsGenerator {
             val instant = ZonedDateTime.of(now, ZoneId.systemDefault()).toInstant()
             val clock = Clock.fixed(instant, ZoneId.systemDefault())
             val idSource = FixedUuidSource(id)

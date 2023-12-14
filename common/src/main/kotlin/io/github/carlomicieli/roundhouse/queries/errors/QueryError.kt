@@ -23,7 +23,6 @@ package io.github.carlomicieli.roundhouse.queries.errors
 import java.lang.Exception
 
 sealed interface QueryError {
-
     val reason: String
 
     data class DatabaseError(val exception: Exception) : QueryError {

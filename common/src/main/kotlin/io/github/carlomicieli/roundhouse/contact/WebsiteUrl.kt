@@ -23,18 +23,19 @@ package io.github.carlomicieli.roundhouse.contact
 import java.net.URI
 
 data class WebsiteUrl(val value: URI) {
-
     companion object {
-        fun tryCreate(url: String): Result<WebsiteUrl> = kotlin.runCatching {
-            WebsiteUrl(URI(url))
-        }
+        fun tryCreate(url: String): Result<WebsiteUrl> =
+            kotlin.runCatching {
+                WebsiteUrl(URI(url))
+            }
     }
 
     override fun toString(): String = value.toString()
 }
 
-fun String?.toWebsiteUrlOrNull(): WebsiteUrl? = if (this.isNullOrBlank()) {
-    null
-} else {
-    WebsiteUrl.tryCreate(this).getOrNull()
-}
+fun String?.toWebsiteUrlOrNull(): WebsiteUrl? =
+    if (this.isNullOrBlank()) {
+        null
+    } else {
+        WebsiteUrl.tryCreate(this).getOrNull()
+    }

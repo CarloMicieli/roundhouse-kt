@@ -53,52 +53,56 @@ class GetBrandByIdQueryTest {
     }
 
     @Test
-    fun `should return a result when the brand is found`() = runTest {
-        val brandId = BrandId.of("acme")
-        whenever(getBrandByIdRepository.findById(brandId)).doSuspendableAnswer { brandView(brandId) }
+    fun `should return a result when the brand is found`() =
+        runTest {
+            val brandId = BrandId.of("acme")
+            whenever(getBrandByIdRepository.findById(brandId)).doSuspendableAnswer { brandView(brandId) }
 
-        val criteria = ByBrandId(brandId)
-        val result = query.execute(criteria)
+            val criteria = ByBrandId(brandId)
+            val result = query.execute(criteria)
 
-        result shouldBe SingleResult.Result(brandView(brandId))
-    }
-
-    @Test
-    fun `should return a result when the brand is not found`() = runTest {
-        val brandId = BrandId.of("acme")
-        whenever(getBrandByIdRepository.findById(brandId)).doSuspendableAnswer { null }
-
-        val criteria = ByBrandId(brandId)
-        val result = query.execute(criteria)
-
-        result shouldBe SingleResult.Result(null)
-    }
+            result shouldBe SingleResult.Result(brandView(brandId))
+        }
 
     @Test
-    fun `should handle exception executing the query`() = runTest {
-        val brandId = BrandId.of("bad")
-        whenever(getBrandByIdRepository.findById(brandId)).thenThrow(RuntimeException("Ops, something went wrong"))
+    fun `should return a result when the brand is not found`() =
+        runTest {
+            val brandId = BrandId.of("acme")
+            whenever(getBrandByIdRepository.findById(brandId)).doSuspendableAnswer { null }
 
-        val criteria = ByBrandId(brandId)
-        val result = query.execute(criteria)
+            val criteria = ByBrandId(brandId)
+            val result = query.execute(criteria)
 
-        val errorResult = result as? SingleResult.Error
-        errorResult shouldNotBe null
-        errorResult?.queryError?.reason shouldBe "An error has occurred"
-    }
+            result shouldBe SingleResult.Result(null)
+        }
 
-    private fun brandView(id: BrandId) = BrandView(
-        id = id,
-        name = id.toString(),
-        registeredCompanyName = null,
-        organizationEntityType = null,
-        groupName = null,
-        description = "My test brand",
-        address = null,
-        contactInfo = null,
-        socials = null,
-        kind = BrandKind.INDUSTRIAL,
-        status = BrandStatus.ACTIVE,
-        metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
-    )
+    @Test
+    fun `should handle exception executing the query`() =
+        runTest {
+            val brandId = BrandId.of("bad")
+            whenever(getBrandByIdRepository.findById(brandId)).thenThrow(RuntimeException("Ops, something went wrong"))
+
+            val criteria = ByBrandId(brandId)
+            val result = query.execute(criteria)
+
+            val errorResult = result as? SingleResult.Error
+            errorResult shouldNotBe null
+            errorResult?.queryError?.reason shouldBe "An error has occurred"
+        }
+
+    private fun brandView(id: BrandId) =
+        BrandView(
+            id = id,
+            name = id.toString(),
+            registeredCompanyName = null,
+            organizationEntityType = null,
+            groupName = null,
+            description = "My test brand",
+            address = null,
+            contactInfo = null,
+            socials = null,
+            kind = BrandKind.INDUSTRIAL,
+            status = BrandStatus.ACTIVE,
+            metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
+        )
 }

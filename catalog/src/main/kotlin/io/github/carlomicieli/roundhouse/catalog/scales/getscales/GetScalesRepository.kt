@@ -26,5 +26,8 @@ import io.github.carlomicieli.roundhouse.queries.sorting.Sorting
 import kotlinx.coroutines.flow.Flow
 
 interface GetScalesRepository {
-    fun findAll(currentPage: Page, orderBy: Sorting): Flow<ScaleView>
+    fun findAll(
+        currentPage: Page,
+        orderBy: Sorting
+    ): Flow<ScaleView>
 }

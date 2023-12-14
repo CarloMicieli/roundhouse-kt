@@ -32,9 +32,10 @@ class MeasureUnitsConvertersTest {
     @Test
     fun `should throw a UnsupportedOperationException when the conversion is not valid`() {
         val converter = InvalidConverter(MeasureUnit.INCHES, MeasureUnit.KILOMETERS)
-        val ex = shouldThrowExactly<UnsupportedOperationException> {
-            converter.convert(BigDecimal.valueOf(10))
-        }
+        val ex =
+            shouldThrowExactly<UnsupportedOperationException> {
+                converter.convert(BigDecimal.valueOf(10))
+            }
         ex.message shouldBe "Unable to find a suitable converter from INCHES to KILOMETERS"
     }
 

@@ -32,9 +32,10 @@ class CountryTest {
     @ParameterizedTest
     @ValueSource(strings = ["", "a", "aaa", "something wrong"])
     fun `should check the country code length`(code: String) {
-        val exception = shouldThrowExactly<IllegalArgumentException> {
-            Country.of(code)
-        }
+        val exception =
+            shouldThrowExactly<IllegalArgumentException> {
+                Country.of(code)
+            }
 
         exception.message shouldBe "'$code' is not a valid Alpha-2 ISO 3166 country code"
     }
@@ -63,9 +64,10 @@ class CountryTest {
     @ParameterizedTest
     @ValueSource(strings = ["dd", "yy"])
     fun `should check whether the country code is not a valid Alpha-2 ISO 3166 code`(code: String) {
-        val exception = shouldThrowExactly<IllegalArgumentException> {
-            Country.of(code)
-        }
+        val exception =
+            shouldThrowExactly<IllegalArgumentException> {
+                Country.of(code)
+            }
 
         exception.message shouldBe "'$code' is not a valid Alpha-2 ISO 3166 country code"
     }

@@ -9,7 +9,7 @@ A web application for model railways collectors with spring boot and webflux.
 
 ## Requirements
 
-* Java 17 
+* Java 21 
 * Git
 * Docker
 

@@ -49,9 +49,10 @@ class URNTest {
 
     @Test
     fun `should throw an exception for blank input values`() {
-        val exception = shouldThrowExactly<IllegalArgumentException> {
-            URN("")
-        }
+        val exception =
+            shouldThrowExactly<IllegalArgumentException> {
+                URN("")
+            }
         exception.message shouldBe "URN value cannot be blank"
     }
 }

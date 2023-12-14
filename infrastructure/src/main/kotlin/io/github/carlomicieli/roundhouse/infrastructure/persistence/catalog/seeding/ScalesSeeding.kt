@@ -50,41 +50,45 @@ class ScalesSeeding(private val createScaleRepository: CreateScaleRepository) {
 }
 
 @Suppress("FunctionName")
-fun H0(): NewScale = NewScale(
-    id = ScaleId.of("H0"),
-    name = "H0",
-    description = "",
-    ratio = Ratio.of(87f),
-    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(16.5), TrackGauge.STANDARD),
-    standards = setOf(Standard.NEM)
-)
+fun H0(): NewScale =
+    NewScale(
+        id = ScaleId.of("H0"),
+        name = "H0",
+        description = "",
+        ratio = Ratio.of(87f),
+        gauge = Gauge.ofMillimetres(BigDecimal.valueOf(16.5), TrackGauge.STANDARD),
+        standards = setOf(Standard.NEM)
+    )
 
 @Suppress("FunctionName")
-fun TT(): NewScale = NewScale(
-    id = ScaleId.of("TT"),
-    name = "TT",
-    description = "",
-    ratio = Ratio.of(120f),
-    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(12.0), TrackGauge.STANDARD),
-    standards = setOf(Standard.NEM)
-)
+fun TT(): NewScale =
+    NewScale(
+        id = ScaleId.of("TT"),
+        name = "TT",
+        description = "",
+        ratio = Ratio.of(120f),
+        gauge = Gauge.ofMillimetres(BigDecimal.valueOf(12.0), TrackGauge.STANDARD),
+        standards = setOf(Standard.NEM)
+    )
 
 @Suppress("FunctionName")
-fun N(): NewScale = NewScale(
-    id = ScaleId.of("N"),
-    name = "N",
-    description = "",
-    ratio = Ratio.of(160f),
-    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(9.0), TrackGauge.STANDARD),
-    standards = setOf(Standard.NEM)
-)
+fun N(): NewScale =
+    NewScale(
+        id = ScaleId.of("N"),
+        name = "N",
+        description = "",
+        ratio = Ratio.of(160f),
+        gauge = Gauge.ofMillimetres(BigDecimal.valueOf(9.0), TrackGauge.STANDARD),
+        standards = setOf(Standard.NEM)
+    )
 
 @Suppress("FunctionName")
-fun Z(): NewScale = NewScale(
-    id = ScaleId.of("Z"),
-    name = "Z",
-    description = "",
-    ratio = Ratio.of(220f),
-    gauge = Gauge.ofMillimetres(BigDecimal.valueOf(6.5), TrackGauge.STANDARD),
-    standards = setOf(Standard.NEM)
-)
+fun Z(): NewScale =
+    NewScale(
+        id = ScaleId.of("Z"),
+        name = "Z",
+        description = "",
+        ratio = Ratio.of(220f),
+        gauge = Gauge.ofMillimetres(BigDecimal.valueOf(6.5), TrackGauge.STANDARD),
+        standards = setOf(Standard.NEM)
+    )

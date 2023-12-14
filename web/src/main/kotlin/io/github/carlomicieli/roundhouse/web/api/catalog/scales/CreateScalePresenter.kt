@@ -39,10 +39,11 @@ class CreateScalePresenter(override val problemDetailsGenerator: ProblemDetailsG
     override suspend fun errorToProblemDetails(error: CreateScaleError): ProblemDetails {
         return when (error) {
             is CreateScaleError.GenericError -> problemDetailsGenerator.error(error.ex.message)
-            is CreateScaleError.ScaleAlreadyExists -> problemDetailsGenerator.alreadyExists(
-                "Scale already exists",
-                mapOf("name" to error.name)
-            )
+            is CreateScaleError.ScaleAlreadyExists ->
+                problemDetailsGenerator.alreadyExists(
+                    "Scale already exists",
+                    mapOf("name" to error.name)
+                )
 
             is CreateScaleError.InvalidRequest -> problemDetailsGenerator.invalidRequest(error.errors)
         }

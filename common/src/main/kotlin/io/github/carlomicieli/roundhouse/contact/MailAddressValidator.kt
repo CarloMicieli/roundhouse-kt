@@ -23,13 +23,13 @@ package io.github.carlomicieli.roundhouse.contact
 import java.util.regex.Pattern
 
 object MailAddressValidator {
-    private const val EmailRegex: String = (
+    private const val EMAIL_REGEX: String = (
         "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" +
             "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"
-        )
-    private val EmailPattern: Pattern = Pattern.compile(EmailRegex)
+    )
+    private val EmailPattern: Pattern = Pattern.compile(EMAIL_REGEX)
 
-    private const val MaxUsernameLength: Int = 64
+    private const val MAX_USERNAME_LENGTH: Int = 64
 
     fun isValid(email: String): Boolean {
         if (email.isBlank() ||

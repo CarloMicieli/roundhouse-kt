@@ -48,17 +48,19 @@ class RatioTest {
 
     @Test
     fun `should allow only positive ratios`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            Ratio.of(-1.0)
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                Ratio.of(-1.0)
+            }
         ex.message shouldBe "ratio value must be positive"
     }
 
     @Test
     fun `should not allow zero ratios`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            Ratio.of(0.0)
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                Ratio.of(0.0)
+            }
         ex.message shouldBe "ratio value must be positive"
     }
 

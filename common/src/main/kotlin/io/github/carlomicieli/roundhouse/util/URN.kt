@@ -31,7 +31,6 @@ import java.util.UUID
  * another parser may use to find an item.
  */
 data class URN(val value: String) {
-
     init {
         require(value.isNotBlank()) { "URN value cannot be blank" }
     }

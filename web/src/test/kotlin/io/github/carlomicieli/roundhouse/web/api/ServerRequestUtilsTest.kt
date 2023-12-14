@@ -45,8 +45,9 @@ class ServerRequestUtilsTest {
 
         @Test
         fun `fallback to the default pagination limit if the parameter in the request is not a number`() {
-            val request = MockServerRequest.builder()
-                .queryParam("limit", "NaN").build()
+            val request =
+                MockServerRequest.builder()
+                    .queryParam("limit", "NaN").build()
             val page = request.page()
 
             page.limit shouldBe Page.DEFAULT_PAGE.limit
@@ -54,8 +55,9 @@ class ServerRequestUtilsTest {
 
         @Test
         fun `fallback to the default pagination offset if the parameter in the request is not a number`() {
-            val request = MockServerRequest.builder()
-                .queryParam("offset", "NaN").build()
+            val request =
+                MockServerRequest.builder()
+                    .queryParam("offset", "NaN").build()
             val page = request.page()
 
             page.start shouldBe Page.DEFAULT_PAGE.start
@@ -63,9 +65,10 @@ class ServerRequestUtilsTest {
 
         @Test
         fun `should use the page limit in the request`() {
-            val request = MockServerRequest.builder()
-                .queryParam("limit", "5")
-                .build()
+            val request =
+                MockServerRequest.builder()
+                    .queryParam("limit", "5")
+                    .build()
             val page = request.page()
 
             page.limit shouldBe 5
@@ -74,9 +77,10 @@ class ServerRequestUtilsTest {
 
         @Test
         fun `should use the page offset in the request`() {
-            val request = MockServerRequest.builder()
-                .queryParam("offset", "5")
-                .build()
+            val request =
+                MockServerRequest.builder()
+                    .queryParam("offset", "5")
+                    .build()
             val page = request.page()
 
             page.limit shouldBe Page.DEFAULT_PAGE.limit
@@ -97,9 +101,10 @@ class ServerRequestUtilsTest {
 
         @Test
         fun `should use the parameter in the request to build a single criteria sorting`() {
-            val request = MockServerRequest.builder()
-                .queryParam("sort_by", "name.desc")
-                .build()
+            val request =
+                MockServerRequest.builder()
+                    .queryParam("sort_by", "name.desc")
+                    .build()
             val sorting = request.sorting()
 
             sorting.size shouldBe 1
@@ -110,9 +115,10 @@ class ServerRequestUtilsTest {
 
         @Test
         fun `should default to ascending direction when not provided in the request`() {
-            val request = MockServerRequest.builder()
-                .queryParam("sort_by", "name")
-                .build()
+            val request =
+                MockServerRequest.builder()
+                    .queryParam("sort_by", "name")
+                    .build()
             val sorting = request.sorting()
 
             sorting.size shouldBe 1
@@ -123,9 +129,10 @@ class ServerRequestUtilsTest {
 
         @Test
         fun `should use the parameters in the request to build a multiple criteria sorting`() {
-            val request = MockServerRequest.builder()
-                .queryParam("sort_by", "name.desc,age.asc")
-                .build()
+            val request =
+                MockServerRequest.builder()
+                    .queryParam("sort_by", "name.desc,age.asc")
+                    .build()
             val sorting = request.sorting()
 
             sorting.size shouldBe 2

@@ -31,17 +31,19 @@ interface QueryResultPresenter<T> {
 
     suspend fun result(value: T): ServerResponse
 
-    suspend fun toServerResponse(result: SingleResult<T?>): ServerResponse = when (result) {
-        is SingleResult.Result -> {
-            val resultValue = result.value
-            if (resultValue == null) {
-                ServerResponse.notFound().buildAndAwait()
-            } else {
-                result(resultValue)
+    suspend fun toServerResponse(result: SingleResult<T?>): ServerResponse =
+        when (result) {
+            is SingleResult.Result -> {
+                val resultValue = result.value
+                if (resultValue == null) {
+                    ServerResponse.notFound().buildAndAwait()
+                } else {
+                    result(resultValue)
+                }
             }
-        }
 
-        is SingleResult.Error -> problemDetailsGenerator.error(result.queryError.reason)
-            .toServerResponse()
-    }
+            is SingleResult.Error ->
+                problemDetailsGenerator.error(result.queryError.reason)
+                    .toServerResponse()
+        }
 }

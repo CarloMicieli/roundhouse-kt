@@ -57,51 +57,56 @@ class GetScaleByIdQueryTest {
     }
 
     @Test
-    fun `should return a result when the Scale is found`() = runTest {
-        val scaleId = ScaleId.of("acme")
-        whenever(getScaleByIdRepository.findById(scaleId)).doSuspendableAnswer { scaleView(scaleId) }
+    fun `should return a result when the Scale is found`() =
+        runTest {
+            val scaleId = ScaleId.of("acme")
+            whenever(getScaleByIdRepository.findById(scaleId)).doSuspendableAnswer { scaleView(scaleId) }
 
-        val criteria = ByScaleId(scaleId)
-        val result = query.execute(criteria)
+            val criteria = ByScaleId(scaleId)
+            val result = query.execute(criteria)
 
-        result shouldBe SingleResult.Result(scaleView(scaleId))
-    }
-
-    @Test
-    fun `should return a result when the Scale is not found`() = runTest {
-        val scaleId = ScaleId.of("acme")
-        whenever(getScaleByIdRepository.findById(scaleId)).doSuspendableAnswer { null }
-
-        val criteria = ByScaleId(scaleId)
-        val result = query.execute(criteria)
-
-        result shouldBe SingleResult.Result(null)
-    }
+            result shouldBe SingleResult.Result(scaleView(scaleId))
+        }
 
     @Test
-    fun `should handle exception executing the query`() = runTest {
-        val scaleId = ScaleId.of("bad")
-        whenever(getScaleByIdRepository.findById(scaleId)).thenThrow(RuntimeException("Ops, something went wrong"))
+    fun `should return a result when the Scale is not found`() =
+        runTest {
+            val scaleId = ScaleId.of("acme")
+            whenever(getScaleByIdRepository.findById(scaleId)).doSuspendableAnswer { null }
 
-        val criteria = ByScaleId(scaleId)
-        val result = query.execute(criteria)
+            val criteria = ByScaleId(scaleId)
+            val result = query.execute(criteria)
 
-        val errorResult = result as? SingleResult.Error
-        errorResult shouldNotBe null
-        errorResult?.queryError?.reason shouldBe "An error has occurred"
-    }
+            result shouldBe SingleResult.Result(null)
+        }
 
-    private fun scaleView(id: ScaleId) = ScaleView(
-        id = id,
-        name = id.toString(),
-        ratio = Ratio.of(87.0f),
-        gauge = Gauge(
-            Length.valueOf(16.5, MeasureUnit.MILLIMETERS),
-            Length.valueOf(0.65, MeasureUnit.INCHES),
-            TrackGauge.STANDARD
-        ),
-        description = "My test Scale",
-        standards = setOf(Standard.NEM),
-        metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
-    )
+    @Test
+    fun `should handle exception executing the query`() =
+        runTest {
+            val scaleId = ScaleId.of("bad")
+            whenever(getScaleByIdRepository.findById(scaleId)).thenThrow(RuntimeException("Ops, something went wrong"))
+
+            val criteria = ByScaleId(scaleId)
+            val result = query.execute(criteria)
+
+            val errorResult = result as? SingleResult.Error
+            errorResult shouldNotBe null
+            errorResult?.queryError?.reason shouldBe "An error has occurred"
+        }
+
+    private fun scaleView(id: ScaleId) =
+        ScaleView(
+            id = id,
+            name = id.toString(),
+            ratio = Ratio.of(87.0f),
+            gauge =
+                Gauge(
+                    Length.valueOf(16.5, MeasureUnit.MILLIMETERS),
+                    Length.valueOf(0.65, MeasureUnit.INCHES),
+                    TrackGauge.STANDARD
+                ),
+            description = "My test Scale",
+            standards = setOf(Standard.NEM),
+            metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
+        )
 }

@@ -32,7 +32,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
 class GetScalesPresenter(override val problemDetailsGenerator: ProblemDetailsGenerator) :
     QueryResultSetPresenter<ScaleView> {
-
     override suspend fun results(results: PaginatedResultSet.Results<ScaleView>): ServerResponse {
         val body = CollectionModel.of(results.items, results.paginationLinks("/api/scales"))
 

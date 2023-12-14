@@ -26,6 +26,8 @@ import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
 
 class ValidTrackGaugeValidator : ConstraintValidator<ValidTrackGauge, String> {
-    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean =
-        value?.isValidName<TrackGauge>() ?: true
+    override fun isValid(
+        value: String?,
+        context: ConstraintValidatorContext?
+    ): Boolean = value?.isValidName<TrackGauge>() ?: true
 }

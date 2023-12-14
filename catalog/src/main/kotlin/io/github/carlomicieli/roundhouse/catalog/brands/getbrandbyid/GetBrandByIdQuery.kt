@@ -27,10 +27,11 @@ import io.github.carlomicieli.roundhouse.queries.result.toQueryError
 import io.github.carlomicieli.roundhouse.queries.result.toSingleResult
 
 class GetBrandByIdQuery(private val repository: GetBrandByIdRepository) : SingleResultQuery<ByBrandId, BrandView> {
-    override suspend fun execute(criteria: ByBrandId): SingleResult<BrandView?> = try {
-        val id = criteria.brandId
-        repository.findById(id).toSingleResult()
-    } catch (ex: Exception) {
-        ex.toQueryError()
-    }
+    override suspend fun execute(criteria: ByBrandId): SingleResult<BrandView?> =
+        try {
+            val id = criteria.brandId
+            repository.findById(id).toSingleResult()
+        } catch (ex: Exception) {
+            ex.toQueryError()
+        }
 }

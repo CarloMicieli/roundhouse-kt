@@ -29,9 +29,10 @@ import org.junit.jupiter.api.Test
 class TwoLengthsTest {
     @Test
     fun `should throw an illegal argument exception when the two measure units are the same`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            TwoLengths(MeasureUnit.MILLIMETERS, MeasureUnit.MILLIMETERS)
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                TwoLengths(MeasureUnit.MILLIMETERS, MeasureUnit.MILLIMETERS)
+            }
 
         ex.message shouldBe "the two measure units must be different"
     }

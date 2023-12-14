@@ -57,19 +57,21 @@ class CreateScaleUseCase(private val validator: Validator, private val repositor
         return UseCaseResult.withOutput(ScaleCreated(newScale.id, Instant.now()))
     }
 
-    private fun CreateScale.toNewScale(): NewScale = NewScale(
-        id = ScaleId.of(this.name),
-        name = this.name,
-        ratio = Ratio.of(this.ratio),
-        gauge = this.gauge?.toGauge() ?: throw IllegalArgumentException("invalid scale gauge"),
-        description = this.description,
-        standards = this.standards.map { Standard.valueOf(it) }.toSet()
-    )
+    private fun CreateScale.toNewScale(): NewScale =
+        NewScale(
+            id = ScaleId.of(this.name),
+            name = this.name,
+            ratio = Ratio.of(this.ratio),
+            gauge = this.gauge?.toGauge() ?: throw IllegalArgumentException("invalid scale gauge"),
+            description = this.description,
+            standards = this.standards.map { Standard.valueOf(it) }.toSet()
+        )
 
     private fun CreateScaleGauge.toGauge(): Gauge {
-        val trackGauge: TrackGauge = this.trackGauge?.toEnum<TrackGauge>() ?: throw IllegalArgumentException(
-            "track gauge is required"
-        )
+        val trackGauge: TrackGauge =
+            this.trackGauge?.toEnum<TrackGauge>() ?: throw IllegalArgumentException(
+                "track gauge is required"
+            )
         return twoLengths(this.millimeters?.toDouble(), this.inches?.toDouble())?.let {
             Gauge(
                 it.first,

@@ -38,13 +38,14 @@ value class Ratio private constructor(val value: BigDecimal) : Comparable<Ratio>
 
     companion object {
         // Common scala ratios
-        private val ratios: Map<BigDecimal, Ratio> = mapOf(
-            BigDecimal.valueOf(32) to Ratio(BigDecimal.valueOf(32)),
-            BigDecimal.valueOf(43.5) to Ratio(BigDecimal.valueOf(43.5)),
-            BigDecimal.valueOf(87) to Ratio(BigDecimal.valueOf(87)),
-            BigDecimal.valueOf(120) to Ratio(BigDecimal.valueOf(120)),
-            BigDecimal.valueOf(160) to Ratio(BigDecimal.valueOf(160))
-        )
+        private val ratios: Map<BigDecimal, Ratio> =
+            mapOf(
+                BigDecimal.valueOf(32) to Ratio(BigDecimal.valueOf(32)),
+                BigDecimal.valueOf(43.5) to Ratio(BigDecimal.valueOf(43.5)),
+                BigDecimal.valueOf(87) to Ratio(BigDecimal.valueOf(87)),
+                BigDecimal.valueOf(120) to Ratio(BigDecimal.valueOf(120)),
+                BigDecimal.valueOf(160) to Ratio(BigDecimal.valueOf(160))
+            )
 
         fun of(value: Float): Ratio = of(value.toDouble())
 
@@ -54,10 +55,11 @@ value class Ratio private constructor(val value: BigDecimal) : Comparable<Ratio>
 
         fun tryCreate(value: Float): Result<Ratio> = tryCreate(value.toDouble())
 
-        fun tryCreate(value: Double): Result<Ratio> = runCatching {
-            val v = BigDecimal.valueOf(value).stripTrailingZeros()
-            ratios[v] ?: Ratio(v)
-        }
+        fun tryCreate(value: Double): Result<Ratio> =
+            runCatching {
+                val v = BigDecimal.valueOf(value).stripTrailingZeros()
+                ratios[v] ?: Ratio(v)
+            }
     }
 }
 

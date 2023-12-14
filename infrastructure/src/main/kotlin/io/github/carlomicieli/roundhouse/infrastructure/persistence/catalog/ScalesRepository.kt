@@ -42,44 +42,49 @@ class ScalesRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, pri
     CreateScaleRepository,
     GetScaleByIdRepository,
     GetScalesRepository {
-
     override suspend fun exists(name: String): Boolean {
-        val query = selectOne {
-            Criteria.where("name").`is`(name)
-        }
+        val query =
+            selectOne {
+                Criteria.where("name").`is`(name)
+            }
         return r2dbcEntityTemplate
             .exists(query, ENTITY)
             .awaitSingle()
     }
 
     override suspend fun insert(newScale: NewScale) {
-        val newRow = ScaleRow(
-            scaleId = newScale.id,
-            name = newScale.name,
-            description = newScale.description,
-            ratio = newScale.ratio.value,
-            gaugeMillimeters = newScale.gauge.millimetres.value,
-            gaugeInches = newScale.gauge.inches.value,
-            trackGauge = newScale.gauge.trackGauge,
-            standards = newScale.standards.joinToString(),
-            version = 0,
-            created = clock.instant(),
-            lastModified = null
-        )
+        val newRow =
+            ScaleRow(
+                scaleId = newScale.id,
+                name = newScale.name,
+                description = newScale.description,
+                ratio = newScale.ratio.value,
+                gaugeMillimeters = newScale.gauge.millimetres.value,
+                gaugeInches = newScale.gauge.inches.value,
+                trackGauge = newScale.gauge.trackGauge,
+                standards = newScale.standards.joinToString(),
+                version = 0,
+                created = clock.instant(),
+                lastModified = null
+            )
         r2dbcEntityTemplate.insert(newRow).awaitSingle()
     }
 
     override suspend fun findById(scaleId: ScaleId): ScaleView? {
-        val query = selectOne {
-            Criteria.where("scale_id").`is`(scaleId.toString())
-        }
+        val query =
+            selectOne {
+                Criteria.where("scale_id").`is`(scaleId.toString())
+            }
         return r2dbcEntityTemplate
             .selectOne(query, ENTITY)
             .map { it.toView() }
             .awaitSingleOrNull()
     }
 
-    override fun findAll(currentPage: Page, orderBy: Sorting): Flow<ScaleView> {
+    override fun findAll(
+        currentPage: Page,
+        orderBy: Sorting
+    ): Flow<ScaleView> {
         val query = select(currentPage, orderBy)
         return r2dbcEntityTemplate
             .select(query, ENTITY)

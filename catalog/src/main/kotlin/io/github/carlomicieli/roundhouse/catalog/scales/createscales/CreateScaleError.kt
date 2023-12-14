@@ -24,6 +24,8 @@ import io.github.carlomicieli.roundhouse.validation.ValidationError
 
 sealed interface CreateScaleError {
     data class InvalidRequest(val errors: List<ValidationError>) : CreateScaleError
+
     data class GenericError(val ex: Exception) : CreateScaleError
+
     data class ScaleAlreadyExists(val name: String) : CreateScaleError
 }

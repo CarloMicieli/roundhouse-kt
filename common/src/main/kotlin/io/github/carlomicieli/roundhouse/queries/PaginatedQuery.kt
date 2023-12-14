@@ -28,5 +28,8 @@ interface PaginatedQuery<T> : Query<Nothing, T> {
     /**
      * Execute this `Query` in order to select one page of the corresponding data.
      */
-    suspend fun execute(currentPage: Page, orderBy: Sorting = Sorting.DEFAULT_SORT): PaginatedResultSet<T>
+    suspend fun execute(
+        currentPage: Page,
+        orderBy: Sorting = Sorting.DEFAULT_SORT
+    ): PaginatedResultSet<T>
 }

@@ -62,65 +62,72 @@ class GetScalesQueryTest {
     }
 
     @Test
-    fun `should return a result when the scales are found`() = runTest {
-        val currentPage = Page.DEFAULT_PAGE
-        val sorting = Sorting.DEFAULT_SORT
+    fun `should return a result when the scales are found`() =
+        runTest {
+            val currentPage = Page.DEFAULT_PAGE
+            val sorting = Sorting.DEFAULT_SORT
 
-        whenever(getScalesRepository.findAll(currentPage, sorting)).doAnswer { scalesFlow() }
+            whenever(getScalesRepository.findAll(currentPage, sorting)).doAnswer { scalesFlow() }
 
-        val result = query.execute(currentPage, sorting)
+            val result = query.execute(currentPage, sorting)
 
-        result shouldBe PaginatedResultSet.Results(currentPage, scalesList())
-    }
+            result shouldBe PaginatedResultSet.Results(currentPage, scalesList())
+        }
 
     @Test
-    fun `should handle exception executing the query`() = runTest {
-        val currentPage = Page.DEFAULT_PAGE
-        val sorting = Sorting.DEFAULT_SORT
+    fun `should handle exception executing the query`() =
+        runTest {
+            val currentPage = Page.DEFAULT_PAGE
+            val sorting = Sorting.DEFAULT_SORT
 
-        whenever(getScalesRepository.findAll(currentPage, sorting)).thenThrow(
-            RuntimeException("Ops, something went wrong")
+            whenever(getScalesRepository.findAll(currentPage, sorting)).thenThrow(
+                RuntimeException("Ops, something went wrong")
+            )
+
+            val result = query.execute(currentPage, sorting)
+
+            val errorResult = result as? PaginatedResultSet.Error
+            errorResult shouldNotBe null
+            errorResult?.queryError?.reason shouldBe "An error has occurred"
+        }
+
+    @Test
+    fun `should return a result when no scales are found`() =
+        runTest {
+            val currentPage = Page.DEFAULT_PAGE
+            val sorting = Sorting.DEFAULT_SORT
+
+            whenever(getScalesRepository.findAll(currentPage, sorting)).doAnswer { emptyFlow() }
+
+            val result = query.execute(currentPage, sorting)
+
+            result shouldBe PaginatedResultSet.Results(currentPage, listOf())
+        }
+
+    private fun scalesList(): List<ScaleView> =
+        (1 until 10)
+            .map { "Scale$it" }
+            .map { scaleView(ScaleId.of(it)) }
+
+    private fun scalesFlow(): Flow<ScaleView> =
+        flow {
+            scalesList()
+                .forEach { emit(it) }
+        }
+
+    private fun scaleView(id: ScaleId) =
+        ScaleView(
+            id = id,
+            name = id.toString(),
+            ratio = Ratio.of(87.0f),
+            gauge =
+                Gauge(
+                    Length.valueOf(16.5, MeasureUnit.MILLIMETERS),
+                    Length.valueOf(0.65, MeasureUnit.INCHES),
+                    TrackGauge.STANDARD
+                ),
+            description = "My test Scale",
+            standards = setOf(Standard.NEM),
+            metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
         )
-
-        val result = query.execute(currentPage, sorting)
-
-        val errorResult = result as? PaginatedResultSet.Error
-        errorResult shouldNotBe null
-        errorResult?.queryError?.reason shouldBe "An error has occurred"
-    }
-
-    @Test
-    fun `should return a result when no scales are found`() = runTest {
-        val currentPage = Page.DEFAULT_PAGE
-        val sorting = Sorting.DEFAULT_SORT
-
-        whenever(getScalesRepository.findAll(currentPage, sorting)).doAnswer { emptyFlow() }
-
-        val result = query.execute(currentPage, sorting)
-
-        result shouldBe PaginatedResultSet.Results(currentPage, listOf())
-    }
-
-    private fun scalesList(): List<ScaleView> = (1 until 10)
-        .map { "Scale$it" }
-        .map { scaleView(ScaleId.of(it)) }
-
-    private fun scalesFlow(): Flow<ScaleView> = flow {
-        scalesList()
-            .forEach { emit(it) }
-    }
-
-    private fun scaleView(id: ScaleId) = ScaleView(
-        id = id,
-        name = id.toString(),
-        ratio = Ratio.of(87.0f),
-        gauge = Gauge(
-            Length.valueOf(16.5, MeasureUnit.MILLIMETERS),
-            Length.valueOf(0.65, MeasureUnit.INCHES),
-            TrackGauge.STANDARD
-        ),
-        description = "My test Scale",
-        standards = setOf(Standard.NEM),
-        metadata = MetadataInfo(1, createdAt = Instant.ofEpochMilli(1661021655290L))
-    )
 }

@@ -29,5 +29,5 @@ object Testcontainers {
 }
 
 object Kotest {
-    val version = "5.6.2"
+    val version = "5.8.0"
 }

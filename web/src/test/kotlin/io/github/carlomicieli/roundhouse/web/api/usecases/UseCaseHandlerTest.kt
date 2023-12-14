@@ -38,49 +38,54 @@ import org.springframework.web.reactive.function.server.buildAndAwait
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UseCaseHandlerTest {
+    @Test
+    fun `should handle successful use case results`() =
+        runTest {
+            val input = 42
+            val result = UseCaseResult.withOutput("ok")
+
+            val useCase =
+                mock<UseCase<Int, String, Exception>> {
+                    onBlocking { execute(input) } doReturn result
+                }
+
+            val presenter =
+                mock<UseCaseResultPresenter<String, Exception>> {
+                    onBlocking { toServerResponse(result) } doReturn ServerResponse.ok().bodyValueAndAwait("ok")
+                }
+
+            val request = mock<ServerRequest>()
+            val useCaseHandler = TestUseCaseHandler(useCase, presenter, input)
+
+            val response = useCaseHandler.handle(request)
+            response.statusCode() shouldBe HttpStatus.OK
+        }
 
     @Test
-    fun `should handle successful use case results`() = runTest {
-        val input = 42
-        val result = UseCaseResult.withOutput("ok")
+    fun `should handle error use case results`() =
+        runTest {
+            val input = 42
+            val error = java.lang.Exception("ops")
+            val result = UseCaseResult.withError(error)
 
-        val useCase = mock<UseCase<Int, String, Exception>> {
-            onBlocking { execute(input) } doReturn result
+            val useCase =
+                mock<UseCase<Int, String, Exception>> {
+                    onBlocking { execute(input) } doReturn result
+                }
+
+            val presenter =
+                mock<UseCaseResultPresenter<String, Exception>> {
+                    onBlocking {
+                        toServerResponse(result)
+                    } doReturn ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).buildAndAwait()
+                }
+
+            val request = mock<ServerRequest>()
+            val useCaseHandler = TestUseCaseHandler(useCase, presenter, input)
+
+            val response = useCaseHandler.handle(request)
+            response.statusCode() shouldBe HttpStatus.INTERNAL_SERVER_ERROR
         }
-
-        val presenter = mock<UseCaseResultPresenter<String, Exception>> {
-            onBlocking { toServerResponse(result) } doReturn ServerResponse.ok().bodyValueAndAwait("ok")
-        }
-
-        val request = mock<ServerRequest>()
-        val useCaseHandler = TestUseCaseHandler(useCase, presenter, input)
-
-        val response = useCaseHandler.handle(request)
-        response.statusCode() shouldBe HttpStatus.OK
-    }
-
-    @Test
-    fun `should handle error use case results`() = runTest {
-        val input = 42
-        val error = java.lang.Exception("ops")
-        val result = UseCaseResult.withError(error)
-
-        val useCase = mock<UseCase<Int, String, Exception>> {
-            onBlocking { execute(input) } doReturn result
-        }
-
-        val presenter = mock<UseCaseResultPresenter<String, Exception>> {
-            onBlocking {
-                toServerResponse(result)
-            } doReturn ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).buildAndAwait()
-        }
-
-        val request = mock<ServerRequest>()
-        val useCaseHandler = TestUseCaseHandler(useCase, presenter, input)
-
-        val response = useCaseHandler.handle(request)
-        response.statusCode() shouldBe HttpStatus.INTERNAL_SERVER_ERROR
-    }
 }
 
 class TestUseCaseHandler(
@@ -89,6 +94,7 @@ class TestUseCaseHandler(
     private val expectedInput: Int? = null
 ) : UseCaseHandler<Int, String, Exception> {
     override suspend fun extractInput(serverRequest: ServerRequest): Int? = expectedInput
+
     override val logger: Logger
         get() = LoggerFactory.getLogger("test")
 }

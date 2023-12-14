@@ -37,7 +37,7 @@ repositories {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
@@ -57,14 +57,14 @@ tasks {
         kotlinOptions {
             allWarningsAsErrors = true
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = JavaVersion.VERSION_17.toString()
+            jvmTarget = JavaVersion.VERSION_21.toString()
             apiVersion = "1.7"
             languageVersion = "1.7"
         }
     }
 }
 
-extra["kotestVersion"] = "5.5.4"
+extra["kotestVersion"] = "5.8.0"
 
 configurations {
     all {
@@ -109,7 +109,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.kotest:kotest-assertions-core:${property("kotestVersion")}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
 }
 
 tasks {

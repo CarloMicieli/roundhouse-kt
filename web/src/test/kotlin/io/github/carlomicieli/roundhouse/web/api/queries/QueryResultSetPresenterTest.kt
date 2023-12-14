@@ -37,32 +37,39 @@ import java.lang.Exception
 @DisplayName("QueryResultSetPresenter")
 @OptIn(ExperimentalCoroutinesApi::class)
 class QueryResultSetPresenterTest {
-
     private val presenter = queryResultSetPresenter()
 
     @Test
-    fun `should create a response with the result set`() = runTest {
-        val response = presenter.toServerResponse(PaginatedResultSet.Results(Page.DEFAULT_PAGE, listOf("hello world")))
-        response.statusCode() shouldBe HttpStatus.OK
-    }
+    fun `should create a response with the result set`() =
+        runTest {
+            val result = PaginatedResultSet.Results(Page.DEFAULT_PAGE, listOf("hello world"))
+            val response = presenter.toServerResponse(result)
+            response.statusCode() shouldBe HttpStatus.OK
+        }
 
     @Test
-    fun `should create a NOT_FOUND response`() = runTest {
-        val response = presenter.toServerResponse(PaginatedResultSet.Results(Page.DEFAULT_PAGE, listOf()))
-        response.statusCode() shouldBe HttpStatus.NOT_FOUND
-    }
+    fun `should create a NOT_FOUND response`() =
+        runTest {
+            val response = presenter.toServerResponse(PaginatedResultSet.Results(Page.DEFAULT_PAGE, listOf()))
+            response.statusCode() shouldBe HttpStatus.NOT_FOUND
+        }
 
     @Test
-    fun `should create a INTERNAL_SERVER_ERROR response`() = runTest {
-        val response = presenter.toServerResponse(PaginatedResultSet.Error(QueryError.DatabaseError(Exception("ops"))))
-        response.statusCode() shouldBe HttpStatus.INTERNAL_SERVER_ERROR
-    }
+    fun `should create a INTERNAL_SERVER_ERROR response`() =
+        runTest {
+            val response =
+                presenter.toServerResponse(
+                    PaginatedResultSet.Error(QueryError.DatabaseError(Exception("ops")))
+                )
+            response.statusCode() shouldBe HttpStatus.INTERNAL_SERVER_ERROR
+        }
 
-    private fun queryResultSetPresenter(): QueryResultSetPresenter<String> = object : QueryResultSetPresenter<String> {
-        override val problemDetailsGenerator: ProblemDetailsGenerator
-            get() = ProblemDetailsGenerator.default()
+    private fun queryResultSetPresenter(): QueryResultSetPresenter<String> =
+        object : QueryResultSetPresenter<String> {
+            override val problemDetailsGenerator: ProblemDetailsGenerator
+                get() = ProblemDetailsGenerator.default()
 
-        override suspend fun results(results: PaginatedResultSet.Results<String>): ServerResponse =
-            ServerResponse.ok().bodyValueAndAwait(results)
-    }
+            override suspend fun results(results: PaginatedResultSet.Results<String>): ServerResponse =
+                ServerResponse.ok().bodyValueAndAwait(results)
+        }
 }

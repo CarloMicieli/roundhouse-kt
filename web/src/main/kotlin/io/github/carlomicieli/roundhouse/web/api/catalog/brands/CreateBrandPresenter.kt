@@ -39,10 +39,11 @@ class CreateBrandPresenter(override val problemDetailsGenerator: ProblemDetailsG
     override suspend fun errorToProblemDetails(error: CreateBrandError): ProblemDetails {
         return when (error) {
             is CreateBrandError.GenericError -> problemDetailsGenerator.error(error.ex.message)
-            is CreateBrandError.BrandAlreadyExists -> problemDetailsGenerator.alreadyExists(
-                "Brand already exists",
-                mapOf("name" to error.name)
-            )
+            is CreateBrandError.BrandAlreadyExists ->
+                problemDetailsGenerator.alreadyExists(
+                    "Brand already exists",
+                    mapOf("name" to error.name)
+                )
 
             is CreateBrandError.InvalidRequest -> problemDetailsGenerator.invalidRequest(error.errors)
         }

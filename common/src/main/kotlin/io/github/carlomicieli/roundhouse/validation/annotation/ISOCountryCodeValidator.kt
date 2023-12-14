@@ -26,8 +26,10 @@ import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
 
 class ISOCountryCodeValidator : ConstraintValidator<ISOCountryCode, String> {
-
-    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
+    override fun isValid(
+        value: String?,
+        context: ConstraintValidatorContext?
+    ): Boolean {
         return value?.isValidCountryCode() ?: true
     }
 }

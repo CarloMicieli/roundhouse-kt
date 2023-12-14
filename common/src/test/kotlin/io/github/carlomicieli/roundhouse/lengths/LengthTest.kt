@@ -77,9 +77,10 @@ class LengthTest {
 
     @Test
     fun `can only assume non negative values`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            Length.valueOf(-1, MeasureUnit.KILOMETERS)
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                Length.valueOf(-1, MeasureUnit.KILOMETERS)
+            }
         ex.message shouldBe "a length value cannot be negative"
     }
 

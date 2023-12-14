@@ -26,6 +26,8 @@ import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
 
 class ValidBrandKindValidator : ConstraintValidator<ValidBrandKind, String> {
-    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean =
-        value?.isValidName<BrandKind>() ?: true
+    override fun isValid(
+        value: String?,
+        context: ConstraintValidatorContext?
+    ): Boolean = value?.isValidName<BrandKind>() ?: true
 }

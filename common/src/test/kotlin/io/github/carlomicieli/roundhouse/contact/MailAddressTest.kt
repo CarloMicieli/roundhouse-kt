@@ -30,9 +30,10 @@ import org.junit.jupiter.api.Test
 class MailAddressTest {
     @Test
     fun `cannot be blank`() {
-        val exception = shouldThrowExactly<IllegalArgumentException> {
-            MailAddress("")
-        }
+        val exception =
+            shouldThrowExactly<IllegalArgumentException> {
+                MailAddress("")
+            }
         exception.message shouldBe "A mail address cannot be blank"
     }
 

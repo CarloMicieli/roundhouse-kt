@@ -29,10 +29,14 @@ import io.github.carlomicieli.roundhouse.queries.sorting.Sorting
 import kotlinx.coroutines.flow.toList
 
 class GetBrandsQuery(private val getBrandsRepository: GetBrandsRepository) : PaginatedQuery<BrandView> {
-    override suspend fun execute(currentPage: Page, orderBy: Sorting): PaginatedResultSet<BrandView> = try {
-        val results: List<BrandView> = getBrandsRepository.findAll(currentPage, orderBy).toList()
-        PaginatedResultSet.Results(currentPage, results)
-    } catch (ex: Exception) {
-        PaginatedResultSet.Error(QueryError.DatabaseError(ex))
-    }
+    override suspend fun execute(
+        currentPage: Page,
+        orderBy: Sorting
+    ): PaginatedResultSet<BrandView> =
+        try {
+            val results: List<BrandView> = getBrandsRepository.findAll(currentPage, orderBy).toList()
+            PaginatedResultSet.Results(currentPage, results)
+        } catch (ex: Exception) {
+            PaginatedResultSet.Error(QueryError.DatabaseError(ex))
+        }
 }

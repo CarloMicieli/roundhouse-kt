@@ -38,9 +38,10 @@ class SortingTest {
 
     @Test
     fun `is built adding sorting criteria`() {
-        val sorting = Sorting.by("name", Direction.ASC)
-            .andThenBy("age", Direction.DESC)
-            .build()
+        val sorting =
+            Sorting.by("name", Direction.ASC)
+                .andThenBy("age", Direction.DESC)
+                .build()
 
         sorting.size shouldBe 2
         sorting.criteriaList shouldHaveSize 2
@@ -50,9 +51,10 @@ class SortingTest {
 
     @Test
     fun `should return the sorting criteria by property name`() {
-        val sorting = Sorting.by("name", Direction.ASC)
-            .andThenBy("age", Direction.DESC)
-            .build()
+        val sorting =
+            Sorting.by("name", Direction.ASC)
+                .andThenBy("age", Direction.DESC)
+                .build()
 
         val criteria = sorting["name"]
         criteria shouldNotBe null
@@ -62,9 +64,10 @@ class SortingTest {
 
     @Test
     fun `should return null when the property name is not included in the sorting criteria`() {
-        val sorting = Sorting.by("name", Direction.ASC)
-            .andThenBy("age", Direction.DESC)
-            .build()
+        val sorting =
+            Sorting.by("name", Direction.ASC)
+                .andThenBy("age", Direction.DESC)
+                .build()
 
         val criteria = sorting["notFound"]
         criteria shouldBe null

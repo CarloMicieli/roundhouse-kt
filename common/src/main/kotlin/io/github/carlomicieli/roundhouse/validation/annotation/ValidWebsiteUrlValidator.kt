@@ -26,8 +26,10 @@ import jakarta.validation.ConstraintValidatorContext
 import java.net.URI
 
 class ValidWebsiteUrlValidator : ConstraintValidator<ValidWebsiteUrl, String> {
-
-    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
+    override fun isValid(
+        value: String?,
+        context: ConstraintValidatorContext?
+    ): Boolean {
         return if (value == null) {
             true
         } else {

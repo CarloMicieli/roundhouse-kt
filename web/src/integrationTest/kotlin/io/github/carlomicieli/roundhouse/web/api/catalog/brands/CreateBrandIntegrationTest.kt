@@ -29,7 +29,6 @@ import java.util.UUID
 private const val POST_BRANDS_ENDPOINT = "/api/brands"
 
 class CreateBrandIntegrationTest : AbstractWebApiTest() {
-
     @Test
     fun `should return UNPROCESSABLE_ENTITY when the request body is empty`() {
         webClient.post()
@@ -70,10 +69,11 @@ class CreateBrandIntegrationTest : AbstractWebApiTest() {
     @Test
     fun `should return CONFLICT when a brand with the same name already exists`() {
         val name = UUID.randomUUID().toString()
-        val newBrand = RequestBody(
-            name = name,
-            kind = "INDUSTRIAL"
-        )
+        val newBrand =
+            RequestBody(
+                name = name,
+                kind = "INDUSTRIAL"
+            )
 
         webClient.post()
             .uri(POST_BRANDS_ENDPOINT)
@@ -102,28 +102,31 @@ class CreateBrandIntegrationTest : AbstractWebApiTest() {
     @Test
     fun `should create a new brand`() {
         val name = UUID.randomUUID().toString()
-        val newBrand = RequestBody(
-            name = name,
-            groupName = "group",
-            description = "Description goes here",
-            registeredCompanyName = "Company & co",
-            organizationEntityType = "OTHER",
-            kind = "INDUSTRIAL",
-            contactInfo = ContactInfo(
-                email = "mail@mail.com",
-                websiteUrl = "https://www.website.com",
-                phoneNumber = "555 1234"
-            ),
-            address = Address(
-                streetAddress = "22 Acacia Avenue",
-                extendedAddress = "Apt. 123",
-                city = "London",
-                postalCode = "1H2 H88",
-                countryCode = "GB",
-                region = "Sussex"
-            ),
-            status = "ACTIVE"
-        )
+        val newBrand =
+            RequestBody(
+                name = name,
+                groupName = "group",
+                description = "Description goes here",
+                registeredCompanyName = "Company & co",
+                organizationEntityType = "OTHER",
+                kind = "INDUSTRIAL",
+                contactInfo =
+                    ContactInfo(
+                        email = "mail@mail.com",
+                        websiteUrl = "https://www.website.com",
+                        phoneNumber = "555 1234"
+                    ),
+                address =
+                    Address(
+                        streetAddress = "22 Acacia Avenue",
+                        extendedAddress = "Apt. 123",
+                        city = "London",
+                        postalCode = "1H2 H88",
+                        countryCode = "GB",
+                        region = "Sussex"
+                    ),
+                status = "ACTIVE"
+            )
 
         webClient.post()
             .uri(POST_BRANDS_ENDPOINT)

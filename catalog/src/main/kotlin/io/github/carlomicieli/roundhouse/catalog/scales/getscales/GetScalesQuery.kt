@@ -34,11 +34,15 @@ class GetScalesQuery(private val getScalesRepository: GetScalesRepository) : Pag
         val log = LoggerFactory.getLogger(GetScalesQuery::class.java)
     }
 
-    override suspend fun execute(currentPage: Page, orderBy: Sorting): PaginatedResultSet<ScaleView> = try {
-        val results: List<ScaleView> = getScalesRepository.findAll(currentPage, orderBy).toList()
-        PaginatedResultSet.Results(currentPage, results)
-    } catch (ex: Exception) {
-        log.error("GetScalesQuery", ex)
-        PaginatedResultSet.Error(QueryError.DatabaseError(ex))
-    }
+    override suspend fun execute(
+        currentPage: Page,
+        orderBy: Sorting
+    ): PaginatedResultSet<ScaleView> =
+        try {
+            val results: List<ScaleView> = getScalesRepository.findAll(currentPage, orderBy).toList()
+            PaginatedResultSet.Results(currentPage, results)
+        } catch (ex: Exception) {
+            log.error("GetScalesQuery", ex)
+            PaginatedResultSet.Error(QueryError.DatabaseError(ex))
+        }
 }

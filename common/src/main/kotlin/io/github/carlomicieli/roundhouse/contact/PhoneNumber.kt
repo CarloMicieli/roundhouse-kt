@@ -32,8 +32,9 @@ data class PhoneNumber(val value: String)
  *
  * @return a PhoneNumber, or {@code null} if the input is not a valid phone number
  */
-fun String?.toPhoneNumberOrNull(): PhoneNumber? = if (this.isNullOrBlank()) {
-    null
-} else {
-    PhoneNumber(this)
-}
+fun String?.toPhoneNumberOrNull(): PhoneNumber? =
+    if (this.isNullOrBlank()) {
+        null
+    } else {
+        PhoneNumber(this)
+    }

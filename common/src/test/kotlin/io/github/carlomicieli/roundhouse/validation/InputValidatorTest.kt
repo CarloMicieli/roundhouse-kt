@@ -77,7 +77,6 @@ class InputValidatorTest {
 data class MyBean(
     @field:NotEmpty
     val fullName: String,
-
     @field:Positive
     val age: Int?
 )

@@ -31,16 +31,12 @@ data class CreateScale(
     @field:NotBlank
     @field:Size(min = 1, max = 10)
     val name: String = "",
-
     @field:Min(1)
     val ratio: BigDecimal = BigDecimal.ZERO,
-
     @field:Valid
     @field:NotNull
     val gauge: CreateScaleGauge? = null,
-
     @field:Size(max = 2500)
     val description: String? = null,
-
     val standards: Set<String> = setOf()
 )

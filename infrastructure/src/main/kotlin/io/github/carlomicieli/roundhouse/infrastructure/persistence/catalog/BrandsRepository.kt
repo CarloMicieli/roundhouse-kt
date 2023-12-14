@@ -41,58 +41,63 @@ class BrandsRepository(private val r2dbcEntityTemplate: R2dbcEntityTemplate, pri
     CreateBrandRepository,
     GetBrandByIdRepository,
     GetBrandsRepository {
-
     override suspend fun exists(name: String): Boolean {
-        val query = selectOne {
-            where("name").`is`(name)
-        }
+        val query =
+            selectOne {
+                where("name").`is`(name)
+            }
         return r2dbcEntityTemplate
             .exists(query, ENTITY)
             .awaitSingle()
     }
 
     override suspend fun insert(newBrand: NewBrand) {
-        val newRow = BrandRow(
-            brandId = newBrand.id,
-            name = newBrand.name,
-            registeredCompanyName = newBrand.registeredCompanyName,
-            organizationEntityType = newBrand.organizationEntityType,
-            groupName = newBrand.groupName,
-            description = newBrand.description,
-            contactPhoneNumber = newBrand.contactInfo?.phone,
-            contactEmail = newBrand.contactInfo?.email,
-            contactWebsiteUrl = newBrand.contactInfo?.websiteUrl,
-            kind = newBrand.kind,
-            addressStreetAddress = newBrand.address?.streetAddress,
-            addressExtendedAddress = newBrand.address?.extendedAddress,
-            addressCity = newBrand.address?.city,
-            addressRegion = newBrand.address?.region,
-            addressPostalCode = newBrand.address?.postalCode,
-            addressCountry = newBrand.address?.country,
-            socialsFacebook = newBrand.socials?.facebook?.value,
-            socialsInstagram = newBrand.socials?.instagram?.value,
-            socialsLinkedin = newBrand.socials?.linkedin?.value,
-            socialsTwitter = newBrand.socials?.twitter?.value,
-            socialsYoutube = newBrand.socials?.youtube?.value,
-            status = newBrand.status,
-            version = 0,
-            created = clock.instant(),
-            lastModified = null
-        )
+        val newRow =
+            BrandRow(
+                brandId = newBrand.id,
+                name = newBrand.name,
+                registeredCompanyName = newBrand.registeredCompanyName,
+                organizationEntityType = newBrand.organizationEntityType,
+                groupName = newBrand.groupName,
+                description = newBrand.description,
+                contactPhoneNumber = newBrand.contactInfo?.phone,
+                contactEmail = newBrand.contactInfo?.email,
+                contactWebsiteUrl = newBrand.contactInfo?.websiteUrl,
+                kind = newBrand.kind,
+                addressStreetAddress = newBrand.address?.streetAddress,
+                addressExtendedAddress = newBrand.address?.extendedAddress,
+                addressCity = newBrand.address?.city,
+                addressRegion = newBrand.address?.region,
+                addressPostalCode = newBrand.address?.postalCode,
+                addressCountry = newBrand.address?.country,
+                socialsFacebook = newBrand.socials?.facebook?.value,
+                socialsInstagram = newBrand.socials?.instagram?.value,
+                socialsLinkedin = newBrand.socials?.linkedin?.value,
+                socialsTwitter = newBrand.socials?.twitter?.value,
+                socialsYoutube = newBrand.socials?.youtube?.value,
+                status = newBrand.status,
+                version = 0,
+                created = clock.instant(),
+                lastModified = null
+            )
         r2dbcEntityTemplate.insert(newRow).awaitSingle()
     }
 
     override suspend fun findById(brandId: io.github.carlomicieli.roundhouse.catalog.brands.BrandId): BrandView? {
-        val query = selectOne {
-            where("brand_id").`is`(brandId.toString())
-        }
+        val query =
+            selectOne {
+                where("brand_id").`is`(brandId.toString())
+            }
         return r2dbcEntityTemplate
             .selectOne(query, ENTITY)
             .map { it.toView() }
             .awaitSingleOrNull()
     }
 
-    override fun findAll(currentPage: Page, orderBy: Sorting): Flow<BrandView> {
+    override fun findAll(
+        currentPage: Page,
+        orderBy: Sorting
+    ): Flow<BrandView> {
         val query = select(currentPage, orderBy)
         return r2dbcEntityTemplate
             .select(query, ENTITY)

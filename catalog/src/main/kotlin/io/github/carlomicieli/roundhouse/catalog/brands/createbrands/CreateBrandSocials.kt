@@ -30,13 +30,14 @@ data class CreateBrandSocials(
     val twitter: String?,
     val youtube: String?
 ) {
-    fun toSocials(): Socials = Socials(
-        facebook = this.facebook.toHandler(),
-        instagram = this.instagram.toHandler(),
-        linkedin = this.linkedin.toHandler(),
-        twitter = this.twitter.toHandler(),
-        youtube = this.youtube.toHandler()
-    )
+    fun toSocials(): Socials =
+        Socials(
+            facebook = this.facebook.toHandler(),
+            instagram = this.instagram.toHandler(),
+            linkedin = this.linkedin.toHandler(),
+            twitter = this.twitter.toHandler(),
+            youtube = this.youtube.toHandler()
+        )
 }
 
 fun String?.toHandler(): Handler? {

@@ -27,13 +27,13 @@ import java.math.BigDecimal
 import java.util.Objects
 
 class Gauge(val millimetres: Length, val inches: Length, val trackGauge: TrackGauge) : Comparable<Gauge> {
-
     override fun compareTo(other: Gauge): Int = this.millimetres.compareTo(other.millimetres)
 
-    override fun equals(other: Any?): Boolean = other is Gauge &&
-        this.millimetres == other.millimetres &&
-        this.inches == other.inches &&
-        this.trackGauge == other.trackGauge
+    override fun equals(other: Any?): Boolean =
+        other is Gauge &&
+            this.millimetres == other.millimetres &&
+            this.inches == other.inches &&
+            this.trackGauge == other.trackGauge
 
     override fun hashCode(): Int = Objects.hash(millimetres, inches, trackGauge)
 
@@ -43,7 +43,10 @@ class Gauge(val millimetres: Length, val inches: Length, val trackGauge: TrackGa
         private val mmToInches: MeasureUnitConverter = MeasureUnit.MILLIMETERS.convertTo(MeasureUnit.INCHES)
         private val inchesToMm: MeasureUnitConverter = MeasureUnit.INCHES.convertTo(MeasureUnit.MILLIMETERS)
 
-        fun ofMillimetres(millimetres: BigDecimal, trackGauge: TrackGauge = TrackGauge.STANDARD): Gauge {
+        fun ofMillimetres(
+            millimetres: BigDecimal,
+            trackGauge: TrackGauge = TrackGauge.STANDARD
+        ): Gauge {
             val inches = mmToInches.convert(millimetres)
             return Gauge(
                 millimetres = Length.ofMillimeters(millimetres),
@@ -52,7 +55,10 @@ class Gauge(val millimetres: Length, val inches: Length, val trackGauge: TrackGa
             )
         }
 
-        fun ofInches(inches: BigDecimal, trackGauge: TrackGauge = TrackGauge.STANDARD): Gauge {
+        fun ofInches(
+            inches: BigDecimal,
+            trackGauge: TrackGauge = TrackGauge.STANDARD
+        ): Gauge {
             val millimetres = inchesToMm.convert(inches, 1)
             return Gauge(
                 millimetres = Length.ofMillimeters(millimetres),

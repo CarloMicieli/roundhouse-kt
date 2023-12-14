@@ -39,39 +39,42 @@ import org.springframework.context.support.beans
 import java.time.Clock
 
 object ApplicationConfig {
-    val common = listOf(
-        commonBeans
-    )
+    val common =
+        listOf(
+            commonBeans
+        )
 
-    val catalog = listOf(
-        Brands.beans,
-        Scales.beans
-    )
+    val catalog =
+        listOf(
+            Brands.beans,
+            Scales.beans
+        )
 }
 
-val commonBeans = beans {
-    bean<Clock>() { Clock.systemDefaultZone() }
-    bean<UuidSource>() { RandomUuidSource }
-    bean<ProblemDetailsGenerator>()
-    bean<ObjectMapper>() {
-        ObjectMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-            .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .registerModule(customSerializerModule())
-            .registerModule(JavaTimeModule())
-            .registerModule(KotlinModule.Builder().build())
-    }
+val commonBeans =
+    beans {
+        bean<Clock> { Clock.systemDefaultZone() }
+        bean<UuidSource> { RandomUuidSource }
+        bean<ProblemDetailsGenerator>()
+        bean<ObjectMapper> {
+            ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .registerModule(customSerializerModule())
+                .registerModule(JavaTimeModule())
+                .registerModule(KotlinModule.Builder().build())
+        }
 
-    profile("local || it") {
-        bean<CatalogSeeding>()
-        bean {
-            CommandLineRunner {
-                runBlocking {
-                    val catalogSeeding = ref<CatalogSeeding>()
-                    catalogSeeding.seed()
+        profile("local || it") {
+            bean<CatalogSeeding>()
+            bean {
+                CommandLineRunner {
+                    runBlocking {
+                        val catalogSeeding = ref<CatalogSeeding>()
+                        catalogSeeding.seed()
+                    }
                 }
             }
         }
     }
-}

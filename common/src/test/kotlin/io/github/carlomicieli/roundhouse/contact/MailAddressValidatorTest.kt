@@ -40,7 +40,10 @@ class MailAddressValidatorTest {
         "username@.com,false",
         "foo,false"
     )
-    fun `should validate mail address`(email: String, isValid: Boolean) {
+    fun `should validate mail address`(
+        email: String,
+        isValid: Boolean
+    ) {
         MailAddressValidator.isValid(email) shouldBe isValid
     }
 }

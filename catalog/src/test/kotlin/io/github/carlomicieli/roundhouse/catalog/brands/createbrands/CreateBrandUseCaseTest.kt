@@ -39,7 +39,6 @@ import org.mockito.kotlin.whenever
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(ExperimentalCoroutinesApi::class)
 class CreateBrandUseCaseTest {
-
     lateinit var useCase: CreateBrandUseCase
     lateinit var createBrandRepository: CreateBrandRepository
 
@@ -54,61 +53,69 @@ class CreateBrandUseCaseTest {
     }
 
     @Test
-    fun `should validate the input`() = runTest {
-        val input = CreateBrand()
-        val result = useCase.execute(input)
+    fun `should validate the input`() =
+        runTest {
+            val input = CreateBrand()
+            val result = useCase.execute(input)
 
-        result.isError() shouldBe true
-        val error = result.extractError()
-        (error is CreateBrandError.InvalidRequest) shouldBe true
-    }
-
-    @Test
-    fun `should create new brands`() = runTest {
-        whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { false }
-
-        val input = CreateBrand(
-            name = "ACME",
-            registeredCompanyName = "ACME Srl",
-            groupName = "ACME",
-            description = "Description goes here",
-            kind = BrandKind.INDUSTRIAL.name,
-            contactInfo = CreateBrandContactInfo(
-                email = "mail@mail.com",
-                websiteUrl = "https://www.website.com",
-                phoneNumber = "555 1234"
-            ),
-            status = "ACTIVE"
-        )
-        val result = useCase.execute(input)
-
-        result.isError() shouldBe false
-        val output = result.extractOutput()
-        output.id shouldBe io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("ACME")
-    }
+            result.isError() shouldBe true
+            val error = result.extractError()
+            (error is CreateBrandError.InvalidRequest) shouldBe true
+        }
 
     @Test
-    fun `should check if the brand already exists`() = runTest {
-        whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { true }
+    fun `should create new brands`() =
+        runTest {
+            whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { false }
 
-        val input = CreateBrand(
-            name = "ACME",
-            kind = BrandKind.INDUSTRIAL.name
-        )
-        val result = useCase.execute(input)
+            val input =
+                CreateBrand(
+                    name = "ACME",
+                    registeredCompanyName = "ACME Srl",
+                    groupName = "ACME",
+                    description = "Description goes here",
+                    kind = BrandKind.INDUSTRIAL.name,
+                    contactInfo =
+                        CreateBrandContactInfo(
+                            email = "mail@mail.com",
+                            websiteUrl = "https://www.website.com",
+                            phoneNumber = "555 1234"
+                        ),
+                    status = "ACTIVE"
+                )
+            val result = useCase.execute(input)
 
-        result.isError() shouldBe true
-        val error = result.extractError()
-        (error is CreateBrandError.BrandAlreadyExists) shouldBe true
-    }
+            result.isError() shouldBe false
+            val output = result.extractOutput()
+            output.id shouldBe io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("ACME")
+        }
 
-    private fun UseCaseResult<BrandCreated, CreateBrandError>.extractError(): CreateBrandError = when (this) {
-        is UseCaseResult.Error -> this.value
-        else -> throw AssertionError("this result is not an error")
-    }
+    @Test
+    fun `should check if the brand already exists`() =
+        runTest {
+            whenever(createBrandRepository.exists("ACME")).doSuspendableAnswer { true }
 
-    private fun UseCaseResult<BrandCreated, CreateBrandError>.extractOutput(): BrandCreated = when (this) {
-        is UseCaseResult.Output -> this.value
-        else -> throw AssertionError("this result is not a use case output")
-    }
+            val input =
+                CreateBrand(
+                    name = "ACME",
+                    kind = BrandKind.INDUSTRIAL.name
+                )
+            val result = useCase.execute(input)
+
+            result.isError() shouldBe true
+            val error = result.extractError()
+            (error is CreateBrandError.BrandAlreadyExists) shouldBe true
+        }
+
+    private fun UseCaseResult<BrandCreated, CreateBrandError>.extractError(): CreateBrandError =
+        when (this) {
+            is UseCaseResult.Error -> this.value
+            else -> throw AssertionError("this result is not an error")
+        }
+
+    private fun UseCaseResult<BrandCreated, CreateBrandError>.extractOutput(): BrandCreated =
+        when (this) {
+            is UseCaseResult.Output -> this.value
+            else -> throw AssertionError("this result is not a use case output")
+        }
 }

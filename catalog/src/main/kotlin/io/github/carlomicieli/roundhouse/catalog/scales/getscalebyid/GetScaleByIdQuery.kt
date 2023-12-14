@@ -27,10 +27,11 @@ import io.github.carlomicieli.roundhouse.queries.result.toQueryError
 import io.github.carlomicieli.roundhouse.queries.result.toSingleResult
 
 class GetScaleByIdQuery(private val repository: GetScaleByIdRepository) : SingleResultQuery<ByScaleId, ScaleView> {
-    override suspend fun execute(criteria: ByScaleId): SingleResult<ScaleView?> = try {
-        val id = criteria.scaleId
-        repository.findById(id).toSingleResult()
-    } catch (ex: Exception) {
-        ex.toQueryError()
-    }
+    override suspend fun execute(criteria: ByScaleId): SingleResult<ScaleView?> =
+        try {
+            val id = criteria.scaleId
+            repository.findById(id).toSingleResult()
+        } catch (ex: Exception) {
+            ex.toQueryError()
+        }
 }

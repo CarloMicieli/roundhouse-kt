@@ -37,7 +37,6 @@ import java.util.UUID
 
 @TestInstance(Lifecycle.PER_CLASS)
 class UseCaseResultPresenterTest {
-
     private val useCaseResultPresenter: UseCaseResultPresenter<String, String> =
         object : UseCaseResultPresenter<String, String> {
             override suspend fun outputToResponse(output: String): ServerResponse =
@@ -51,15 +50,17 @@ class UseCaseResultPresenterTest {
         }
 
     @Test
-    fun `should produce the server response for use case outputs`() = runBlocking {
-        val serverResponse = useCaseResultPresenter.toServerResponse(UseCaseResult.withOutput("ok"))
-        serverResponse.statusCode() shouldBe HttpStatus.OK
-    }
+    fun `should produce the server response for use case outputs`() =
+        runBlocking {
+            val serverResponse = useCaseResultPresenter.toServerResponse(UseCaseResult.withOutput("ok"))
+            serverResponse.statusCode() shouldBe HttpStatus.OK
+        }
 
     @Test
-    fun `should produce the server response for use case errors`() = runBlocking {
-        val serverResponse = useCaseResultPresenter.toServerResponse(UseCaseResult.withError("error"))
-        serverResponse.statusCode() shouldBe HttpStatus.UNPROCESSABLE_ENTITY
-        serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
-    }
+    fun `should produce the server response for use case errors`() =
+        runBlocking {
+            val serverResponse = useCaseResultPresenter.toServerResponse(UseCaseResult.withError("error"))
+            serverResponse.statusCode() shouldBe HttpStatus.UNPROCESSABLE_ENTITY
+            serverResponse.headers().contentType shouldBe MediaType.APPLICATION_PROBLEM_JSON
+        }
 }

@@ -30,31 +30,26 @@ class CreateBrandAddress(
     @field:NotBlank
     @field:Size(max = 255)
     val streetAddress: String = "",
-
     @field:Size(max = 255)
     val extendedAddress: String?,
-
     @field:NotBlank
     @field:Size(max = 50)
     val city: String = "",
-
     @field:Size(max = 50)
     val region: String?,
-
     @field:Size(max = 10)
     val postalCode: String?,
-
     @field:NotBlank
     @field:ISOCountryCode
     val countryCode: String = ""
 ) {
-
-    fun toAddress(): Address = Address(
-        streetAddress = this.streetAddress,
-        extendedAddress = this.extendedAddress,
-        city = this.city,
-        region = this.region,
-        postalCode = this.postalCode,
-        country = Country.of(this.countryCode)
-    )
+    fun toAddress(): Address =
+        Address(
+            streetAddress = this.streetAddress,
+            extendedAddress = this.extendedAddress,
+            city = this.city,
+            region = this.region,
+            postalCode = this.postalCode,
+            country = Country.of(this.countryCode)
+        )
 }

@@ -51,22 +51,26 @@ sealed class UseCaseResult<out R, out E> private constructor() {
     }
 }
 
-inline fun <R, E, R2> UseCaseResult<R, E>.map(f: (R) -> R2): UseCaseResult<R2, E> = when (this) {
-    is UseCaseResult.Output -> UseCaseResult.Output(f(this.value))
-    is UseCaseResult.Error -> this
-}
+inline fun <R, E, R2> UseCaseResult<R, E>.map(f: (R) -> R2): UseCaseResult<R2, E> =
+    when (this) {
+        is UseCaseResult.Output -> UseCaseResult.Output(f(this.value))
+        is UseCaseResult.Error -> this
+    }
 
-inline fun <R, E, R2> UseCaseResult<R, E>.flatMap(f: (R) -> UseCaseResult<R2, E>) = when (this) {
-    is UseCaseResult.Output -> f(this.value)
-    is UseCaseResult.Error -> this
-}
+inline fun <R, E, R2> UseCaseResult<R, E>.flatMap(f: (R) -> UseCaseResult<R2, E>) =
+    when (this) {
+        is UseCaseResult.Output -> f(this.value)
+        is UseCaseResult.Error -> this
+    }
 
-inline fun <R, E, E2> UseCaseResult<R, E>.mapError(f: (E) -> E2): UseCaseResult<R, E2> = when (this) {
-    is UseCaseResult.Output -> this
-    is UseCaseResult.Error -> UseCaseResult.Error(f(this.value))
-}
+inline fun <R, E, E2> UseCaseResult<R, E>.mapError(f: (E) -> E2): UseCaseResult<R, E2> =
+    when (this) {
+        is UseCaseResult.Output -> this
+        is UseCaseResult.Error -> UseCaseResult.Error(f(this.value))
+    }
 
-fun <R> UseCaseResult<R, R>.get(): R = when (this) {
-    is UseCaseResult.Error -> this.value
-    is UseCaseResult.Output -> this.value
-}
+fun <R> UseCaseResult<R, R>.get(): R =
+    when (this) {
+        is UseCaseResult.Error -> this.value
+        is UseCaseResult.Output -> this.value
+    }

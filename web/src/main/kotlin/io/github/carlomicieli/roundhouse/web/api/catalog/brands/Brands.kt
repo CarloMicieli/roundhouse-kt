@@ -31,41 +31,43 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.coRouter
 
 object Brands {
-    val beans = beans {
-        bean<CreateBrandHandler>()
-        bean<CreateBrandUseCase>()
-        bean<CreateBrandPresenter>()
+    val beans =
+        beans {
+            bean<CreateBrandHandler>()
+            bean<CreateBrandUseCase>()
+            bean<CreateBrandPresenter>()
 
-        bean<GetBrandByIdHandler>()
-        bean<GetBrandByIdQuery>()
-        bean<GetBrandByIdPresenter>()
+            bean<GetBrandByIdHandler>()
+            bean<GetBrandByIdQuery>()
+            bean<GetBrandByIdPresenter>()
 
-        bean<GetBrandsHandler>()
-        bean<GetBrandsQuery>()
-        bean<GetBrandsPresenter>()
+            bean<GetBrandsHandler>()
+            bean<GetBrandsQuery>()
+            bean<GetBrandsPresenter>()
 
-        bean<BrandsRepository>()
+            bean<BrandsRepository>()
 
-        bean {
-            val createBrandHandler = ref<CreateBrandHandler>()
-            val getBrandByIdHandler = ref<GetBrandByIdHandler>()
-            val getBrandsHandler = ref<GetBrandsHandler>()
-            routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)
+            bean {
+                val createBrandHandler = ref<CreateBrandHandler>()
+                val getBrandByIdHandler = ref<GetBrandByIdHandler>()
+                val getBrandsHandler = ref<GetBrandsHandler>()
+                routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)
+            }
         }
-    }
 
     internal fun routes(
         createBrandHandler: CreateBrandHandler,
         getBrandByIdHandler: GetBrandByIdHandler,
         getBrandsHandler: GetBrandsHandler
-    ): RouterFunction<ServerResponse> = coRouter {
-        "/api/brands".nest {
-            accept(MediaType.APPLICATION_JSON).nest {
-                POST("", createBrandHandler::handle)
-            }
+    ): RouterFunction<ServerResponse> =
+        coRouter {
+            "/api/brands".nest {
+                accept(MediaType.APPLICATION_JSON).nest {
+                    POST("", createBrandHandler::handle)
+                }
 
-            GET("", getBrandsHandler::handle)
-            GET("{brand}", getBrandByIdHandler::handle)
+                GET("", getBrandsHandler::handle)
+                GET("{brand}", getBrandByIdHandler::handle)
+            }
         }
-    }
 }

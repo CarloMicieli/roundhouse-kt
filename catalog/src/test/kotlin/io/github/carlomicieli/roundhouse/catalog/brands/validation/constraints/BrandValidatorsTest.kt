@@ -142,6 +142,11 @@ class BrandValidatorsTest {
         }
     }
 
-    data class BrandKindClass(@field:ValidBrandKind val kind: String?)
-    data class BrandStatusClass(@field:ValidBrandStatus val status: String?)
+    data class BrandKindClass(
+        @field:ValidBrandKind val kind: String?
+    )
+
+    data class BrandStatusClass(
+        @field:ValidBrandStatus val status: String?
+    )
 }

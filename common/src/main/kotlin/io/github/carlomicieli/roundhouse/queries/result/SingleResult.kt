@@ -28,6 +28,7 @@ import java.lang.Exception
  */
 sealed interface SingleResult<T> {
     data class Result<T>(val value: T?) : SingleResult<T>
+
     data class Error<T>(val queryError: QueryError) : SingleResult<T>
 }
 

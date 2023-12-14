@@ -31,7 +31,6 @@ import java.lang.Exception
 
 @DisplayName("PaginatedResultSet")
 class PaginatedResultSetTest {
-
     @Nested
     @DisplayName("Results")
     inner class ResultsTest {

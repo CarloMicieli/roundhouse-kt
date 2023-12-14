@@ -32,6 +32,8 @@ class MeasureUnitConverterByRate(private val rate: BigDecimal) : MeasureUnitConv
         require(rate.signum() > 0) { "conversion rate must be positive" }
     }
 
-    override fun convert(value: BigDecimal, decimals: Int): BigDecimal =
-        (value * rate).setScale(decimals, RoundingMode.HALF_UP)
+    override fun convert(
+        value: BigDecimal,
+        decimals: Int
+    ): BigDecimal = (value * rate).setScale(decimals, RoundingMode.HALF_UP)
 }

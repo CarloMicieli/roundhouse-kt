@@ -33,43 +33,71 @@ import io.github.carlomicieli.roundhouse.util.Slug
 import io.github.carlomicieli.roundhouse.util.URN
 
 object URNSerializer : StdSerializer<URN>(URN::class.java) {
-    override fun serialize(value: URN?, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: URN?,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) {
         gen.writeString(value?.value)
     }
 }
 
 object SlugSerializer : StdSerializer<Slug>(Slug::class.java) {
-    override fun serialize(value: Slug?, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: Slug?,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) {
         gen.writeString(value?.toString())
     }
 }
 
 object BrandIdSerializer : StdSerializer<BrandId>(BrandId::class.java) {
-    override fun serialize(value: BrandId?, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: BrandId?,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) {
         gen.writeString(value?.toString())
     }
 }
 
 object MailAddressSerializer : StdSerializer<MailAddress>(MailAddress::class.java) {
-    override fun serialize(value: MailAddress?, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: MailAddress?,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) {
         gen.writeString(value?.value)
     }
 }
 
 object PhoneNumberSerializer : StdSerializer<PhoneNumber>(PhoneNumber::class.java) {
-    override fun serialize(value: PhoneNumber?, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: PhoneNumber?,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) {
         gen.writeString(value?.toString())
     }
 }
 
 object ScaleIdSerializer : StdSerializer<ScaleId>(ScaleId::class.java) {
-    override fun serialize(value: ScaleId?, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: ScaleId?,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) {
         gen.writeString(value?.toString())
     }
 }
 
 object WebsiteUrlSerializer : StdSerializer<WebsiteUrl>(WebsiteUrl::class.java) {
-    override fun serialize(value: WebsiteUrl?, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: WebsiteUrl?,
+        gen: JsonGenerator,
+        provider: SerializerProvider
+    ) {
         gen.writeString(value?.toString())
     }
 }

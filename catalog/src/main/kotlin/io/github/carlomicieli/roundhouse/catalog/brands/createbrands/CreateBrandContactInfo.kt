@@ -37,7 +37,6 @@ data class CreateBrandContactInfo(
     @field:Size(min = 3, max = 20)
     val phoneNumber: String?
 ) {
-
     fun toContactInfo(): ContactInfo? {
         val mailAddress = if (this.email == null) null else MailAddress(this.email)
         val phone = if (this.phoneNumber == null) null else PhoneNumber(this.phoneNumber)

@@ -26,5 +26,8 @@ import io.github.carlomicieli.roundhouse.queries.sorting.Sorting
 import kotlinx.coroutines.flow.Flow
 
 interface GetBrandsRepository {
-    fun findAll(currentPage: Page, orderBy: Sorting): Flow<BrandView>
+    fun findAll(
+        currentPage: Page,
+        orderBy: Sorting
+    ): Flow<BrandView>
 }

@@ -24,16 +24,16 @@ import jakarta.validation.ConstraintViolation
 import jakarta.validation.Validator
 
 class InputValidator<T>(private val validator: Validator) {
-
     /**
      * Validate the input
      * @param input the value to validate
      * @return the result of the validation
      */
     fun validate(input: T): Validated<T> {
-        val errors = validator.validate(input)
-            .map { it.toValidationError() }
-            .sortedBy { it.fieldName }
+        val errors =
+            validator.validate(input)
+                .map { it.toValidationError() }
+                .sortedBy { it.fieldName }
 
         return if (errors.isEmpty()) {
             Validated.Valid(input)

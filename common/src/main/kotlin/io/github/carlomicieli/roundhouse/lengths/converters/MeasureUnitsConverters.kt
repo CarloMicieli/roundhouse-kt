@@ -30,12 +30,13 @@ import java.math.BigDecimal
 typealias Conversion = Pair<MeasureUnit, MeasureUnit>
 
 object MeasureUnitsConverters {
-    private val conversions: Map<Conversion, MeasureUnitConverter> = mapOf(
-        (MeasureUnit.INCHES to MeasureUnit.MILLIMETERS) to MeasureUnitConverterByRate(INCHES_TO_MILLIMETERS),
-        (MeasureUnit.MILLIMETERS to MeasureUnit.INCHES) to MeasureUnitConverterByRate(MILLIMETERS_TO_INCHES),
-        (MeasureUnit.KILOMETERS to MeasureUnit.MILES) to MeasureUnitConverterByRate(KILOMETERS_TO_MILES),
-        (MeasureUnit.MILES to MeasureUnit.KILOMETERS) to MeasureUnitConverterByRate(MILES_TO_KILOMETERS)
-    )
+    private val conversions: Map<Conversion, MeasureUnitConverter> =
+        mapOf(
+            (MeasureUnit.INCHES to MeasureUnit.MILLIMETERS) to MeasureUnitConverterByRate(INCHES_TO_MILLIMETERS),
+            (MeasureUnit.MILLIMETERS to MeasureUnit.INCHES) to MeasureUnitConverterByRate(MILLIMETERS_TO_INCHES),
+            (MeasureUnit.KILOMETERS to MeasureUnit.MILES) to MeasureUnitConverterByRate(KILOMETERS_TO_MILES),
+            (MeasureUnit.MILES to MeasureUnit.KILOMETERS) to MeasureUnitConverterByRate(MILES_TO_KILOMETERS)
+        )
 
     operator fun get(conversion: Conversion): MeasureUnitConverter =
         conversions[conversion] ?: InvalidConverter(conversion.first, conversion.second)

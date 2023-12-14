@@ -27,7 +27,6 @@ import java.math.BigDecimal
 
 @DisplayName("Gauge")
 class GaugeTest {
-
     @Test
     fun `should create new scale gauge from a millimetres value`() {
         val millimetres = BigDecimal.valueOf(16.5)

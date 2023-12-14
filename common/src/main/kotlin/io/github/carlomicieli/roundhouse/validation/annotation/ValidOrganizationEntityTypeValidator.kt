@@ -27,6 +27,8 @@ import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
 
 class ValidOrganizationEntityTypeValidator : ConstraintValidator<ValidOrganizationEntityType, String> {
-    override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean =
-        value?.isValidName<OrganizationEntityType>() ?: true
+    override fun isValid(
+        value: String?,
+        context: ConstraintValidatorContext?
+    ): Boolean = value?.isValidName<OrganizationEntityType>() ?: true
 }

@@ -46,9 +46,10 @@ class ScaleIdTest {
 
     @Test
     fun `should throw an exception when the id value is blank`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            ScaleId.of("")
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                ScaleId.of("")
+            }
 
         ex.message shouldBe "Scale id cannot be blank"
     }

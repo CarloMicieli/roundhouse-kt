@@ -52,7 +52,6 @@ class GlobalErrorWebExceptionHandler(
     applicationContext: ApplicationContext,
     serverCodecConfigurer: ServerCodecConfigurer
 ) : AbstractErrorWebExceptionHandler(errorAttributes, WebProperties.Resources(), applicationContext) {
-
     companion object {
         val log: Logger = LoggerFactory.getLogger(GlobalErrorWebExceptionHandler::class.java)
     }
@@ -67,10 +66,11 @@ class GlobalErrorWebExceptionHandler(
     }
 
     private fun renderErrorResponse(request: ServerRequest): Mono<ServerResponse> {
-        val errorPropertiesMap = getErrorAttributes(
-            request,
-            ErrorAttributeOptions.of(ErrorAttributeOptions.Include.EXCEPTION)
-        )
+        val errorPropertiesMap =
+            getErrorAttributes(
+                request,
+                ErrorAttributeOptions.of(ErrorAttributeOptions.Include.EXCEPTION)
+            )
 
         log.debug("{}", errorPropertiesMap)
         val ex = getError(request)

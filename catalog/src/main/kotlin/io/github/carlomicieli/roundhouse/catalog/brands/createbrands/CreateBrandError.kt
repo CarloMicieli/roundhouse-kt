@@ -24,6 +24,8 @@ import io.github.carlomicieli.roundhouse.validation.ValidationError
 
 sealed interface CreateBrandError {
     data class InvalidRequest(val errors: List<ValidationError>) : CreateBrandError
+
     data class GenericError(val ex: Exception) : CreateBrandError
+
     data class BrandAlreadyExists(val name: String) : CreateBrandError
 }

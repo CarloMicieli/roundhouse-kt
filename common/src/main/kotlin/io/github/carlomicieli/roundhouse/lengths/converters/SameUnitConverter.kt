@@ -27,5 +27,8 @@ import java.math.BigDecimal
  * This converter is basically return the input value unchanged.
  */
 object SameUnitConverter : MeasureUnitConverter {
-    override fun convert(value: BigDecimal, decimals: Int): BigDecimal = value
+    override fun convert(
+        value: BigDecimal,
+        decimals: Int
+    ): BigDecimal = value
 }

@@ -35,19 +35,21 @@ interface QueryResultSetPresenter<T> {
 
     suspend fun results(results: PaginatedResultSet.Results<T>): ServerResponse
 
-    suspend fun toServerResponse(results: PaginatedResultSet<T>): ServerResponse = when (results) {
-        is PaginatedResultSet.Results -> {
-            val resultValue = results.items.size
-            if (resultValue == 0) {
-                ServerResponse.notFound().buildAndAwait()
-            } else {
-                results(results)
+    suspend fun toServerResponse(results: PaginatedResultSet<T>): ServerResponse =
+        when (results) {
+            is PaginatedResultSet.Results -> {
+                val resultValue = results.items.size
+                if (resultValue == 0) {
+                    ServerResponse.notFound().buildAndAwait()
+                } else {
+                    results(results)
+                }
             }
-        }
 
-        is PaginatedResultSet.Error -> problemDetailsGenerator.error(results.queryError.reason)
-            .toServerResponse()
-    }
+            is PaginatedResultSet.Error ->
+                problemDetailsGenerator.error(results.queryError.reason)
+                    .toServerResponse()
+        }
 }
 
 fun <T> PaginatedResultSet.Results<T>.paginationLinks(baseUrl: String): List<Link> {
@@ -66,6 +68,9 @@ fun <T> PaginatedResultSet.Results<T>.paginationLinks(baseUrl: String): List<Lin
     }
 }
 
-fun Page.toLink(baseUrl: String, relation: LinkRelation): Link {
+fun Page.toLink(
+    baseUrl: String,
+    relation: LinkRelation
+): Link {
     return Link.of("$baseUrl?offset=${this.start}&limit=${this.limit}", relation)
 }

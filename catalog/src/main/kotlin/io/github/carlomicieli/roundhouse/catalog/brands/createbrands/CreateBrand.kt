@@ -31,31 +31,22 @@ data class CreateBrand(
     @field:NotBlank
     @field:Size(min = 3, max = 100)
     val name: String = "",
-
     @field:NotBlank
     @field:ValidBrandKind
     val kind: String = "",
-
     @field:Size(min = 3, max = 100)
     val registeredCompanyName: String? = null,
-
     @field:ValidOrganizationEntityType
     val organizationEntityType: String? = null,
-
     @field:Size(min = 3, max = 50)
     val groupName: String? = null,
-
     @field:Size(min = 3, max = 1000)
     val description: String? = null,
-
     @field:Valid
     val contactInfo: CreateBrandContactInfo? = null,
-
     @field:Valid
     val address: CreateBrandAddress? = null,
-
     val socials: CreateBrandSocials? = null,
-
     @field:ValidBrandStatus
     val status: String? = null
 )

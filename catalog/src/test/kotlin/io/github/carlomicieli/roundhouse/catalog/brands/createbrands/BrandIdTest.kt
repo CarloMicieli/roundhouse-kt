@@ -47,9 +47,10 @@ class BrandIdTest {
 
     @Test
     fun `should throw an exception when the id value is blank`() {
-        val ex = shouldThrowExactly<IllegalArgumentException> {
-            io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("")
-        }
+        val ex =
+            shouldThrowExactly<IllegalArgumentException> {
+                io.github.carlomicieli.roundhouse.catalog.brands.BrandId.of("")
+            }
 
         ex.message shouldBe "Brand id cannot be blank"
     }

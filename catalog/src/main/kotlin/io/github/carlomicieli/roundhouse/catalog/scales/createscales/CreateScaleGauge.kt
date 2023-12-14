@@ -28,10 +28,8 @@ import java.math.BigDecimal
 data class CreateScaleGauge(
     @field:Min(1)
     val millimeters: BigDecimal? = null,
-
     @field:Min(0)
     val inches: BigDecimal? = null,
-
     @field:NotBlank
     @field:ValidTrackGauge
     val trackGauge: String? = null

@@ -69,11 +69,12 @@ class CreateScaleIntegrationTest : AbstractWebApiTest() {
     @Test
     fun `should return CONFLICT when a scale with the same name already exists`() {
         val name = "1234567890"
-        val newScale = RequestBody(
-            name = name,
-            ratio = BigDecimal.valueOf(87),
-            gauge = Gauge("STANDARD", BigDecimal.valueOf(16.5))
-        )
+        val newScale =
+            RequestBody(
+                name = name,
+                ratio = BigDecimal.valueOf(87),
+                gauge = Gauge("STANDARD", BigDecimal.valueOf(16.5))
+            )
 
         webClient.post()
             .uri(POST_SCALES_ENDPOINT)
@@ -102,13 +103,14 @@ class CreateScaleIntegrationTest : AbstractWebApiTest() {
     @Test
     fun `should create a new scale`() {
         val name = "nnnnn"
-        val newScale = RequestBody(
-            name = name,
-            ratio = BigDecimal.valueOf(160),
-            gauge = Gauge("STANDARD", BigDecimal.valueOf(9)),
-            description = "Most famous scale",
-            standards = setOf("NEM")
-        )
+        val newScale =
+            RequestBody(
+                name = name,
+                ratio = BigDecimal.valueOf(160),
+                gauge = Gauge("STANDARD", BigDecimal.valueOf(9)),
+                description = "Most famous scale",
+                standards = setOf("NEM")
+            )
 
         webClient.post()
             .uri(POST_SCALES_ENDPOINT)

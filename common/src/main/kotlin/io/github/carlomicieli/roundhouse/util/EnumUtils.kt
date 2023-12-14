@@ -36,8 +36,7 @@ object EnumUtils {
      *
      * @param T the enumeration
      */
-    inline fun <reified T : Enum<T>> String.toEnum(): T =
-        enumValueOf(this.uppercase())
+    inline fun <reified T : Enum<T>> String.toEnum(): T = enumValueOf(this.uppercase())
 
     /**
      * It converts the {@code String} to the corresponding enumeration name, returning
@@ -45,13 +44,14 @@ object EnumUtils {
      *
      * @param T the enumeration
      */
-    inline fun <reified T : Enum<T>> String?.toEnumOrNull(): T? = if (this == null) {
-        null
-    } else {
-        if (this.isValidName<T>()) {
-            this.toEnum<T>()
-        } else {
+    inline fun <reified T : Enum<T>> String?.toEnumOrNull(): T? =
+        if (this == null) {
             null
+        } else {
+            if (this.isValidName<T>()) {
+                this.toEnum<T>()
+            } else {
+                null
+            }
         }
-    }
 }

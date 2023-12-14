@@ -24,7 +24,6 @@ package io.github.carlomicieli.roundhouse.queries.sorting
  * It represents the sorting criteria for {@code Query}s.
  */
 class Sorting private constructor(val criteriaList: List<SortCriteria>) {
-
     /**
      * Return the number of criteria defined in this {@code Sorting}
      */
@@ -36,9 +35,10 @@ class Sorting private constructor(val criteriaList: List<SortCriteria>) {
      * @param propertyName the property name
      * @return a {@code SortCriteria}
      */
-    operator fun get(propertyName: String): SortCriteria? = criteriaList.firstOrNull {
-        it.propertyName.equals(propertyName, true)
-    }
+    operator fun get(propertyName: String): SortCriteria? =
+        criteriaList.firstOrNull {
+            it.propertyName.equals(propertyName, true)
+        }
 
     companion object {
         val DEFAULT_SORT = Sorting(emptyList())
@@ -49,7 +49,10 @@ class Sorting private constructor(val criteriaList: List<SortCriteria>) {
          * @param direction the sorting direction
          * @return a sorting builder
          */
-        fun by(propertyName: String, direction: Direction = Direction.ASC): Builder {
+        fun by(
+            propertyName: String,
+            direction: Direction = Direction.ASC
+        ): Builder {
             val list = mutableListOf<SortCriteria>()
             list.add(SortCriteria(propertyName, direction))
             return Builder(list)
@@ -63,7 +66,10 @@ class Sorting private constructor(val criteriaList: List<SortCriteria>) {
          * @param direction the sorting direction
          * @return a sorting builder
          */
-        fun andThenBy(propertyName: String, direction: Direction = Direction.ASC): Builder {
+        fun andThenBy(
+            propertyName: String,
+            direction: Direction = Direction.ASC
+        ): Builder {
             list.add(SortCriteria(propertyName, direction))
             return this
         }

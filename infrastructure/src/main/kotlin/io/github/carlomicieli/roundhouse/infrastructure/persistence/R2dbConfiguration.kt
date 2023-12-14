@@ -62,27 +62,27 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableR2dbcRepositories(basePackages = ["io.github.carlomicieli.roundhouse.infrastructure.persistence"])
 @EnableTransactionManagement
 class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcConfiguration() {
-
     @Bean
     override fun r2dbcCustomConversions(): R2dbcCustomConversions {
-        val converters = listOf(
-            BrandIdReadConverter,
-            BrandIdWriteConverter,
-            BrandKindConverter,
-            BrandStatusConverter,
-            CountryReadConverter,
-            CountryWriteConverter,
-            MailAddressReadConverter,
-            MailAddressWriteConverter(),
-            OrganizationEntityTypeConverter,
-            PhoneNumberReadConverter(),
-            PhoneNumberWriteConverter(),
-            ScaleIdReadConverter,
-            ScaleIdWriteConverter,
-            TrackGaugeConverter,
-            WebsiteUrlReadConverter(),
-            WebsiteUrlWriteConverter()
-        )
+        val converters =
+            listOf(
+                BrandIdReadConverter,
+                BrandIdWriteConverter,
+                BrandKindConverter,
+                BrandStatusConverter,
+                CountryReadConverter,
+                CountryWriteConverter,
+                MailAddressReadConverter,
+                MailAddressWriteConverter(),
+                OrganizationEntityTypeConverter,
+                PhoneNumberReadConverter(),
+                PhoneNumberWriteConverter(),
+                ScaleIdReadConverter,
+                ScaleIdWriteConverter,
+                TrackGaugeConverter,
+                WebsiteUrlReadConverter(),
+                WebsiteUrlWriteConverter()
+            )
         return R2dbcCustomConversions(storeConversions, converters)
     }
 
@@ -104,12 +104,13 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
     }
 
     private fun createConnectionFactory(r2dbcProperties: R2dbcProperties): PostgresqlConnectionFactory {
-        val codecRegistrar: CodecRegistrar = EnumCodec.builder()
-            .withEnum("brand_kind", BrandKind::class.java)
-            .withEnum("brand_status", BrandStatus::class.java)
-            .withEnum("organization_entity_type", OrganizationEntityType::class.java)
-            .withEnum("track_gauge", TrackGauge::class.java)
-            .build()
+        val codecRegistrar: CodecRegistrar =
+            EnumCodec.builder()
+                .withEnum("brand_kind", BrandKind::class.java)
+                .withEnum("brand_status", BrandStatus::class.java)
+                .withEnum("organization_entity_type", OrganizationEntityType::class.java)
+                .withEnum("track_gauge", TrackGauge::class.java)
+                .build()
 
         val builder = ConnectionFactoryOptions.parse(r2dbcProperties.url).mutate()
         if (!StringUtil.isNullOrEmpty(r2dbcProperties.name)) {
@@ -123,18 +124,20 @@ class R2dbConfiguration(val r2dbcProperties: R2dbcProperties) : AbstractR2dbcCon
         }
         val connectionFactoryOptions = builder.build()
 
-        val connectionConfiguration = PostgresqlConnectionConfiguration.builder()
-            .host(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.HOST))
-            .port(connectionFactoryOptions.getOptionAsInt(ConnectionFactoryOptions.PORT))
-            .database(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.DATABASE))
-            .username(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.USER))
-            .password(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.PASSWORD))
-            .codecRegistrar(codecRegistrar)
-            .build()
+        val connectionConfiguration =
+            PostgresqlConnectionConfiguration.builder()
+                .host(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.HOST))
+                .port(connectionFactoryOptions.getOptionAsInt(ConnectionFactoryOptions.PORT))
+                .database(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.DATABASE))
+                .username(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.USER))
+                .password(connectionFactoryOptions.getOptionAsString(ConnectionFactoryOptions.PASSWORD))
+                .codecRegistrar(codecRegistrar)
+                .build()
         return PostgresqlConnectionFactory(connectionConfiguration)
     }
 
     private fun ConnectionFactoryOptions.getOptionAsString(option: Option<*>): String =
         getRequiredValue(option) as String
+
     private fun ConnectionFactoryOptions.getOptionAsInt(option: Option<*>): Int = getRequiredValue(option) as Int
 }

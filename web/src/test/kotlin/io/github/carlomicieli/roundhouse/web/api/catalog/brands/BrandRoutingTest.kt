@@ -41,7 +41,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 @TestInstance(Lifecycle.PER_CLASS)
 @OptIn(ExperimentalCoroutinesApi::class)
 class BrandRoutingTest {
-
     private lateinit var createBrandHandler: CreateBrandHandler
     private lateinit var getBrandByIdHandler: GetBrandByIdHandler
     private lateinit var getBrandsHandler: GetBrandsHandler
@@ -52,52 +51,58 @@ class BrandRoutingTest {
         createBrandHandler = mock()
         getBrandByIdHandler = mock()
         getBrandsHandler = mock()
-        webclient = WebTestClient.bindToRouterFunction(
-            Brands.routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)
-        ).build()
+        webclient =
+            WebTestClient.bindToRouterFunction(
+                Brands.routes(createBrandHandler, getBrandByIdHandler, getBrandsHandler)
+            ).build()
     }
 
     @Test
     @DisplayName("POST /api/brands is mapped correctly")
-    fun postNewBrandTest() = runTest {
-        whenever(createBrandHandler.handle(any())).doSuspendableAnswer {
-            ServerResponse.ok().bodyValueAndAwait("works")
+    fun postNewBrandTest() =
+        runTest {
+            whenever(createBrandHandler.handle(any())).doSuspendableAnswer {
+                ServerResponse.ok().bodyValueAndAwait("works")
+            }
+
+            val bodyValue = CreateBrand()
+
+            webclient.post()
+                .uri("/api/brands")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(bodyValue)
+                .exchange()
+                .expectStatus().isOk
         }
-
-        val bodyValue = CreateBrand()
-
-        webclient.post()
-            .uri("/api/brands")
-            .accept(MediaType.APPLICATION_JSON)
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(bodyValue)
-            .exchange()
-            .expectStatus().isOk
-    }
 
     @Test
     @DisplayName("GET /api/brands/{brand} is mapped correctly")
-    fun getBrandByIdTest() = runTest {
-        whenever(getBrandByIdHandler.handle(any())).doSuspendableAnswer {
-            ServerResponse.ok().bodyValueAndAwait("works")
-        }
+    fun getBrandByIdTest() =
+        runTest {
+            whenever(getBrandByIdHandler.handle(any())).doSuspendableAnswer {
+                ServerResponse.ok().bodyValueAndAwait("works")
+            }
 
-        webclient.get()
-            .uri("/api/brands/{brand}", "acme")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk
-    }
+            webclient.get()
+                .uri("/api/brands/{brand}", "acme")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk
+        }
 
     @Test
     @DisplayName("GET /api/brands is mapped correctly")
-    fun getBrandsTest() = runTest {
-        whenever(getBrandsHandler.handle(any())).doSuspendableAnswer { ServerResponse.ok().bodyValueAndAwait("works") }
+    fun getBrandsTest() =
+        runTest {
+            whenever(getBrandsHandler.handle(any())).doSuspendableAnswer {
+                ServerResponse.ok().bodyValueAndAwait("works")
+            }
 
-        webclient.get()
-            .uri("/api/brands")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk
-    }
+            webclient.get()
+                .uri("/api/brands")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk
+        }
 }

@@ -39,7 +39,6 @@ data class Country(
      */
     val englishName: String? = null
 ) {
-
     init {
         require(code.length == 2 && code.isValidCountryCode()) {
             "'$code' is not a valid Alpha-2 ISO 3166 country code"
@@ -47,35 +46,39 @@ data class Country(
     }
 
     companion object {
+        private val countries: Map<String, Country> =
+            mapOf(
+                putCountry("at", "Austria"),
+                putCountry("be", "Belgium"),
+                putCountry("ca", "Canada"),
+                putCountry("cn", "China"),
+                putCountry("dk", "Denmark"),
+                putCountry("fi", "Finland"),
+                putCountry("fr", "France"),
+                putCountry("de", "Germany"),
+                putCountry("it", "Italy"),
+                putCountry("jp", "Japan"),
+                putCountry("mx", "Mexico"),
+                putCountry("nl", "Netherlands"),
+                putCountry("no", "Norway"),
+                putCountry("pt", "Portugal"),
+                putCountry("ro", "Romania"),
+                putCountry("es", "Spain"),
+                putCountry("se", "Sweden"),
+                putCountry("ch", "Switzerland"),
+                putCountry("tr", "Turkey"),
+                putCountry("gb", "United Kingdom"),
+                putCountry("us", "United States")
+            )
 
-        private val countries: Map<String, Country> = mapOf(
-            putCountry("at", "Austria"),
-            putCountry("be", "Belgium"),
-            putCountry("ca", "Canada"),
-            putCountry("cn", "China"),
-            putCountry("dk", "Denmark"),
-            putCountry("fi", "Finland"),
-            putCountry("fr", "France"),
-            putCountry("de", "Germany"),
-            putCountry("it", "Italy"),
-            putCountry("jp", "Japan"),
-            putCountry("mx", "Mexico"),
-            putCountry("nl", "Netherlands"),
-            putCountry("no", "Norway"),
-            putCountry("pt", "Portugal"),
-            putCountry("ro", "Romania"),
-            putCountry("es", "Spain"),
-            putCountry("se", "Sweden"),
-            putCountry("ch", "Switzerland"),
-            putCountry("tr", "Turkey"),
-            putCountry("gb", "United Kingdom"),
-            putCountry("us", "United States")
-        )
-
-        private fun putCountry(code: String, englishName: String): Pair<String, Country> = Pair(
-            code,
-            Country(code, englishName)
-        )
+        private fun putCountry(
+            code: String,
+            englishName: String
+        ): Pair<String, Country> =
+            Pair(
+                code,
+                Country(code, englishName)
+            )
 
         fun of(code: String): Country {
             return countries[code.lowercase()] ?: Country(code.lowercase())
