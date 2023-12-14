@@ -21,11 +21,11 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
 object R2dbcPostgresql {
-    val version = "1.0.0.RELEASE"
+    val version = "1.0.3.RELEASE"
 }
 
 object Testcontainers {
-    val version = "1.18.3"
+    val version = "1.19.3"
 }
 
 object Kotest {

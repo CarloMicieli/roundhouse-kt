@@ -24,7 +24,7 @@ To run the `postgres` database:
     -e POSTGRES_PASSWORD=mysecretpassword \
     -e POSTGRES_DB=roundhouse \
     -p 5432:5432 \
-    postgres:15.1-alpine
+    postgres:16.1-alpine
 ```
 
 ### Start the server
