@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2021-2022 (C) Carlo Micieli
+ *   Copyright (c) 2021-2023 (C) Carlo Micieli
  *
  *    Licensed to the Apache Software Foundation (ASF) under one
  *    or more contributor license agreements.  See the NOTICE file
@@ -20,17 +20,16 @@
  */
 package io.github.carlomicieli.roundhouse.catalog.catalogitems
 
-import java.util.UUID
-
-/**
- * A model railway rolling stock
- */
-sealed interface RollingStock {
-    val rollingStockId: UUID
-    val railway: RollingStockRailway
-    val category: RollingStockCategory
-    val epoch: String
-    val livery: String?
-    val lengthOverBuffer: LengthOverBuffer?
-    val technicalSpecifications: TechnicalSpecifications?
+enum class PassengerCarType {
+    BAGGAGE_CAR,
+    COMBINE_CAR,
+    COMPARTMENT_COACH,
+    DINING_CAR,
+    DOUBLE_DECKER,
+    DRIVING_TRAILER,
+    LOUNGE,
+    OBSERVATION,
+    OPEN_COACH,
+    RAILWAY_POST_OFFICE,
+    SLEEPING_CAR
 }

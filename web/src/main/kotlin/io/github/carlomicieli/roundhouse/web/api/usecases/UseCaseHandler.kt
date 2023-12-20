@@ -72,11 +72,12 @@ interface UseCaseHandler<I, O, E> {
 
 data class LogEntry<I, O>(val request: I, val response: O, val headers: Headers) {
     fun logTo(logger: Logger) {
-        val log = mapOf(
-            "request" to request,
-            "response" to response,
-            "headers" to headers.asHttpHeaders().toMap()
-        )
+        val log =
+            mapOf(
+                "request" to request,
+                "response" to response,
+                "headers" to headers.asHttpHeaders().toMap()
+            )
 
         logger.info("{}", log)
     }

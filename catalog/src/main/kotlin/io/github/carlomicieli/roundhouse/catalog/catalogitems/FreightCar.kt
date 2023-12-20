@@ -23,14 +23,17 @@ package io.github.carlomicieli.roundhouse.catalog.catalogitems
 import java.util.UUID
 
 /**
- * A model railway rolling stock
+ * a freight car rolling stock
  */
-sealed interface RollingStock {
-    val rollingStockId: UUID
-    val railway: RollingStockRailway
-    val category: RollingStockCategory
-    val epoch: String
-    val livery: String?
-    val lengthOverBuffer: LengthOverBuffer?
-    val technicalSpecifications: TechnicalSpecifications?
-}
+data class FreightCar(
+    override val rollingStockId: UUID,
+    override val railway: RollingStockRailway,
+    override val category: RollingStockCategory,
+    override val epoch: String,
+    override val livery: String?,
+    override val lengthOverBuffer: LengthOverBuffer?,
+    override val technicalSpecifications: TechnicalSpecifications?,
+    val typeName: String,
+    val roadNumber: String?,
+    val freightCarType: FreightCarType?
+) : RollingStock

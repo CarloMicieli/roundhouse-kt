@@ -23,9 +23,9 @@ package io.github.carlomicieli.roundhouse.catalog.catalogitems
 import java.util.UUID
 
 /**
- * a freight car rolling stock
+ * an electric multiple unit rolling stock
  */
-data class FreightCar(
+data class ElectricMultipleUnit(
     override val rollingStockId: UUID,
     override val railway: RollingStockRailway,
     override val category: RollingStockCategory,
@@ -34,31 +34,11 @@ data class FreightCar(
     override val lengthOverBuffer: LengthOverBuffer?,
     override val technicalSpecifications: TechnicalSpecifications?,
     val typeName: String,
+    val electricMultipleUnitType: ElectricMultipleUnitType,
+    val isDummy: Boolean,
     val roadNumber: String?,
-    val freightCarType: FreightCarType?
+    val series: String?,
+    val depot: String?,
+    val dccInterface: DccInterface?,
+    val control: Control?
 ) : RollingStock
-
-/**
- * the freight car type
- */
-enum class FreightCarType {
-    AUTO_TRANSPORT_CARS,
-    BRAKE_WAGON,
-    CONTAINER_CARS,
-    COVERED_FREIGHT_CARS,
-    DEEP_WELL_FLAT_CARS,
-    DUMP_CARS,
-    GONDOLA,
-    HEAVY_GOODS_WAGONS,
-    HINGED_COVER_WAGONS,
-    HOPPER_WAGON,
-    REFRIGERATOR_CARS,
-    SILO_CONTAINER_CARS,
-    SLIDE_TARPAULIN_WAGON,
-    SLIDING_WALL_BOXCARS,
-    SPECIAL_TRANSPORT,
-    STAKE_WAGONS,
-    SWING_ROOF_WAGON,
-    TANK_CARS,
-    TELESCOPE_HOOD_WAGONS
-}

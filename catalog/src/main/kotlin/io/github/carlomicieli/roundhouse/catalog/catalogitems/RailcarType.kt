@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2021-2022 (C) Carlo Micieli
+ *   Copyright (c) 2021-2023 (C) Carlo Micieli
  *
  *    Licensed to the Apache Software Foundation (ASF) under one
  *    or more contributor license agreements.  See the NOTICE file
@@ -19,29 +19,6 @@
  *    under the License.
  */
 package io.github.carlomicieli.roundhouse.catalog.catalogitems
-
-import java.util.UUID
-
-/**
- * a railcar rolling stock
- */
-data class Railcar(
-    override val rollingStockId: UUID,
-    override val railway: RollingStockRailway,
-    override val category: RollingStockCategory,
-    override val epoch: String,
-    override val livery: String?,
-    override val lengthOverBuffer: LengthOverBuffer?,
-    override val technicalSpecifications: TechnicalSpecifications?,
-    val typeName: String,
-    val railcarType: RailcarType,
-    val isDummy: Boolean,
-    val roadNumber: String?,
-    val series: String?,
-    val depot: String?,
-    val dccInterface: DccInterface?,
-    val control: Control?
-) : RollingStock
 
 enum class RailcarType {
     POWER_CAR,

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2021-2022 (C) Carlo Micieli
+ *   Copyright (c) 2021-2023 (C) Carlo Micieli
  *
  *    Licensed to the Apache Software Foundation (ASF) under one
  *    or more contributor license agreements.  See the NOTICE file
@@ -20,17 +20,27 @@
  */
 package io.github.carlomicieli.roundhouse.catalog.catalogitems
 
-import java.util.UUID
-
 /**
- * A model railway rolling stock
+ * the freight car type
  */
-sealed interface RollingStock {
-    val rollingStockId: UUID
-    val railway: RollingStockRailway
-    val category: RollingStockCategory
-    val epoch: String
-    val livery: String?
-    val lengthOverBuffer: LengthOverBuffer?
-    val technicalSpecifications: TechnicalSpecifications?
+enum class FreightCarType {
+    AUTO_TRANSPORT_CARS,
+    BRAKE_WAGON,
+    CONTAINER_CARS,
+    COVERED_FREIGHT_CARS,
+    DEEP_WELL_FLAT_CARS,
+    DUMP_CARS,
+    GONDOLA,
+    HEAVY_GOODS_WAGONS,
+    HINGED_COVER_WAGONS,
+    HOPPER_WAGON,
+    REFRIGERATOR_CARS,
+    SILO_CONTAINER_CARS,
+    SLIDE_TARPAULIN_WAGON,
+    SLIDING_WALL_BOXCARS,
+    SPECIAL_TRANSPORT,
+    STAKE_WAGONS,
+    SWING_ROOF_WAGON,
+    TANK_CARS,
+    TELESCOPE_HOOD_WAGONS
 }

@@ -23,9 +23,9 @@ package io.github.carlomicieli.roundhouse.catalog.catalogitems
 import java.util.UUID
 
 /**
- * a passenger car rolling stock
+ * a railcar rolling stock
  */
-data class PassengerCar(
+data class Railcar(
     override val rollingStockId: UUID,
     override val railway: RollingStockRailway,
     override val category: RollingStockCategory,
@@ -34,21 +34,11 @@ data class PassengerCar(
     override val lengthOverBuffer: LengthOverBuffer?,
     override val technicalSpecifications: TechnicalSpecifications?,
     val typeName: String,
+    val railcarType: RailcarType,
+    val isDummy: Boolean,
     val roadNumber: String?,
-    val passengerCarType: PassengerCarType?,
-    val serviceLevel: String?
+    val series: String?,
+    val depot: String?,
+    val dccInterface: DccInterface?,
+    val control: Control?
 ) : RollingStock
-
-enum class PassengerCarType {
-    BAGGAGE_CAR,
-    COMBINE_CAR,
-    COMPARTMENT_COACH,
-    DINING_CAR,
-    DOUBLE_DECKER,
-    DRIVING_TRAILER,
-    LOUNGE,
-    OBSERVATION,
-    OPEN_COACH,
-    RAILWAY_POST_OFFICE,
-    SLEEPING_CAR
-}
