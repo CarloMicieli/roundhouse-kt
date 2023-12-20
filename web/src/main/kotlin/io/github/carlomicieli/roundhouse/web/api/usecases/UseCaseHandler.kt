@@ -24,6 +24,7 @@ import io.github.carlomicieli.roundhouse.usecases.UseCase
 import org.slf4j.Logger
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerRequest.Headers
 import org.springframework.web.reactive.function.server.ServerResponse
 
 /**
@@ -51,7 +52,8 @@ interface UseCaseHandler<I, O, E> {
             presenter.toEmptyRequestResponse()
         } else {
             val result = useCase.execute(input)
-            logger.info("input={}, result={}", input, result)
+            val logEntry = LogEntry(input, result, serverRequest.headers())
+            logEntry.logTo(logger)
             presenter.toServerResponse(result)
         }
     }
@@ -66,4 +68,16 @@ interface UseCaseHandler<I, O, E> {
      * @return the use case input extracted from the server request, or {@code null} if the extraction is not possible
      */
     suspend fun extractInput(serverRequest: ServerRequest): I?
+}
+
+data class LogEntry<I, O>(val request: I, val response: O, val headers: Headers) {
+    fun logTo(logger: Logger) {
+        val log = mapOf(
+            "request" to request,
+            "response" to response,
+            "headers" to headers.asHttpHeaders().toMap()
+        )
+
+        logger.info("{}", log)
+    }
 }
