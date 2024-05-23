@@ -64,7 +64,7 @@ tasks {
     }
 }
 
-extra["kotestVersion"] = "5.8.0"
+extra["kotestVersion"] = "5.9.0"
 
 configurations {
     all {
@@ -109,15 +109,15 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.kotest:kotest-assertions-core:${property("kotestVersion")}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
 }
 
 tasks {
     test {
         useJUnitPlatform()
 
-        minHeapSize = "512m"
-        maxHeapSize = "1G"
+        minHeapSize = "1G"
+        maxHeapSize = "2G"
         failFast = false
         ignoreFailures = true
 
