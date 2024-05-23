@@ -39,10 +39,12 @@ tasks.getByName<BootRun>("bootRun") {
     mainClass.set("io.github.carlomicieli.roundhouse.ApplicationKt")
 }
 
+var apiSchema: RegularFile = layout.projectDirectory.file("src/main/resources/openapi/api-schema.yaml")
+val generated: Provider<Directory> = layout.buildDirectory.dir("generated")
 openApiGenerate {
     generatorName.set("java")
-    inputSpec.set("${project.projectDir}/src/main/resources/openapi/api-schema.yaml")
-    outputDir.set("${project.buildDir}/generated")
+    inputSpec.set(apiSchema.asFile.path)
+    outputDir.set(generated.map { it.asFile.name }.get())
     apiPackage.set("io.github.carlomicieli.roundhouse.api")
     modelPackage.set("io.github.carlomicieli.roundhouse.model")
     globalProperties.set(
@@ -75,10 +77,11 @@ tasks {
     }
 }
 
+val javaSrc = layout.buildDirectory.dir("generated/src/main/java")
 sourceSets {
     main {
         java {
-            srcDir("${project.buildDir}/generated/src/main/java")
+            srcDir(javaSrc.get())
         }
     }
 }

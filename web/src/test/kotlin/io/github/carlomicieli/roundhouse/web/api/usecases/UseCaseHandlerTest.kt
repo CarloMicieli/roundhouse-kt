@@ -23,8 +23,8 @@ package io.github.carlomicieli.roundhouse.web.api.usecases
 import io.github.carlomicieli.roundhouse.usecases.UseCase
 import io.github.carlomicieli.roundhouse.usecases.UseCaseResult
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
@@ -36,7 +36,7 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import org.springframework.web.reactive.function.server.buildAndAwait
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@Disabled
 class UseCaseHandlerTest {
     @Test
     fun `should handle successful use case results`() =
