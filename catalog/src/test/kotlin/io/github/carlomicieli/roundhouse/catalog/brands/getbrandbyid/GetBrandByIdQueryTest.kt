@@ -28,7 +28,6 @@ import io.github.carlomicieli.roundhouse.metadata.MetadataInfo
 import io.github.carlomicieli.roundhouse.queries.result.SingleResult
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -41,7 +40,6 @@ import java.time.Instant
 
 @DisplayName("GetBrandByIdQuery")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(ExperimentalCoroutinesApi::class)
 class GetBrandByIdQueryTest {
     private lateinit var query: GetBrandByIdQuery
     private lateinit var getBrandByIdRepository: GetBrandByIdRepository

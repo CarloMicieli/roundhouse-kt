@@ -21,7 +21,6 @@
 package io.github.carlomicieli.roundhouse.web.api.catalog.brands
 
 import io.github.carlomicieli.roundhouse.catalog.brands.createbrands.CreateBrand
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -39,7 +38,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
 @DisplayName("Brand routes")
 @TestInstance(Lifecycle.PER_CLASS)
-@OptIn(ExperimentalCoroutinesApi::class)
 class BrandRoutingTest {
     private lateinit var createBrandHandler: CreateBrandHandler
     private lateinit var getBrandByIdHandler: GetBrandByIdHandler

@@ -25,7 +25,6 @@ import io.github.carlomicieli.roundhouse.usecases.UseCaseResult
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import jakarta.validation.Validation
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -38,7 +37,6 @@ import java.math.BigDecimal
 
 @DisplayName("CreateScaleUseCase")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(ExperimentalCoroutinesApi::class)
 class CreateScaleUseCaseTest {
     lateinit var useCase: CreateScaleUseCase
     lateinit var createScaleRepository: CreateScaleRepository

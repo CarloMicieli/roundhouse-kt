@@ -34,7 +34,6 @@ import io.github.carlomicieli.roundhouse.queries.result.PaginatedResultSet
 import io.github.carlomicieli.roundhouse.queries.sorting.Sorting
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
@@ -50,7 +49,6 @@ import java.time.Instant
 
 @DisplayName("GetScalesQuery")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(ExperimentalCoroutinesApi::class)
 class GetScalesQueryTest {
     private lateinit var query: GetScalesQuery
     private lateinit var getScalesRepository: GetScalesRepository

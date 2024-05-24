@@ -24,7 +24,6 @@ import io.github.carlomicieli.roundhouse.problems.ProblemDetailsGenerator
 import io.github.carlomicieli.roundhouse.queries.errors.QueryError
 import io.github.carlomicieli.roundhouse.queries.result.SingleResult
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -34,7 +33,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import java.lang.Exception
 
 @DisplayName("QueryResultPresenter")
-@OptIn(ExperimentalCoroutinesApi::class)
 class QueryResultPresenterTest {
     private val presenter = queryResultPresenter()
 

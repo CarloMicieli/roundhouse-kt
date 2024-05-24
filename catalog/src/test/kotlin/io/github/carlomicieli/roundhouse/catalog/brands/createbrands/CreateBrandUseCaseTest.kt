@@ -20,12 +20,10 @@
  */
 package io.github.carlomicieli.roundhouse.catalog.brands.createbrands
 
-import io.github.carlomicieli.roundhouse.catalog.brands.BrandId
 import io.github.carlomicieli.roundhouse.catalog.brands.BrandKind
 import io.github.carlomicieli.roundhouse.usecases.UseCaseResult
 import io.kotest.matchers.shouldBe
 import jakarta.validation.Validation
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -37,7 +35,6 @@ import org.mockito.kotlin.whenever
 
 @DisplayName("Create brand use case")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(ExperimentalCoroutinesApi::class)
 class CreateBrandUseCaseTest {
     lateinit var useCase: CreateBrandUseCase
     lateinit var createBrandRepository: CreateBrandRepository

@@ -21,7 +21,6 @@
 package io.github.carlomicieli.roundhouse.web.api.catalog.scales
 
 import io.github.carlomicieli.roundhouse.catalog.scales.createscales.CreateScale
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -38,7 +37,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
 @DisplayName("Scale routes")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(ExperimentalCoroutinesApi::class)
 class ScaleRoutingTest {
     private lateinit var createScaleHandler: CreateScaleHandler
     private lateinit var getScaleByIdHandler: GetScaleByIdHandler

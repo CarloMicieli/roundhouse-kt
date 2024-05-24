@@ -30,7 +30,6 @@ import io.github.carlomicieli.roundhouse.queries.result.PaginatedResultSet
 import io.github.carlomicieli.roundhouse.queries.sorting.Sorting
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
@@ -46,7 +45,6 @@ import java.time.Instant
 
 @DisplayName("GetBrandsByQuery")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(ExperimentalCoroutinesApi::class)
 class GetBrandsQueryTest {
     private lateinit var query: GetBrandsQuery
     private lateinit var getBrandsRepository: GetBrandsRepository
