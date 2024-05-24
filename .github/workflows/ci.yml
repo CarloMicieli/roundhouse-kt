@@ -1,5 +1,17 @@
 name: CI with Gradle
-on: push
+on:
+  push:
+    paths-ignore:
+      - '.cz.toml'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'README.md'
+      - 'ROADMAP.md'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -15,31 +27,23 @@ jobs:
           java-version: 21
           distribution: temurin
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v3
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Compile the project
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build -x check
+        run: ./gradlew build -x check
 
       - name: Checks that sourcecode satisfies formatting rules
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: spotlessCheck
+        run: ./gradlew spotlessCheck
 
       - name: Run the unit tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: test
+        run: ./gradlew test
 
       - name: Run the integration tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: integrationTest
+        run: ./gradlew integrationTest
 
       - name: Kover coverage report
         run: ./gradlew web:koverXmlReport
@@ -68,12 +72,10 @@ jobs:
           distribution: temurin
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build the container image
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: bootBuildImage
+        run: ./gradlew bootBuildImage
 
       - name: Start containers
         run: docker compose -f "docker-compose.yml" up -d
